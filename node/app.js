@@ -80,6 +80,27 @@ app.get('/webhook', function(req, res) {
  * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
  *
  */
+var session;
+var sessions = {};
+
+function findOrCreateSession (fbid){
+    var sessionId;
+    // Let's see if we already have a session for the user fbid
+    Object.keys(sessions).forEach(k => {
+        if (sessions[k].fbid === fbid) {
+        // Yep, got it!
+        sessionId = k;
+    }
+});
+    if (!sessionId) {
+        // No session found for user fbid, let's create a new one
+        sessionId = new Date().toISOString();
+        sessions[sessionId] = {fbid: fbid, context: {}};
+        sessions[sessionId].context.state = 0;
+    }
+    return sessionId;
+}
+
 app.post('/webhook', function (req, res) {
   var data = req.body;
 
@@ -91,8 +112,11 @@ app.post('/webhook', function (req, res) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
 
+
       // Iterate over each messaging event
       pageEntry.messaging.forEach(function(messagingEvent) {
+          const sessionId = findOrCreateSession(messagingEvent.sender.id);
+          session = sessions[sessionId];
         if (messagingEvent.optin) {
           receivedAuthentication(messagingEvent);
         } else if (messagingEvent.message) {
@@ -215,29 +239,81 @@ function receivedAuthentication(event) {
  * then we'll simply confirm that we've received the attachment.
  * 
  */
+
+function confirm(text)
+{
+    if(text.includes("sp")|| text.includes("네") || text.includes("맞아") || text.includes("응") || text.includes("ㅇ"))
+    {
+        return true;
+    }else return false;
+}
+function start_order(text)
+{
+    if(text.includes("안녕") || text.includes("처음") || text.includes("시작") || text.includes("헬로"))
+    {
+        return true;
+    }else return false;
+}
+function reset()
+{
+    session.context.state = "-1";
+}
+function order_confirm(num)
+{
+    var current_state = "배달 중";
+    var shop = "가나다 매장(02-111-1111)"
+    var content = "[주문번호:" + num + "]\n--- 제품 ---\nAAAAA\nBBBBB\nCCCCC\n금액:00000원\n[주문상태:"+ current_state + " ]\n[주문매장: " + shop + "]";
+    return content;
+}
+
+function identify(num)
+{
+    return true;
+}
+function verification(num)
+{
+    return true;
+}
+function selectAddress(address)
+{
+    var candidate_address = "1. input Area1" + "2. input Area2";
+    return candidate_address;
+}
+function selectShop(address)
+{
+    return true;
+}
+//let state = "-1";
+let pizza_menu = "";
+let pizza_num = "0";
+let drink_menu = "";
+let side_menu = "";
+
 function receivedMessage(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfMessage = event.timestamp;
-  var message = event.message;
+    //var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
+    var timeOfMessage = event.timestamp;
+    var message = event.message;
 
-  console.log("Received message for user %d and page %d at %d with message:", 
-    senderID, recipientID, timeOfMessage);
-  console.log(JSON.stringify(message));
+    console.log("Received message for user %d and page %d at %d with message:",
+    session.fbid, recipientID, timeOfMessage);
+    console.log(JSON.stringify(message));
 
-  var isEcho = message.is_echo;
-  var messageId = message.mid;
-  var appId = message.app_id;
-  var metadata = message.metadata;
+    var isEcho = message.is_echo;
+    var messageId = message.mid;
+    var appId = message.app_id;
+    var metadata = message.metadata;
+    var order_number='0';
+    var help_id='0';
 
-  // You may get a text or attachment but not both
-  var messageText = message.text;
-  var messageAttachments = message.attachments;
-  var quickReply = message.quick_reply;
+    // You may get a text or attachment but not both
+    var messageText = message.text;
+    var messageAttachments = message.attachments;
+    var quickReply = message.quick_reply;
 
-  if (isEcho) {
+    if (isEcho) {
     // Just logging message echoes to console
-    console.log("Received echo for message %s and app %d with metadata %s", 
+    console.log("Received echo for message %s and app %d with metadata %s",
       messageId, appId, metadata);
     return;
   } else if (quickReply) {
@@ -245,73 +321,196 @@ function receivedMessage(event) {
     console.log("Quick reply for message %s with payload %s",
       messageId, quickReplyPayload);
 
-    sendTextMessage(senderID, "Quick reply tapped");
+    sendTextMessage(session.fbid, "Quick reply tapped");
     return;
   }
 
-  if (messageText) {
+  if (messageText)
+  {
+      if (session.context.state == "-1" || messageText.includes("안녕") || messageText.includes("처음") || messageText.includes("시작") || messageText.includes("헬로"))
+      {
+          session.context.state = 'start';
+      }else if(session.context.state=='order_confirm')
+      {
+          order_number = messageText;
+      }else if(session.context.state == 'privacy')
+      {
+          if(messageText.includes("예") || messageText.includes("1"))
+          {
+              session.context.state = "phone_number";
+          }else{
+              session.context.state = "-1";
+          }
+      }else if(session.context.state == 'phone_number_confirm')
+      {
+          if(identify(messageText))
+          {
+              session.context.state = "identify";
+              session.context.phone_number = messageText;
+          }else{
+              session.context.state = 'phone_number_confirm';
+          }
+      }else if(session.context.state == 'verification_code')
+      {
+          if(verification(messageText))
+          {
+              session.context.state = "order_method";
+
+          }else{
+              session.context.state = "identify";
+          }
+      }else if(session.context.state == 'help')
+      {
+          if(messageText.includes("1"))
+          {
+              session.context.state = "help_1";
+          }else{
+              session.context.state = "help_2";
+          }
+
+      }else if(session.context.state == 'order_method')
+      {
+          if(messageText.includes("배달") || messageText.includes("1"))
+          {
+              session.context.state = "delivery";
+          }else{
+              session.context.state = "wrap";
+          }
+      }else if(session.context.state == 'address_1')
+      {
+          session.context.address = messageText;
+      }else if(session.context.state == 'address_2')
+      {
+          session.context.address = session.context.address + messageText;
+      }else if(session.context.state == 'address_3')
+      {
+          if(messageText.includes("1"))
+          {
+              session.context.address = session.context.address + " input Area1 ";
+          }else {
+              session.context.address = session.context.address + " input Area2 ";
+          }
+      }else if(session.context.state == 'address_4')
+      {
+          session.context.address = session.context.address + messageText;
+      }else if(session.context.state == 'address_5')
+      {
+          if(messageText.includes('1') || messageText.includes('예') || messageText.includes('sp') || messageText.includes('네'))
+          {
+              if(selectShop(session.context.address))
+              {
+                  session.context.state = 'menu_1'
+
+              }else{
+                  session.context.state = 'research_address_1';
+              }
+          }else{
+              session.context.state = 'delivery';
+          }
+      }else if(session.context.state == 'research_address_2')
+      {
+          if(messageText.includes('1') || messageText.includes('예') || messageText.includes('sp') || messageText.includes('네'))
+          {
+              session.context.state = 'delivery';
+          }else{
+              session.context.state = '0';
+          }
+      }else if(session.context.state =='0')
+      {
+          sendTextMessage(session.fbid, "이용해주셔서 감사합니다.");
+          session.context.state = '-1';
+      }
 
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
-    switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
-        break;
+    switch (session.context.state) {
+	    case 'start':
+            sendStartMessage(session.fbid);
+	        break;
 
-      case 'gif':
-        sendGifMessage(senderID);
-        break;
+        case 'order_confirm':
+            sendTextMessage(session.fbid, order_confirm(order_number));
+            session.context.state = "0";
+            break;
 
-      case 'audio':
-        sendAudioMessage(senderID);
-        break;
+        case 'help_1':
+            sendTextMessage(session.fbid, "주소 입력은 잘 하시면 됩니다.");
+            state = '0';
+            break;
+        
+        case 'help_2':
+            sendTextMessage(session.fbid, "피자헛 멤버십은 잘 적립하시면 됩니다.");
+            state = '0';
+            break;
 
-      case 'video':
-        sendVideoMessage(senderID);
-        break;
+        case 'phone_number':
+            sendTextMessage(session.fbid, "정확한 주문을 위해 휴대폰 번호를 입력해 주세요.");
+            session.context.state = 'phone_number_confirm';
+            break;
 
-      case 'file':
-        sendFileMessage(senderID);
-        break;
+        case 'identify':
+            sendTextMessage(session.fbid, "휴대폰번호로 발송된 인증번호를 입력해주세요. 입력하신 번호는" + session.context.phone_number + "입니다.");
+            session.context.state = "verification_code"
+            break;
 
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
+        case 'order_method':
+            sendTextMessage(session.fbid, "주문 방법을 선택해주세요.\n1. 배달 주문\n2. 포장 주문");
+            session.context.state = 'order_method';
+            break;
 
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
+        case 'delivery':
+            sendTextMessage(session.fbid, "배달 받으실 주소를 입력해 주세요 (00시 00구 00동/로)");
+            session.context.state = 'address_1';
+            break;
 
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
+        case 'address_1':
+            sendTextMessage(session.fbid, "상세 주소를 입력해주세요 (00아파트, 00-000)");
+            session.context.state = 'address_2'
+            break;
 
-      case 'quick reply':
-        sendQuickReply(senderID);
-        break;        
+        case 'address_2':
+            var address = selectAddress(session.context.address);
+            sendTextMessage(session.fbid, address + "\n목록에서 배달 받으실 주소 번호를 입력해 주십시오.");
+            session.context.state = 'address_3';
+            break;
 
-      case 'read receipt':
-        sendReadReceipt(senderID);
-        break;        
+        case 'address_3':
+            sendTextMessage(session.fbid, "나머지 주소를 입력해 주십시오.(0동 0호, 0층)");
+            session.context.state = 'address_4';
+            break;
 
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;        
+        case 'address_4':
+            sendTextMessage(session.fbid, "배달 받으실 주소가 " + session.context.address + " 가 맞습니까?");
+            session.context.state = 'address_5';
+            break;
 
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;        
+        case 'research_address_1':
+            sendTextMessage(session.fbid, "배달 가능 매장이 존재하지 않습니다. 주소 검색을 다시 하시겠습니까?");
+            session.context.state = 'research_address_2';
+            break;
 
-      case 'account linking':
-        sendAccountLinking(senderID);
-        break;
+        case 'menu_1':
+            sendTextMessage(session.fbid, "주문하시고자 하는 제품군을 선택해 주십시오.");
+            sendTextMessage(session.fbid, "1. 신제품세트\n2. 인기메뉴\n3. 리치골드\n4. 치즈크러스트\n5. 버거바이트\n6. 팬\n7. 더맛있는피자\n8. 더블박스\n9. 사이드\n10. 음료\n11. 기타\n100. 종료\n목록에서 번호를 입력해 주십시오.");
+            session.context.state = '0';
+            break;
+
+        case '0':
+            sendTextMessage(session.fbid, "이용해주셔서 감사합니다.");
+            session.context.state = '-1';
+            break;
+
+        case '-1':
+            reset();
+            break;
+        case 'wrap': break;
 
       default:
-        sendTextMessage(senderID, messageText);
+          sendTextMessage(session.fbid, "이용해주셔서 감사합니다.");
     }
   } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
+    sendTextMessage(session.fbid, "Message with attachment received");
   }
 }
 
@@ -349,7 +548,8 @@ function receivedDeliveryConfirmation(event) {
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
  * 
  */
-function receivedPostback(event) {
+function receivedPostback(event)
+{
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfPostback = event.timestamp;
@@ -361,9 +561,27 @@ function receivedPostback(event) {
   console.log("Received postback for user %d and page %d with payload '%s' " + 
     "at %d", senderID, recipientID, payload, timeOfPostback);
 
+    if(payload == "order_number")        //주문확인
+    {
+        session.context.state = 'order_confirm';
+        sendTextMessage(senderID, "주문 번호를 입력해 주십시오.");
+
+    }else if(payload == "order")        //주문하기
+    {
+        session.context.state = 'privacy';
+        sendTextMessage(senderID, "고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)");
+
+    }else if(payload == "help")         //도움말
+    {
+        session.context.state = 'help';
+        sendTextMessage(senderID, "\tQ & A\n1. 주소 입력은 어떻게 하나요?\n2. 피자헛 멤버십은 어떻게 적립하나요?");
+    }else {
+        sendTextMessage(senderID, "감사합니다");
+    }
+
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+  //sendTextMessage(senderID, "Postback called");
 }
 
 /*
@@ -536,7 +754,7 @@ function sendTextMessage(recipientId, messageText) {
  * Send a button message using the Send API.
  *
  */
-function sendButtonMessage(recipientId) {
+function sendStartMessage(recipientId) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -546,19 +764,20 @@ function sendButtonMessage(recipientId) {
         type: "template",
         payload: {
           template_type: "button",
-          text: "This is test text",
+          text: "맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?",
           buttons:[{
-            type: "web_url",
-            url: "https://www.oculus.com/en-us/rift/",
-            title: "Open Web URL"
+            type: "postback",
+            payload: "order_number",
+            title: "주문 확인"
           }, {
             type: "postback",
-            title: "Trigger Postback",
-            payload: "DEVELOPER_DEFINED_PAYLOAD"
+              payload: "order",
+            title: "주문 하기"
+
           }, {
-            type: "phone_number",
-            title: "Call Phone Number",
-            payload: "+16505551234"
+              type: "postback",
+              title: "도움말",
+              payload: "help"
           }]
         }
       }
@@ -566,6 +785,39 @@ function sendButtonMessage(recipientId) {
   };  
 
   callSendAPI(messageData);
+}
+
+function DrinkButtonMessage(recipientId) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            attachment: {
+                type: "template",
+                payload: {
+                    template_type: "button",
+                    text: "다음 중 하나를 골라 주세요",
+                    buttons:[{
+                        type: "postback",
+                        payload: "coke",
+                        title: "콜라"
+                    }, {
+                        type: "postback",
+                        payload: "sevenup",
+                        title: "세븐업"
+
+                    }, {
+                        type: "postback",
+                        payload: "beer",
+                        title: "클라우드 맥주"
+                    }]
+                }
+            }
+        }
+    };
+
+    callSendAPI(messageData);
 }
 
 /*
@@ -830,6 +1082,10 @@ function callSendAPI(messageData) {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
+var server = https.createServer(app).listen(8888, function(){
+	console.log("https");
+});
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
