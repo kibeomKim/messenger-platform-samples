@@ -390,3 +390,165 @@ Received message for user 1355803134478878 and page 1246340288735302 at 14885177
 Received echo for message mid.1488517722298:ffad12b493 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
 Received delivery confirmation for message ID: mid.1488517722298:ffad12b493
 All message before 1488517722298 were delivered.
+
+> messenger-get-started@1.0.0 start /home/ubuntu/messenger-platform-samples/node
+> node app.js
+
+https
+Node app is running on port 5000
+Received message for user 1163191487127028 and page 1355803134478878 at 1488534409899 with message:
+{"mid":"mid.1488534409899:f1bb9bb036","seq":9199,"text":"안녕"}
+Successfully sent message with id mid.1488534410607:96de9fd479 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488534410607 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.1488534410607:96de9fd479","seq":9201,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"order"},{"type":"postback","title":"도움말","payload":"help"}]}}]}
+Received echo for message mid.1488534410607:96de9fd479 and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.1488534410607:96de9fd479
+All message before 1488534410607 were delivered.
+Received delivery confirmation for message ID: mid.1488534410607:96de9fd479
+All message before 1488534410607 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785825161 with message:
+{"mid":"mid.1488785825161:52b5e21b49","seq":9324,"text":"안녕"}
+Successfully sent message with id mid.1488785826069:720a3e8519 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785826069 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.1488785826069:720a3e8519","seq":9326,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"order"},{"type":"postback","title":"도움말","payload":"help"}]}}]}
+Received echo for message mid.1488785826069:720a3e8519 and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.1488785826069:720a3e8519
+All message before 1488785826069 were delivered.
+Received delivery confirmation for message ID: mid.1488785826069:720a3e8519
+All message before 1488785826069 were delivered.
+Received postback for user 1163191487127028 and page 1355803134478878 with payload 'order_number' at 1488785829347
+Successfully sent message with id mid.1488785829914:2e9eb17190 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785829914 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785829914:2e9eb17190","seq":9330,"text":"주문 번호를 입력해 주십시오."}
+Received echo for message mid.1488785829914:2e9eb17190 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785829914:2e9eb17190
+All message before 1488785829914 were delivered.
+Received delivery confirmation for message ID: mid.1488785829914:2e9eb17190
+All message before 1488785829914 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785834214 with message:
+{"mid":"mid.1488785834214:a64a34a031","seq":9332,"text":"11221122"}
+Successfully sent message with id mid.1488785834749:b3c5a62207 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785834749 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785834749:b3c5a62207","seq":9334,"text":"[주문번호:11221122]\n--- 제품 ---\nAAAAA\nBBBBB\nCCCCC\n금액:00000원\n[주문상태:배달 중 ]\n[주문매장: 가나다 매장(02-111-1111)]"}
+Received echo for message mid.1488785834749:b3c5a62207 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785834749:b3c5a62207
+All message before 1488785834749 were delivered.
+Received delivery confirmation for message ID: mid.1488785834749:b3c5a62207
+All message before 1488785834749 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785842864 with message:
+{"mid":"mid.1488785842864:2871382d72","seq":9336,"text":"안녕"}
+Successfully sent message with id mid.1488785843674:a4e3d2c452 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785843674 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.1488785843674:a4e3d2c452","seq":9338,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"order"},{"type":"postback","title":"도움말","payload":"help"}]}}]}
+Received echo for message mid.1488785843674:a4e3d2c452 and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.1488785843674:a4e3d2c452
+All message before 1488785843674 were delivered.
+Received delivery confirmation for message ID: mid.1488785843674:a4e3d2c452
+All message before 1488785843674 were delivered.
+Received postback for user 1163191487127028 and page 1355803134478878 with payload 'order' at 1488785846131
+Successfully sent message with id mid.1488785846718:d588a15720 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785846718 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785846718:d588a15720","seq":9342,"text":"고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)"}
+Received echo for message mid.1488785846718:d588a15720 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785846718:d588a15720
+All message before 1488785846718 were delivered.
+Received delivery confirmation for message ID: mid.1488785846718:d588a15720
+All message before 1488785846718 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785852881 with message:
+{"mid":"mid.1488785852881:2736334262","seq":9344,"text":"1"}
+Successfully sent message with id mid.1488785853445:98061bb409 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785853445 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785853445:98061bb409","seq":9346,"text":"정확한 주문을 위해 휴대폰 번호를 입력해 주세요."}
+Received echo for message mid.1488785853445:98061bb409 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785853445:98061bb409
+All message before 1488785853445 were delivered.
+Received delivery confirmation for message ID: mid.1488785853445:98061bb409
+All message before 1488785853445 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785857913 with message:
+{"mid":"mid.1488785857913:4fb5cad122","seq":9348,"text":"01001001010"}
+Successfully sent message with id mid.1488785858406:1fb02d9551 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785858406 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785858406:1fb02d9551","seq":9350,"text":"휴대폰번호로 발송된 인증번호를 입력해주세요. 입력하신 번호는01001001010입니다."}
+Received echo for message mid.1488785858406:1fb02d9551 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785858406:1fb02d9551
+All message before 1488785858406 were delivered.
+Received delivery confirmation for message ID: mid.1488785858406:1fb02d9551
+All message before 1488785858406 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785862765 with message:
+{"mid":"mid.1488785862765:76f9f71069","seq":9352,"text":"1234"}
+Successfully sent message with id mid.1488785863290:6323da4037 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785863290 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785863290:6323da4037","seq":9354,"text":"주문 방법을 선택해주세요.\n1. 배달 주문\n2. 포장 주문"}
+Received echo for message mid.1488785863290:6323da4037 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785863290:6323da4037
+All message before 1488785863290 were delivered.
+Received delivery confirmation for message ID: mid.1488785863290:6323da4037
+All message before 1488785863290 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785867323 with message:
+{"mid":"mid.1488785867323:db47babb49","seq":9356,"text":"1"}
+Successfully sent message with id mid.1488785867926:f759da9775 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785867926 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785867926:f759da9775","seq":9358,"text":"배달 받으실 주소를 입력해 주세요 (00시 00구 00동/로)"}
+Received echo for message mid.1488785867926:f759da9775 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785867926:f759da9775
+All message before 1488785867926 were delivered.
+Received delivery confirmation for message ID: mid.1488785867926:f759da9775
+All message before 1488785867926 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785874760 with message:
+{"mid":"mid.1488785874760:34bd5a3159","seq":9360,"text":"서울시 관악구"}
+Successfully sent message with id mid.1488785875269:a166133367 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785875269 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785875269:a166133367","seq":9362,"text":"상세 주소를 입력해주세요 (00아파트, 00-000)"}
+Received echo for message mid.1488785875269:a166133367 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785875269:a166133367
+All message before 1488785875269 were delivered.
+Received delivery confirmation for message ID: mid.1488785875269:a166133367
+All message before 1488785875269 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785880637 with message:
+{"mid":"mid.1488785880637:1b2e578924","seq":9364,"text":"서울대학교"}
+Successfully sent message with id mid.1488785881131:81d63a8165 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785881131 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785881131:81d63a8165","seq":9366,"text":"1. input Area12. input Area2\n목록에서 배달 받으실 주소 번호를 입력해 주십시오."}
+Received echo for message mid.1488785881131:81d63a8165 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785881131:81d63a8165
+All message before 1488785881131 were delivered.
+Received delivery confirmation for message ID: mid.1488785881131:81d63a8165
+All message before 1488785881131 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785886877 with message:
+{"mid":"mid.1488785886877:213b615060","seq":9368,"text":"2"}
+Successfully sent message with id mid.1488785887414:8144065618 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785887414 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785887414:8144065618","seq":9370,"text":"나머지 주소를 입력해 주십시오.(0동 0호, 0층)"}
+Received echo for message mid.1488785887414:8144065618 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785887414:8144065618
+All message before 1488785887414 were delivered.
+Received delivery confirmation for message ID: mid.1488785887414:8144065618
+All message before 1488785887414 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785895096 with message:
+{"mid":"mid.1488785895096:cc27a5aa15","seq":9372,"text":"138동 214-1호"}
+Successfully sent message with id mid.1488785895619:02afbd0366 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785895619 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785895619:02afbd0366","seq":9374,"text":"배달 받으실 주소가 서울시 관악구서울대학교 input Area2 138동 214-1호 가 맞습니까?"}
+Received echo for message mid.1488785895619:02afbd0366 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785895619:02afbd0366
+All message before 1488785895619 were delivered.
+Received delivery confirmation for message ID: mid.1488785895619:02afbd0366
+All message before 1488785895619 were delivered.
+Received message for user 1163191487127028 and page 1355803134478878 at 1488785900707 with message:
+{"mid":"mid.1488785900707:88c2078f96","seq":9376,"text":"네"}
+Successfully sent message with id mid.1488785901221:62186cce71 to recipient 1163191487127028
+Successfully sent message with id mid.1488785901222:e576a49172 to recipient 1163191487127028
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785901221 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785901221:62186cce71","seq":9378,"text":"주문하시고자 하는 제품군을 선택해 주십시오."}
+Received echo for message mid.1488785901221:62186cce71 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.1488785901221:62186cce71
+All message before 1488785901222 were delivered.
+Received delivery confirmation for message ID: mid.1488785901222:e576a49172
+All message before 1488785901222 were delivered.
+Received delivery confirmation for message ID: mid.1488785901221:62186cce71
+All message before 1488785901221 were delivered.
+Received delivery confirmation for message ID: mid.1488785901222:e576a49172
+All message before 1488785901222 were delivered.
+Received message for user 1355803134478878 and page 1163191487127028 at 1488785901222 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.1488785901222:e576a49172","seq":9379,"text":"1. 신제품세트\n2. 인기메뉴\n3. 리치골드\n4. 치즈크러스트\n5. 버거바이트\n6. 팬\n7. 더맛있는피자\n8. 더블박스\n9. 사이드\n10. 음료\n11. 기타\n100. 종료\n목록에서 번호를 입력해 주십시오."}
+Received echo for message mid.1488785901222:e576a49172 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA

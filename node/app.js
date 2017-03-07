@@ -16,7 +16,37 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
-  request = require('request');
+  request = require('request'),
+    mongoose = require('mongoose'),
+    async = require('async');
+
+mongoose.connect('mongodb://localhost:27017/pizzahut');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+    console.log('connection successful...');
+});
+
+var menuSchema = mongoose.Schema({
+    type: String,
+    itemName: String,
+    cate: String,
+    price: String
+});
+
+var Model = mongoose.model('menu', menuSchema, 'menu');
+/*
+Model.find({type: 'etc'}, function(err, docs){
+    docs.forEach(function(doc){
+        console.log(doc);
+    });
+});
+
+Model.findOne({type: 'pizza'}, function(err, docs){
+        console.log(docs);
+});
+*/
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -68,8 +98,8 @@ app.get('/webhook', function(req, res) {
     res.status(200).send(req.query['hub.challenge']);
   } else {
     console.error("Failed validation. Make sure the validation tokens match.");
-    res.sendStatus(403);          
-  }  
+    res.sendStatus(403);
+  }
 });
 
 
@@ -95,8 +125,10 @@ function findOrCreateSession (fbid){
     if (!sessionId) {
         // No session found for user fbid, let's create a new one
         sessionId = new Date().toISOString();
-        sessions[sessionId] = {fbid: fbid, context: {}};
-        sessions[sessionId].context.state = 0;
+        sessions[sessionId] = {fbid: fbid, context: {}, menu: {}};
+        sessions[sessionId].context.state = '-1';
+        sessions[sessionId].context.nMenu = 0;
+        sessions[sessionId].context.price = 0;
     }
     return sessionId;
 }
@@ -257,6 +289,8 @@ function start_order(text)
 function reset()
 {
     session.context.state = "-1";
+    session.context.nMenu = 0;
+    session.context.price = 0;
 }
 function order_confirm(num)
 {
@@ -276,24 +310,77 @@ function verification(num)
 }
 function selectAddress(address)
 {
-    var candidate_address = "1. input Area1" + "2. input Area2";
+    var candidate_address = "1. input Area1" + "\n2. input Area2";
     return candidate_address;
 }
 function selectShop(address)
 {
+    session.context.shop = 'aaa매장';
     return true;
 }
-//let state = "-1";
-let pizza_menu = "";
-let pizza_num = "0";
-let drink_menu = "";
-let side_menu = "";
+function checkMembership()
+{
+    return true;
+}
+function order_now()
+{
+    var str = '주문번호[12345678] 주문이 완료되었습니다. 배달 예상 시간은 18:30 입니다.';
+    return str;
+}
+function findDough(text)
+{
+    if(text =='1' || text.includes('신제품') | text.includes('세트') | text.includes('셋트'))
+    {
+        //return '세트';
+        return '와우세븐박스';
+    }else if(text.includes('2') || text.includes('인기메뉴'))
+    {
+        return '치즈크러스트';
+    }else if(text.includes('3') || text.includes('리치골드'))
+    {
+        return '리치골드';
+    }else if(text.includes('4') || text.includes('치즈크러스트'))
+    {
+        return '치즈크러스트';
+    }else if(text.includes('5') || text.includes('팬'))
+    {
+        return '팬';
+    }else if(text.includes('6') || text.includes('맛'))
+    {
+        return 'The맛있는피자2';
+    }else if(text.includes('7') || text.includes('트리플'))
+    {
+        return '트리플박스';
+    }else if(text.includes('8') || text.includes('세븐'))
+    {
+        return '와우세븐박스';
+    }else if(text.includes('9') || text.includes('사이드'))
+    {
+        return 'side';
+    }else if(text.includes('10') || text.includes('음료'))
+    {
+        return 'drink';
+    }else if(text.includes('11') || text.includes('기타'))
+    {
+        return 'etc';
+    }
 
+}
+function findAll(item)
+{
+    //var data;
+    Model.find({dough:item}, function(err, docs){
+        if(err) console.log("mongoDB err 발생: " + err);
+        //console.log(docs);
+        return docs;
+    });
+}
 function receivedMessage(event) {
     //var senderID = event.sender.id;
     var recipientID = event.recipient.id;
     var timeOfMessage = event.timestamp;
     var message = event.message;
+    var menu;
 
     console.log("Received message for user %d and page %d at %d with message:",
     session.fbid, recipientID, timeOfMessage);
@@ -327,6 +414,7 @@ function receivedMessage(event) {
 
   if (messageText)
   {
+      if(messageText == '메뉴주문'){reset(); session.context.state = 'menu_1';session.context.shop = 'aaa매장'; }
       if (session.context.state == "-1" || messageText.includes("안녕") || messageText.includes("처음") || messageText.includes("시작") || messageText.includes("헬로"))
       {
           session.context.state = 'start';
@@ -397,11 +485,11 @@ function receivedMessage(event) {
       {
           if(messageText.includes('1') || messageText.includes('예') || messageText.includes('sp') || messageText.includes('네'))
           {
-              if(selectShop(session.context.address))
+              if(selectShop(session.context.address))       //배달 가능 매장이 있을 때
               {
-                  session.context.state = 'menu_1'
+                  session.context.state = 'menu_1';
 
-              }else{
+              }else{                                        //배달 가능 매장이 없을 때
                   session.context.state = 'research_address_1';
               }
           }else{
@@ -409,12 +497,94 @@ function receivedMessage(event) {
           }
       }else if(session.context.state == 'research_address_2')
       {
-          if(messageText.includes('1') || messageText.includes('예') || messageText.includes('sp') || messageText.includes('네'))
+          if(messageText.includes('1') || messageText.includes('예') || messageText.includes('sp') || messageText.includes('네'))     //배달가능 주소 재 검색
           {
               session.context.state = 'delivery';
-          }else{
+          }else{        //배달 가능한 곳이 없어서 주문 포기
               session.context.state = '0';
           }
+      }else if(session.context.state =='menu_2')
+      {
+          var temp;
+          if(messageText.includes('100') || messageText.includes('종료'))
+          {
+              session.context.state = 'bill';
+          }else {
+              var task_pizza = [
+                  function (callback){
+                      callback(null, findDough(messageText));
+                  },
+                  function (data, callback){
+                      Model.find({type: data}, function(err, docs){
+                          if(err) console.log("mongoDB err 발생: " + err);
+                          callback(null, docs);
+                      });
+                  }
+              ];
+              var task_else = [
+                  function (callback){
+                      callback(null, findDough(messageText));
+                  },
+                  function (data, callback){
+                      Model.find({cate: data}, function(err, docs){
+                          if(err) console.log("mongoDB err 발생: " + err);
+                          callback(null, docs);
+                      });
+                  }
+              ];
+              var num = Number(messageText);
+              var task;
+              if(num < 9){
+                  task = task_pizza;
+              }else{
+                  task = task_else;
+              }
+              async.waterfall(task, function(err, result){
+                  if(err) console.log(err);
+                  else {
+                      var menuList = "상세 제품을 선택해 주십시오.\n";
+                      for(var i = 0; i < result.length; i++)
+                      {
+                          menuList += (i+1) + ". " + result[i]["type"] + " " + result[i]["itemName"] + " " + result[i]["price"] + " 원" + "\n";
+                      }
+                      session.context.menuList = JSON.stringify(result);
+                      sendTextMessage(session.fbid, menuList + "\n원하시는 제품 번호를 입력해 주십시오.");
+                  }
+              });
+          }
+      }else if(session.context.state == 'menu_3')
+      {
+          var menuList = JSON.parse(session.context.menuList);
+          var option = Number(messageText);
+          if(isNaN(option))
+          {
+           sendTextMessage(session.fbid, "숫자만 사용해주세요");
+              session.context.state = 'menu_1';
+          }else if(option - 1 <= menuList.length)
+            {
+                //console.log(menuList);
+                session.menu[session.context.nMenu] = menuList[option-1]["type"] + menuList[option-1]["itemName"];
+                session.context.price += Number(menuList[option-1]['price']);
+                session.context.nMenu += 1;
+
+                //session.context.menu[0] = session.context.menuList[messageText];
+            }else{
+                sendTextMessage(session.fbid, "잘못선택하셨습니다.");
+                session.context.state = 'menu_1';
+            }
+      }else if(session.context.state == 'menu_4')
+      {
+          if(messageText.includes('1') || messageText.includes('예'))
+          {
+              session.context.state = 'bill';
+          }else{
+              session.context.state = 'menu_1';
+          }
+      }else if(session.context.state == 'order')
+      {
+          checkMembership();
+          sendTextMessage(session.fbid, order_now() + '\n이용해주셔서 감사합니다.');
+          session.context.state = '-1';
       }else if(session.context.state =='0')
       {
           sendTextMessage(session.fbid, "이용해주셔서 감사합니다.");
@@ -431,17 +601,17 @@ function receivedMessage(event) {
 
         case 'order_confirm':
             sendTextMessage(session.fbid, order_confirm(order_number));
-            session.context.state = "0";
+            session.context.state = "-1";
             break;
 
         case 'help_1':
             sendTextMessage(session.fbid, "주소 입력은 잘 하시면 됩니다.");
-            state = '0';
+            session.context.state = '-1';
             break;
-        
+
         case 'help_2':
             sendTextMessage(session.fbid, "피자헛 멤버십은 잘 적립하시면 됩니다.");
-            state = '0';
+            session.context.state = '-1';
             break;
 
         case 'phone_number':
@@ -491,9 +661,34 @@ function receivedMessage(event) {
             break;
 
         case 'menu_1':
-            sendTextMessage(session.fbid, "주문하시고자 하는 제품군을 선택해 주십시오.");
-            sendTextMessage(session.fbid, "1. 신제품세트\n2. 인기메뉴\n3. 리치골드\n4. 치즈크러스트\n5. 버거바이트\n6. 팬\n7. 더맛있는피자\n8. 더블박스\n9. 사이드\n10. 음료\n11. 기타\n100. 종료\n목록에서 번호를 입력해 주십시오.");
-            session.context.state = '0';
+            sendTextMessage(session.fbid, "주문하시고자 하는 제품군을 선택해 주십시오.");;
+            sendTextMessage(session.fbid, "1. 신제품세트\n2. 인기메뉴\n3. 리치골드\n4. 치즈크러스트\n5. 팬\n6. 더맛있는피자\n7. 트리플박스\n8. 와우세븐박스\n9. 사이드\n10. 음료\n11. 기타\n100. 종료\n목록에서 번호를 입력해 주십시오.");
+            session.context.state = 'menu_2';
+            break;
+
+        case 'menu_2':
+            session.context.state = 'menu_3';
+            break;
+
+        case 'menu_3':
+            var list = "";
+            for(var i = 0; i < session.context.nMenu; i++)
+            {
+                list += session.menu[i] + ", ";
+            }
+            sendTextMessage(session.fbid, session.context.shop + "에 " + list + "제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
+            session.context.state = 'menu_4';
+            break;
+
+        case 'bill':
+            var content = "";
+            var total;
+            for(var i = 0; i < session.context.nMenu; i++)
+            {
+                content += (i+1) + ". " + session.menu[i] + "\n";
+            }
+            sendTextMessage(session.fbid, "주문이 완료되었습니다.\n" + content + '금액: ' + session.context.price + "원");
+            session.context.state = 'order';
             break;
 
         case '0':
