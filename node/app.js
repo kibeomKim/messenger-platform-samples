@@ -244,7 +244,6 @@ function receivedMessage(event) {
     var recipientID = event.recipient.id;
     var timeOfMessage = event.timestamp;
     var message = event.message;
-    var menu;
 
     console.log("Received message for user %d and page %d at %d with message:",
     session.fbid, recipientID, timeOfMessage);
@@ -254,8 +253,7 @@ function receivedMessage(event) {
     var messageId = message.mid;
     var appId = message.app_id;
     var metadata = message.metadata;
-    var order_number='0';
-    var help_id='0';
+    var order_number='';
 
     // You may get a text or attachment but not both
     var messageText = message.text;
@@ -283,49 +281,7 @@ function receivedMessage(event) {
       {
           reset();
           session.context.state = 'start';
-      }else if(session.context.state=='order_confirm')
-      {
-          order_number = messageText;
-      }else if(session.context.state == 'privacy')
-      {
-          if(flow.confirm(messageText) || messageText.includes("1"))
-          {
-              session.context.state = "phone_number";
-          }else{
-              session.context.state = "0";
-          }
-      }else if(session.context.state == 'phone_number_confirm_2')
-      {
-          if(flow.confirm(messageText) || messageText.includes("1"))
-          {
-              if(flow.identify(messageText))
-              {
-                session.context.state = "identify";
-            }else {
-                  session.context.state = 'phone_number';
-              }
-          }else{
-              session.context.state = 'phone_number_confirm_1';
-          }
-      }else if(session.context.state == 'verification_code')
-      {
-          if(flow.verification(messageText))
-          {
-              session.context.state = "order_method";
-
-          }else{
-              session.context.state = "identify";
-          }
-      }else if(session.context.state == 'help')
-      {
-          if(messageText.includes("1"))
-          {
-              session.context.state = "help_1";
-          }else{
-              session.context.state = "help_2";
-          }
-
-      }else if(session.context.state == 'order_method')
+      }else if(session.context.state == 'order_method_2')
       {
           if(messageText.includes("배달") || messageText.includes("1"))
           {
@@ -335,23 +291,6 @@ function receivedMessage(event) {
               session.context.state = "wrap_1";
               session.context.method = 'wrap';
           }
-      }else if(session.context.state == 'address_1')
-      {
-          session.context.address = messageText;
-      }else if(session.context.state == 'address_2')
-      {
-          session.context.address = session.context.address + " " + messageText;
-      }else if(session.context.state == 'address_3')
-      {
-          if(messageText.includes("1"))
-          {
-              session.context.address = session.context.address;
-          }else {
-              session.context.address = session.context.address;
-          }
-      }else if(session.context.state == 'address_4')
-      {
-          session.context.address = session.context.address + " " + messageText;
       }else if(session.context.state == 'address_5')
       {
           if(flow.confirm(messageText) || messageText.includes("1"))
@@ -365,86 +304,9 @@ function receivedMessage(event) {
               }else{                                        //배달 가능 매장이 없을 때
                   session.context.state = 'research_address_1';
               }
-          }else{
+          }else{        //입력한 주소가 틀렸을 때
               session.context.state = 'delivery';
           }
-      }else if(session.context.state == 'research_address_2')
-      {
-          if(flow.confirm(messageText) || messageText.includes("1"))     //배달가능 주소 재 검색
-          {
-              session.context.state = 'delivery';
-          }else{        //배달 가능한 곳이 없어서 주문 포기
-              session.context.state = '0';
-          }
-      }else if(session.context.state =='menu_2')
-      {
-          var temp;
-          if(messageText.includes('100') || messageText.includes('종료'))
-          {
-              session.context.state = 'bill';
-          }else {
-              var task_pizza = [
-                  function (callback){
-                      callback(null, flow.findDough(messageText));
-                  },
-                  function (data, callback){
-                      Model.find({type: data}, function(err, docs){
-                          if(err) console.log("mongoDB err 발생: " + err);
-                          callback(null, docs);
-                      });
-                  }
-              ];
-              var task_else = [
-                  function (callback){
-                      callback(null, flow.findDough(messageText));
-                  },
-                  function (data, callback){
-                      Model.find({cate: data}, function(err, docs){
-                          if(err) console.log("mongoDB err 발생: " + err);
-                          callback(null, docs);
-                      });
-                  }
-              ];
-              var num = Number(messageText);
-              var task;
-              if(num < 9){
-                  task = task_pizza;
-              }else{
-                  task = task_else;
-              }
-              async.waterfall(task, function(err, result){
-                  if(err) console.log(err);
-                  else {
-                      var menuList = "상세 제품을 선택해 주십시오.\n";
-                      for(var i = 0; i < result.length; i++)
-                      {
-                          menuList += (i+1) + ". " + result[i]["type"] + " " + result[i]["itemName"] + " " + result[i]["price"] + " 원" + "\n";
-                      }
-                      session.context.menuList = JSON.stringify(result);
-                      M.sendTextMessage(session.fbid, menuList + "\n원하시는 제품 번호를 입력해 주십시오.");
-                  }
-              });
-          }
-      }else if(session.context.state == 'menu_3')
-      {
-          var menuList = JSON.parse(session.context.menuList);
-          var option = Number(messageText);
-          if(isNaN(option))
-          {
-           M.sendTextMessage(session.fbid, "숫자만 사용해주세요");
-              session.context.state = 'menu_1';
-          }else if(option - 1 <= menuList.length)
-            {
-                //console.log(menuList);
-                session.context.shop = flow.selectShop(session.context.address);
-                session.menu[session.context.nMenu] = menuList[option-1]["type"] + "-"+ menuList[option-1]["itemName"];
-                session.context.price += Number(menuList[option-1]['price']);
-                session.context.nMenu += 1;
-
-            }else{
-                M.sendTextMessage(session.fbid, "잘못선택하셨습니다.");
-                session.context.state = 'menu_1';
-            }
       }else if(session.context.state == 'menu_4')
       {
           if(messageText.includes('1') || messageText.includes('예'))
@@ -453,54 +315,70 @@ function receivedMessage(event) {
           }else{
               session.context.state = 'menu_1';
           }
-      }else if(session.context.state =='0')
-      {
-          M.sendTextMessage(session.fbid, constants.thank);
-          session.context.state = '-1';
       }
 
-    // If we receive a text message, check to see if it matches any special
-    // keywords and send back the corresponding example. Otherwise, just echo
-    // the text we received.
     switch (session.context.state) {
 	    case 'start':
             M.sendStartMessage(session.fbid);
 	        break;
 
         case 'order_confirm':
+            order_number = messageText;
             M.sendTextMessage(session.fbid, flow.order_confirm(order_number));
             session.context.state = "-1";
             break;
 
-        case 'help_1':
-            M.sendTextMessage(session.fbid, "주소 입력은 잘 하시면 됩니다.");
-            session.context.state = '-1';
-            break;
-
-        case 'help_2':
-            M.sendTextMessage(session.fbid, "피자헛 멤버십은 잘 적립하시면 됩니다.");
-            session.context.state = '-1';
+        case 'help':
+            if(messageText.includes("1"))
+            {
+                M.sendTextMessage(session.fbid, "주소 입력은 잘 하시면 됩니다.");
+                reset();
+            }else{
+                M.sendTextMessage(session.fbid, "피자헛 멤버십은 잘 적립하시면 됩니다.");
+                reset();
+            }
             break;
 
         case 'phone_number':
-            M.sendTextMessage(session.fbid, "정확한 주문을 위해 휴대폰 번호를 입력해 주세요.");
-            session.context.state = 'phone_number_confirm_1';
+            if(flow.confirm(messageText) || messageText.includes("1"))
+            {
+                M.sendTextMessage(session.fbid, "정확한 주문을 위해 휴대폰 번호를 입력해 주세요.");
+                session.context.state = 'phone_number_confirm_1';
+            }else{
+                session.context.state = "0";
+            }
             break;
 
         case 'phone_number_confirm_1':
             M.sendTextMessage(session.fbid, "휴대폰 번호가 " + messageText + "가 맞습니까?\n1. 예\n2. 아니요");
             session.context.phone_number = messageText;
-            session.context.state = 'phone_number_confirm_2';
+            session.context.state = 'identify';
             break;
 
         case 'identify':
-            M.sendTextMessage(session.fbid, "휴대폰번호로 발송된 인증번호를 입력해주세요. 입력하신 번호는" + session.context.phone_number + "입니다.");
-            session.context.state = "verification_code"
+            if(flow.confirm(messageText) || messageText.includes("1"))
+            {
+                if(flow.identify(messageText))
+                {
+                    M.sendTextMessage(session.fbid, "휴대폰번호로 발송된 인증번호를 입력해주세요. 입력하신 번호는" + session.context.phone_number + "입니다.");
+                    session.context.state = "order_method_1"
+                }else {
+                    M.sendTextMessage(session.fbid, "잘못된 인증번호 입니다. 인증번호를 다시 입력해주세요.\n처음으로 가시려면 '처음' 이라고 입력해주세요.");
+                    session.context.state = 'phone_number';
+                }
+            }else{
+                session.context.state = 'phone_number';
+            }
             break;
 
-        case 'order_method':
-            M.sendTextMessage(session.fbid, "주문 방법을 선택해주세요.\n1. 배달 주문\n2. 포장 주문");
-            session.context.state = 'order_method';
+        case 'order_method_1':
+            if(flow.verification(messageText))
+            {
+                M.sendTextMessage(session.fbid, "주문 방법을 선택해주세요.\n1. 배달 주문\n2. 포장 주문");
+                session.context.state = 'order_method_2';
+            }else{
+                session.context.state = "identify";
+            }
             break;
 
         case 'delivery':
@@ -509,22 +387,32 @@ function receivedMessage(event) {
             break;
 
         case 'address_1':
+            session.context.address = messageText;
             M.sendTextMessage(session.fbid, "상세 주소를 입력해주세요 (00아파트, 00-000)");
             session.context.state = 'address_2'
             break;
 
         case 'address_2':
-            var address = flow.selectAddress(session.context.address);
+            var address;
+            session.context.address = session.context.address + " " + messageText;
+            address = flow.selectAddress(session.context.address);
             M.sendTextMessage(session.fbid, address + "\n목록에서 배달 받으실 주소 번호를 입력해 주십시오.");
             session.context.state = 'address_3';
             break;
 
         case 'address_3':
+            if(messageText.includes("1"))
+            {
+                session.context.address = session.context.address;
+            }else {
+                session.context.address = session.context.address;
+            }
             M.sendTextMessage(session.fbid, "나머지 주소를 입력해 주십시오.(0동 0호, 0층)");
             session.context.state = 'address_4';
             break;
 
         case 'address_4':
+            session.context.address = session.context.address + " " + messageText;
             M.sendTextMessage(session.fbid, "배달 받으실 주소가 " + session.context.address + " 이 맞습니까?\n1. 예\n2. 아니오");
             session.context.state = 'address_5';
             break;
@@ -534,6 +422,15 @@ function receivedMessage(event) {
             session.context.state = 'research_address_2';
             break;
 
+        case 'research_address_2':
+            if(flow.confirm(messageText) || messageText.includes("1"))     //배달가능 주소 재 검색
+            {
+                session.context.state = 'delivery';
+            }else{        //배달 가능한 곳이 없어서 주문 포기
+                session.context.state = '0';
+            }
+            break;
+
         case 'menu_1':
             M.sendTextMessage(session.fbid, "주문하시고자 하는 제품군을 선택해 주십시오.");
             M.sendTextMessage(session.fbid, constants.main_menu);
@@ -541,17 +438,81 @@ function receivedMessage(event) {
             break;
 
         case 'menu_2':
-            session.context.state = 'menu_3';
+            if(messageText.includes('100') || messageText.includes('종료'))
+            {
+                session.context.state = 'bill';
+            }else {
+                var task_pizza = [
+                    function (callback){
+                        callback(null, flow.findDough(messageText));
+                    },
+                    function (data, callback){
+                        Model.find({type: data}, function(err, docs){
+                            if(err) console.log("mongoDB err 발생: " + err);
+                            callback(null, docs);
+                        });
+                    }
+                ];
+                var task_else = [
+                    function (callback){
+                        callback(null, flow.findDough(messageText));
+                    },
+                    function (data, callback){
+                        Model.find({cate: data}, function(err, docs){
+                            if(err) console.log("mongoDB err 발생: " + err);
+                            callback(null, docs);
+                        });
+                    }
+                ];
+                var num = Number(messageText);
+                var task;
+                if(num < 9){
+                    task = task_pizza;
+                }else{
+                    task = task_else;
+                }
+                async.waterfall(task, function(err, result){
+                    if(err) console.log(err);
+                    else {
+                        var menuList = "상세 제품을 선택해 주십시오.\n";
+                        for(var i = 0; i < result.length; i++)
+                        {
+                            menuList += (i+1) + ". " + result[i]["type"] + "-" + result[i]["itemName"] + " " + result[i]["price"] + " 원" + "\n";
+                        }
+                        session.context.menuList = JSON.stringify(result);
+                        M.sendTextMessage(session.fbid, menuList + "\n원하시는 제품 번호를 입력해 주십시오.");
+                    }
+                });
+                session.context.state = 'menu_3';
+            }
             break;
 
         case 'menu_3':
+            var menuList = JSON.parse(session.context.menuList);
+            var option = Number(messageText);
             var list = "";
-            for(var i = 0; i < session.context.nMenu; i++)
+
+            if(isNaN(option))
             {
-                list += session.menu[i] + ", ";
+                M.sendTextMessage(session.fbid, "숫자만 사용해주세요");
+                session.context.state = 'menu_1';
+            }else if(option  < menuList.length)
+            {
+                session.menu[session.context.nMenu] = menuList[option-1]["type"] + "-"+ menuList[option-1]["itemName"];
+                session.context.price += Number(menuList[option-1]['price']);
+                session.context.nMenu += 1;
+
+                for(var i = 0; i < session.context.nMenu; i++)
+                {
+                    list += session.menu[i] + ", ";
+                }
+                M.sendTextMessage(session.fbid, session.context.shop + "에 " + list + "제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
+                session.context.state = 'menu_4';
+
+            }else{
+                M.sendTextMessage(session.fbid, "잘못선택하셨습니다.");
+                session.context.state = 'menu_1';
             }
-            M.sendTextMessage(session.fbid, session.context.shop + "에 " + list + "제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
-            session.context.state = 'menu_4';
             break;
 
         case 'bill':
@@ -597,7 +558,6 @@ function receivedMessage(event) {
             break;
 
         case 'order_now':
-
             if(session.context.method == 'wrap')
             {
                 M.sendTextMessage(session.fbid, "[포장주문번호: 12345678]\n포장주문이 접수되었습니다. 30분 뒤 찾아가세요.");
@@ -619,16 +579,15 @@ function receivedMessage(event) {
         case '-1':
             reset();
             break;
+
         case 'wrap_1': M.sendTextMessage(session.fbid, "제품 찾으실 주소를 입력해 주세요.(00시 00구 00동/로)");
             session.context.state = 'wrap_2';
             break;
 
         case 'wrap_2':
             M.sendTextMessage(session.fbid, "인근매장을 선택해주세요.\n" + flow.searchShop(messageText));
+            session.context.shop = flow.selectShop(session.context.address);
             session.context.state = 'menu_1';
-            break;
-        case 'wrap_3':
-
             break;
 
       default:
@@ -666,7 +625,7 @@ function receivedPostback(event)
 
     }else if(payload == "order")        //주문하기
     {
-        session.context.state = 'privacy';
+        session.context.state = 'phone_number';
         M.sendTextMessage(senderID, "고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)");
 
     }else if(payload == "help")         //도움말
@@ -674,7 +633,7 @@ function receivedPostback(event)
         session.context.state = 'help';
         M.sendTextMessage(senderID, "\tQ & A\n1. 주소 입력은 어떻게 하나요?\n2. 피자헛 멤버십은 어떻게 적립하나요?");
     }else {
-        M.sendTextMessage(senderID, "감사합니다");
+        M.sendTextMessage(senderID, constants.thank);
     }
 
     // When a postback is called, we'll send a message back to the sender to
