@@ -20,14 +20,11 @@ const
     mongoose = require('mongoose'),
     async = require('async');
 
-mongoose.connect('mongodb://localhost:27017/pizzahut');
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-    console.log('connection successful...');
-});
-
+var db_connect = require('./server/db.js');
+var flow = require('./server/system.js');
+var M = require('./server/button.js');
+var R = require('./server/received.js');
+var constants = require('./server/constant.js');
 var menuSchema = mongoose.Schema({
     type: String,
     itemName: String,
@@ -36,17 +33,6 @@ var menuSchema = mongoose.Schema({
 });
 
 var Model = mongoose.model('menu', menuSchema, 'menu');
-/*
-Model.find({type: 'etc'}, function(err, docs){
-    docs.forEach(function(doc){
-        console.log(doc);
-    });
-});
-
-Model.findOne({type: 'pizza'}, function(err, docs){
-        console.log(docs);
-});
-*/
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -72,8 +58,8 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
 
 // Generate a page access token for your page from the App Dashboard
 const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
-  (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
-  config.get('pageAccessToken');
+    (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
+    config.get('pageAccessToken');
 
 // URL where the app is running (include protocol). Used to point to scripts and 
 // assets located at this address. 
@@ -129,8 +115,20 @@ function findOrCreateSession (fbid){
         sessions[sessionId].context.state = '-1';
         sessions[sessionId].context.nMenu = 0;
         sessions[sessionId].context.price = 0;
+        sessions[sessionId].menu = {};
+        sessions[sessionId].context.phone_number = "";
+        sessions[sessionId].context.shop = "";
     }
     return sessionId;
+}
+function reset()
+{
+    session.context.state = "-1";
+    session.context.nMenu = 0;
+    session.menu = {};
+    session.context.price = 0;
+    session.context.phone_number = "";
+    session.context.shop = "";
 }
 
 app.post('/webhook', function (req, res) {
@@ -150,17 +148,17 @@ app.post('/webhook', function (req, res) {
           const sessionId = findOrCreateSession(messagingEvent.sender.id);
           session = sessions[sessionId];
         if (messagingEvent.optin) {
-          receivedAuthentication(messagingEvent);
+          R.receivedAuthentication(messagingEvent);
         } else if (messagingEvent.message) {
           receivedMessage(messagingEvent);
         } else if (messagingEvent.delivery) {
-          receivedDeliveryConfirmation(messagingEvent);
+          R.receivedDeliveryConfirmation(messagingEvent);
         } else if (messagingEvent.postback) {
           receivedPostback(messagingEvent);
         } else if (messagingEvent.read) {
-          receivedMessageRead(messagingEvent);
+          R.receivedMessageRead(messagingEvent);
         } else if (messagingEvent.account_linking) {
-          receivedAccountLink(messagingEvent);
+          R.receivedAccountLink(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
         }
@@ -227,36 +225,6 @@ function verifyRequestSignature(req, res, buf) {
     }
   }
 }
-
-/*
- * Authorization Event
- *
- * The value for 'optin.ref' is defined in the entry point. For the "Send to 
- * Messenger" plugin, it is the 'data-ref' field. Read more at 
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/authentication
- *
- */
-function receivedAuthentication(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfAuth = event.timestamp;
-
-  // The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
-  // The developer can set this to an arbitrary value to associate the 
-  // authentication callback with the 'Send to Messenger' click event. This is
-  // a way to do account linking when the user clicks the 'Send to Messenger' 
-  // plugin.
-  var passThroughParam = event.optin.ref;
-
-  console.log("Received authentication for user %d and page %d with pass " +
-    "through param '%s' at %d", senderID, recipientID, passThroughParam, 
-    timeOfAuth);
-
-  // When an authentication is received, we'll send a message back to the sender
-  // to let them know it was successful.
-  sendTextMessage(senderID, "Authentication successful");
-}
-
 /*
  * Message Event
  *
@@ -271,110 +239,6 @@ function receivedAuthentication(event) {
  * then we'll simply confirm that we've received the attachment.
  * 
  */
-
-function confirm(text)
-{
-    if(text.includes("sp")|| text.includes("네") || text.includes("맞아") || text.includes("응") || text.includes("ㅇ"))
-    {
-        return true;
-    }else return false;
-}
-function start_order(text)
-{
-    if(text.includes("안녕") || text.includes("처음") || text.includes("시작") || text.includes("헬로"))
-    {
-        return true;
-    }else return false;
-}
-function reset()
-{
-    session.context.state = "-1";
-    session.context.nMenu = 0;
-    session.context.price = 0;
-}
-function order_confirm(num)
-{
-    var current_state = "배달 중";
-    var shop = "가나다 매장(02-111-1111)"
-    var content = "[주문번호:" + num + "]\n--- 제품 ---\nAAAAA\nBBBBB\nCCCCC\n금액:00000원\n[주문상태:"+ current_state + " ]\n[주문매장: " + shop + "]";
-    return content;
-}
-
-function identify(num)
-{
-    return true;
-}
-function verification(num)
-{
-    return true;
-}
-function selectAddress(address)
-{
-    var candidate_address = "1. input Area1" + "\n2. input Area2";
-    return candidate_address;
-}
-function selectShop(address)
-{
-    session.context.shop = 'aaa매장';
-    return true;
-}
-function checkMembership()
-{
-    return true;
-}
-function order_now()
-{
-    var str = '주문번호[12345678] 주문이 완료되었습니다. 배달 예상 시간은 18:30 입니다.';
-    return str;
-}
-function findDough(text)
-{
-    if(text =='1' || text.includes('신제품') | text.includes('세트') | text.includes('셋트'))
-    {
-        //return '세트';
-        return '와우세븐박스';
-    }else if(text.includes('2') || text.includes('인기메뉴'))
-    {
-        return '치즈크러스트';
-    }else if(text.includes('3') || text.includes('리치골드'))
-    {
-        return '리치골드';
-    }else if(text.includes('4') || text.includes('치즈크러스트'))
-    {
-        return '치즈크러스트';
-    }else if(text.includes('5') || text.includes('팬'))
-    {
-        return '팬';
-    }else if(text.includes('6') || text.includes('맛'))
-    {
-        return 'The맛있는피자2';
-    }else if(text.includes('7') || text.includes('트리플'))
-    {
-        return '트리플박스';
-    }else if(text.includes('8') || text.includes('세븐'))
-    {
-        return '와우세븐박스';
-    }else if(text.includes('9') || text.includes('사이드'))
-    {
-        return 'side';
-    }else if(text.includes('10') || text.includes('음료'))
-    {
-        return 'drink';
-    }else if(text.includes('11') || text.includes('기타'))
-    {
-        return 'etc';
-    }
-
-}
-function findAll(item)
-{
-    //var data;
-    Model.find({dough:item}, function(err, docs){
-        if(err) console.log("mongoDB err 발생: " + err);
-        //console.log(docs);
-        return docs;
-    });
-}
 function receivedMessage(event) {
     //var senderID = event.sender.id;
     var recipientID = event.recipient.id;
@@ -408,39 +272,44 @@ function receivedMessage(event) {
     console.log("Quick reply for message %s with payload %s",
       messageId, quickReplyPayload);
 
-    sendTextMessage(session.fbid, "Quick reply tapped");
+    M.sendTextMessage(session.fbid, "Quick reply tapped");
     return;
   }
 
   if (messageText)
   {
-      if(messageText == '메뉴주문'){reset(); session.context.state = 'menu_1';session.context.shop = 'aaa매장'; }
-      if (session.context.state == "-1" || messageText.includes("안녕") || messageText.includes("처음") || messageText.includes("시작") || messageText.includes("헬로"))
+      /*if(messageText == '메뉴주문'){flow.reset(); session.context.state = 'menu_1';session.context.shop = 'aaa매장'; }*/
+      if (session.context.state == "-1" || flow.start(messageText))
       {
+          reset();
           session.context.state = 'start';
       }else if(session.context.state=='order_confirm')
       {
           order_number = messageText;
       }else if(session.context.state == 'privacy')
       {
-          if(messageText.includes("예") || messageText.includes("1"))
+          if(flow.confirm(messageText) || messageText.includes("1"))
           {
               session.context.state = "phone_number";
           }else{
-              session.context.state = "-1";
+              session.context.state = "0";
           }
-      }else if(session.context.state == 'phone_number_confirm')
+      }else if(session.context.state == 'phone_number_confirm_2')
       {
-          if(identify(messageText))
+          if(flow.confirm(messageText) || messageText.includes("1"))
           {
-              session.context.state = "identify";
-              session.context.phone_number = messageText;
+              if(flow.identify(messageText))
+              {
+                session.context.state = "identify";
+            }else {
+                  session.context.state = 'phone_number';
+              }
           }else{
-              session.context.state = 'phone_number_confirm';
+              session.context.state = 'phone_number_confirm_1';
           }
       }else if(session.context.state == 'verification_code')
       {
-          if(verification(messageText))
+          if(flow.verification(messageText))
           {
               session.context.state = "order_method";
 
@@ -461,32 +330,36 @@ function receivedMessage(event) {
           if(messageText.includes("배달") || messageText.includes("1"))
           {
               session.context.state = "delivery";
+              session.context.method = 'delivery';
           }else{
-              session.context.state = "wrap";
+              session.context.state = "wrap_1";
+              session.context.method = 'wrap';
           }
       }else if(session.context.state == 'address_1')
       {
           session.context.address = messageText;
       }else if(session.context.state == 'address_2')
       {
-          session.context.address = session.context.address + messageText;
+          session.context.address = session.context.address + " " + messageText;
       }else if(session.context.state == 'address_3')
       {
           if(messageText.includes("1"))
           {
-              session.context.address = session.context.address + " input Area1 ";
+              session.context.address = session.context.address;
           }else {
-              session.context.address = session.context.address + " input Area2 ";
+              session.context.address = session.context.address;
           }
       }else if(session.context.state == 'address_4')
       {
-          session.context.address = session.context.address + messageText;
+          session.context.address = session.context.address + " " + messageText;
       }else if(session.context.state == 'address_5')
       {
-          if(messageText.includes('1') || messageText.includes('예') || messageText.includes('sp') || messageText.includes('네'))
+          if(flow.confirm(messageText) || messageText.includes("1"))
           {
-              if(selectShop(session.context.address))       //배달 가능 매장이 있을 때
+              var tmp = flow.selectShop(session.context.address);
+              if(tmp != false)       //배달 가능 매장이 있을 때
               {
+                  session.context.shop = tmp;
                   session.context.state = 'menu_1';
 
               }else{                                        //배달 가능 매장이 없을 때
@@ -497,7 +370,7 @@ function receivedMessage(event) {
           }
       }else if(session.context.state == 'research_address_2')
       {
-          if(messageText.includes('1') || messageText.includes('예') || messageText.includes('sp') || messageText.includes('네'))     //배달가능 주소 재 검색
+          if(flow.confirm(messageText) || messageText.includes("1"))     //배달가능 주소 재 검색
           {
               session.context.state = 'delivery';
           }else{        //배달 가능한 곳이 없어서 주문 포기
@@ -512,7 +385,7 @@ function receivedMessage(event) {
           }else {
               var task_pizza = [
                   function (callback){
-                      callback(null, findDough(messageText));
+                      callback(null, flow.findDough(messageText));
                   },
                   function (data, callback){
                       Model.find({type: data}, function(err, docs){
@@ -523,7 +396,7 @@ function receivedMessage(event) {
               ];
               var task_else = [
                   function (callback){
-                      callback(null, findDough(messageText));
+                      callback(null, flow.findDough(messageText));
                   },
                   function (data, callback){
                       Model.find({cate: data}, function(err, docs){
@@ -548,7 +421,7 @@ function receivedMessage(event) {
                           menuList += (i+1) + ". " + result[i]["type"] + " " + result[i]["itemName"] + " " + result[i]["price"] + " 원" + "\n";
                       }
                       session.context.menuList = JSON.stringify(result);
-                      sendTextMessage(session.fbid, menuList + "\n원하시는 제품 번호를 입력해 주십시오.");
+                      M.sendTextMessage(session.fbid, menuList + "\n원하시는 제품 번호를 입력해 주십시오.");
                   }
               });
           }
@@ -558,18 +431,18 @@ function receivedMessage(event) {
           var option = Number(messageText);
           if(isNaN(option))
           {
-           sendTextMessage(session.fbid, "숫자만 사용해주세요");
+           M.sendTextMessage(session.fbid, "숫자만 사용해주세요");
               session.context.state = 'menu_1';
           }else if(option - 1 <= menuList.length)
             {
                 //console.log(menuList);
-                session.menu[session.context.nMenu] = menuList[option-1]["type"] + menuList[option-1]["itemName"];
+                session.context.shop = flow.selectShop(session.context.address);
+                session.menu[session.context.nMenu] = menuList[option-1]["type"] + "-"+ menuList[option-1]["itemName"];
                 session.context.price += Number(menuList[option-1]['price']);
                 session.context.nMenu += 1;
 
-                //session.context.menu[0] = session.context.menuList[messageText];
             }else{
-                sendTextMessage(session.fbid, "잘못선택하셨습니다.");
+                M.sendTextMessage(session.fbid, "잘못선택하셨습니다.");
                 session.context.state = 'menu_1';
             }
       }else if(session.context.state == 'menu_4')
@@ -580,14 +453,9 @@ function receivedMessage(event) {
           }else{
               session.context.state = 'menu_1';
           }
-      }else if(session.context.state == 'order')
-      {
-          checkMembership();
-          sendTextMessage(session.fbid, order_now() + '\n이용해주셔서 감사합니다.');
-          session.context.state = '-1';
       }else if(session.context.state =='0')
       {
-          sendTextMessage(session.fbid, "이용해주셔서 감사합니다.");
+          M.sendTextMessage(session.fbid, constants.thank);
           session.context.state = '-1';
       }
 
@@ -596,73 +464,79 @@ function receivedMessage(event) {
     // the text we received.
     switch (session.context.state) {
 	    case 'start':
-            sendStartMessage(session.fbid);
+            M.sendStartMessage(session.fbid);
 	        break;
 
         case 'order_confirm':
-            sendTextMessage(session.fbid, order_confirm(order_number));
+            M.sendTextMessage(session.fbid, flow.order_confirm(order_number));
             session.context.state = "-1";
             break;
 
         case 'help_1':
-            sendTextMessage(session.fbid, "주소 입력은 잘 하시면 됩니다.");
+            M.sendTextMessage(session.fbid, "주소 입력은 잘 하시면 됩니다.");
             session.context.state = '-1';
             break;
 
         case 'help_2':
-            sendTextMessage(session.fbid, "피자헛 멤버십은 잘 적립하시면 됩니다.");
+            M.sendTextMessage(session.fbid, "피자헛 멤버십은 잘 적립하시면 됩니다.");
             session.context.state = '-1';
             break;
 
         case 'phone_number':
-            sendTextMessage(session.fbid, "정확한 주문을 위해 휴대폰 번호를 입력해 주세요.");
-            session.context.state = 'phone_number_confirm';
+            M.sendTextMessage(session.fbid, "정확한 주문을 위해 휴대폰 번호를 입력해 주세요.");
+            session.context.state = 'phone_number_confirm_1';
+            break;
+
+        case 'phone_number_confirm_1':
+            M.sendTextMessage(session.fbid, "휴대폰 번호가 " + messageText + "가 맞습니까?\n1. 예\n2. 아니요");
+            session.context.phone_number = messageText;
+            session.context.state = 'phone_number_confirm_2';
             break;
 
         case 'identify':
-            sendTextMessage(session.fbid, "휴대폰번호로 발송된 인증번호를 입력해주세요. 입력하신 번호는" + session.context.phone_number + "입니다.");
+            M.sendTextMessage(session.fbid, "휴대폰번호로 발송된 인증번호를 입력해주세요. 입력하신 번호는" + session.context.phone_number + "입니다.");
             session.context.state = "verification_code"
             break;
 
         case 'order_method':
-            sendTextMessage(session.fbid, "주문 방법을 선택해주세요.\n1. 배달 주문\n2. 포장 주문");
+            M.sendTextMessage(session.fbid, "주문 방법을 선택해주세요.\n1. 배달 주문\n2. 포장 주문");
             session.context.state = 'order_method';
             break;
 
         case 'delivery':
-            sendTextMessage(session.fbid, "배달 받으실 주소를 입력해 주세요 (00시 00구 00동/로)");
+            M.sendTextMessage(session.fbid, "배달 받으실 주소를 입력해 주세요 (00시 00구 00동/로)");
             session.context.state = 'address_1';
             break;
 
         case 'address_1':
-            sendTextMessage(session.fbid, "상세 주소를 입력해주세요 (00아파트, 00-000)");
+            M.sendTextMessage(session.fbid, "상세 주소를 입력해주세요 (00아파트, 00-000)");
             session.context.state = 'address_2'
             break;
 
         case 'address_2':
-            var address = selectAddress(session.context.address);
-            sendTextMessage(session.fbid, address + "\n목록에서 배달 받으실 주소 번호를 입력해 주십시오.");
+            var address = flow.selectAddress(session.context.address);
+            M.sendTextMessage(session.fbid, address + "\n목록에서 배달 받으실 주소 번호를 입력해 주십시오.");
             session.context.state = 'address_3';
             break;
 
         case 'address_3':
-            sendTextMessage(session.fbid, "나머지 주소를 입력해 주십시오.(0동 0호, 0층)");
+            M.sendTextMessage(session.fbid, "나머지 주소를 입력해 주십시오.(0동 0호, 0층)");
             session.context.state = 'address_4';
             break;
 
         case 'address_4':
-            sendTextMessage(session.fbid, "배달 받으실 주소가 " + session.context.address + " 가 맞습니까?");
+            M.sendTextMessage(session.fbid, "배달 받으실 주소가 " + session.context.address + " 이 맞습니까?\n1. 예\n2. 아니오");
             session.context.state = 'address_5';
             break;
 
         case 'research_address_1':
-            sendTextMessage(session.fbid, "배달 가능 매장이 존재하지 않습니다. 주소 검색을 다시 하시겠습니까?");
+            M.sendTextMessage(session.fbid, "배달 가능 매장이 존재하지 않습니다. 주소 검색을 다시 하시겠습니까?");
             session.context.state = 'research_address_2';
             break;
 
         case 'menu_1':
-            sendTextMessage(session.fbid, "주문하시고자 하는 제품군을 선택해 주십시오.");;
-            sendTextMessage(session.fbid, "1. 신제품세트\n2. 인기메뉴\n3. 리치골드\n4. 치즈크러스트\n5. 팬\n6. 더맛있는피자\n7. 트리플박스\n8. 와우세븐박스\n9. 사이드\n10. 음료\n11. 기타\n100. 종료\n목록에서 번호를 입력해 주십시오.");
+            M.sendTextMessage(session.fbid, "주문하시고자 하는 제품군을 선택해 주십시오.");
+            M.sendTextMessage(session.fbid, constants.main_menu);
             session.context.state = 'menu_2';
             break;
 
@@ -676,7 +550,7 @@ function receivedMessage(event) {
             {
                 list += session.menu[i] + ", ";
             }
-            sendTextMessage(session.fbid, session.context.shop + "에 " + list + "제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
+            M.sendTextMessage(session.fbid, session.context.shop + "에 " + list + "제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
             session.context.state = 'menu_4';
             break;
 
@@ -687,598 +561,132 @@ function receivedMessage(event) {
             {
                 content += (i+1) + ". " + session.menu[i] + "\n";
             }
-            sendTextMessage(session.fbid, "주문이 완료되었습니다.\n" + content + '금액: ' + session.context.price + "원");
-            session.context.state = 'order';
+            M.sendTextMessage(session.fbid, "주문이 완료되었습니다.\n" + content + '금액: ' + session.context.price + "원");
+
+            if(flow.checkMembership())
+            {
+                M.sendTextMessage(session.fbid, "멤버십 적립/사용이 가능합니다.(사용은 2,000점 부터 가능합니다.)\n1. 적립(500점)\n2. 사용(2500점)\n3. 사용안함");
+                session.context.state = 'membership';
+            }else {
+
+                if(session.context.method == 'wrap')
+                {
+                    M.sendTextMessage(session.fbid, "[포장주문번호: 12345678]\n포장주문이 접수되었습니다. 30분 뒤 찾아가세요.");
+                    M.sendTextMessage(session.fbid, constants.thank);
+                    session.context.state = '-1';
+
+                }else {
+                    M.sendTextMessage(session.fbid, flow.order_now());
+                    M.sendTextMessage(session.fbid, constants.thank);
+                    session.context.state = '-1';
+                }
+            }
+            break;
+
+        case 'membership':
+            if(messageText.includes('1') || messageText.includes('2'))
+            {
+                M.sendTextMessage(session.fbid, "피자헛 멤버십카드 뒷 4자리를 입력해 주세요.\nXXXX-XXXX-XXXX-OOOO");
+                session.context.state = 'order_now';
+            }
+            else {
+                M.sendTextMessage(session.fbid, flow.order_now());
+                M.sendTextMessage(session.fbid, constants.thank);
+                session.context.state = '-1';
+            }
+            break;
+
+        case 'order_now':
+
+            if(session.context.method == 'wrap')
+            {
+                M.sendTextMessage(session.fbid, "[포장주문번호: 12345678]\n포장주문이 접수되었습니다. 30분 뒤 찾아가세요.");
+                M.sendTextMessage(session.fbid, constants.thank);
+                session.context.state = '-1';
+
+            }else {
+                M.sendTextMessage(session.fbid, flow.order_now());
+                M.sendTextMessage(session.fbid, constants.thank);
+                session.context.state = '-1';
+            }
             break;
 
         case '0':
-            sendTextMessage(session.fbid, "이용해주셔서 감사합니다.");
-            session.context.state = '-1';
+            M.sendTextMessage(session.fbid, constants.thank);
+            reset();
             break;
 
         case '-1':
             reset();
             break;
-        case 'wrap': break;
+        case 'wrap_1': M.sendTextMessage(session.fbid, "제품 찾으실 주소를 입력해 주세요.(00시 00구 00동/로)");
+            session.context.state = 'wrap_2';
+            break;
+
+        case 'wrap_2':
+            M.sendTextMessage(session.fbid, "인근매장을 선택해주세요.\n" + flow.searchShop(messageText));
+            session.context.state = 'menu_1';
+            break;
+        case 'wrap_3':
+
+            break;
 
       default:
-          sendTextMessage(session.fbid, "이용해주셔서 감사합니다.");
+          M.sendTextMessage(session.fbid, constants.thank);
     }
   } else if (messageAttachments) {
-    sendTextMessage(session.fbid, "Message with attachment received");
+    M.sendTextMessage(session.fbid, "Message with attachment received");
   }
 }
-
-
-/*
- * Delivery Confirmation Event
- *
- * This event is sent to confirm the delivery of a message. Read more about 
- * these fields at https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-delivered
- *
- */
-function receivedDeliveryConfirmation(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var delivery = event.delivery;
-  var messageIDs = delivery.mids;
-  var watermark = delivery.watermark;
-  var sequenceNumber = delivery.seq;
-
-  if (messageIDs) {
-    messageIDs.forEach(function(messageID) {
-      console.log("Received delivery confirmation for message ID: %s", 
-        messageID);
-    });
-  }
-
-  console.log("All message before %d were delivered.", watermark);
-}
-
 
 /*
  * Postback Event
  *
- * This event is called when a postback is tapped on a Structured Message. 
+ * This event is called when a postback is tapped on a Structured Message.
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
- * 
+ *
  */
 function receivedPostback(event)
 {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfPostback = event.timestamp;
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
+    var timeOfPostback = event.timestamp;
 
-  // The 'payload' param is a developer-defined field which is set in a postback 
-  // button for Structured Messages. 
-  var payload = event.postback.payload;
+    // The 'payload' param is a developer-defined field which is set in a postback
+    // button for Structured Messages.
+    var payload = event.postback.payload;
 
-  console.log("Received postback for user %d and page %d with payload '%s' " + 
-    "at %d", senderID, recipientID, payload, timeOfPostback);
+    console.log("Received postback for user %d and page %d with payload '%s' " +
+        "at %d", senderID, recipientID, payload, timeOfPostback);
 
     if(payload == "order_number")        //주문확인
     {
         session.context.state = 'order_confirm';
-        sendTextMessage(senderID, "주문 번호를 입력해 주십시오.");
+        M.sendTextMessage(senderID, "주문 번호를 입력해 주십시오.");
 
     }else if(payload == "order")        //주문하기
     {
         session.context.state = 'privacy';
-        sendTextMessage(senderID, "고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)");
+        M.sendTextMessage(senderID, "고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)");
 
     }else if(payload == "help")         //도움말
     {
         session.context.state = 'help';
-        sendTextMessage(senderID, "\tQ & A\n1. 주소 입력은 어떻게 하나요?\n2. 피자헛 멤버십은 어떻게 적립하나요?");
+        M.sendTextMessage(senderID, "\tQ & A\n1. 주소 입력은 어떻게 하나요?\n2. 피자헛 멤버십은 어떻게 적립하나요?");
     }else {
-        sendTextMessage(senderID, "감사합니다");
+        M.sendTextMessage(senderID, "감사합니다");
     }
 
-  // When a postback is called, we'll send a message back to the sender to 
-  // let them know it was successful
-  //sendTextMessage(senderID, "Postback called");
-}
-
-/*
- * Message Read Event
- *
- * This event is called when a previously-sent message has been read.
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-read
- * 
- */
-function receivedMessageRead(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-
-  // All messages before watermark (a timestamp) or sequence have been seen.
-  var watermark = event.read.watermark;
-  var sequenceNumber = event.read.seq;
-
-  console.log("Received message read event for watermark %d and sequence " +
-    "number %d", watermark, sequenceNumber);
-}
-
-/*
- * Account Link Event
- *
- * This event is called when the Link Account or UnLink Account action has been
- * tapped.
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/account-linking
- * 
- */
-function receivedAccountLink(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-
-  var status = event.account_linking.status;
-  var authCode = event.account_linking.authorization_code;
-
-  console.log("Received account link event with for user %d with status %s " +
-    "and auth code %s ", senderID, status, authCode);
-}
-
-/*
- * Send an image using the Send API.
- *
- */
-function sendImageMessage(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "image",
-        payload: {
-          url: SERVER_URL + "/assets/rift.png"
-        }
-      }
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a Gif using the Send API.
- *
- */
-function sendGifMessage(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "image",
-        payload: {
-          url: SERVER_URL + "/assets/instagram_logo.gif"
-        }
-      }
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send audio using the Send API.
- *
- */
-function sendAudioMessage(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "audio",
-        payload: {
-          url: SERVER_URL + "/assets/sample.mp3"
-        }
-      }
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a video using the Send API.
- *
- */
-function sendVideoMessage(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "video",
-        payload: {
-          url: SERVER_URL + "/assets/allofus480.mov"
-        }
-      }
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a file using the Send API.
- *
- */
-function sendFileMessage(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "file",
-        payload: {
-          url: SERVER_URL + "/assets/test.txt"
-        }
-      }
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a text message using the Send API.
- *
- */
-function sendTextMessage(recipientId, messageText) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: messageText,
-      metadata: "DEVELOPER_DEFINED_METADATA"
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a button message using the Send API.
- *
- */
-function sendStartMessage(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: "맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?",
-          buttons:[{
-            type: "postback",
-            payload: "order_number",
-            title: "주문 확인"
-          }, {
-            type: "postback",
-              payload: "order",
-            title: "주문 하기"
-
-          }, {
-              type: "postback",
-              title: "도움말",
-              payload: "help"
-          }]
-        }
-      }
-    }
-  };  
-
-  callSendAPI(messageData);
-}
-
-function DrinkButtonMessage(recipientId) {
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            attachment: {
-                type: "template",
-                payload: {
-                    template_type: "button",
-                    text: "다음 중 하나를 골라 주세요",
-                    buttons:[{
-                        type: "postback",
-                        payload: "coke",
-                        title: "콜라"
-                    }, {
-                        type: "postback",
-                        payload: "sevenup",
-                        title: "세븐업"
-
-                    }, {
-                        type: "postback",
-                        payload: "beer",
-                        title: "클라우드 맥주"
-                    }]
-                }
-            }
-        }
-    };
-
-    callSendAPI(messageData);
-}
-
-/*
- * Send a Structured Message (Generic Message type) using the Send API.
- *
- */
-function sendGenericMessage(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [{
-            title: "rift",
-            subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
-            image_url: SERVER_URL + "/assets/rift.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for first bubble",
-            }],
-          }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",               
-            image_url: SERVER_URL + "/assets/touch.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for second bubble",
-            }]
-          }]
-        }
-      }
-    }
-  };  
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a receipt message using the Send API.
- *
- */
-function sendReceiptMessage(recipientId) {
-  // Generate a random receipt ID as the API requires a unique ID
-  var receiptId = "order" + Math.floor(Math.random()*1000);
-
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message:{
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "receipt",
-          recipient_name: "Peter Chang",
-          order_number: receiptId,
-          currency: "USD",
-          payment_method: "Visa 1234",        
-          timestamp: "1428444852", 
-          elements: [{
-            title: "Oculus Rift",
-            subtitle: "Includes: headset, sensor, remote",
-            quantity: 1,
-            price: 599.00,
-            currency: "USD",
-            image_url: SERVER_URL + "/assets/riftsq.png"
-          }, {
-            title: "Samsung Gear VR",
-            subtitle: "Frost White",
-            quantity: 1,
-            price: 99.99,
-            currency: "USD",
-            image_url: SERVER_URL + "/assets/gearvrsq.png"
-          }],
-          address: {
-            street_1: "1 Hacker Way",
-            street_2: "",
-            city: "Menlo Park",
-            postal_code: "94025",
-            state: "CA",
-            country: "US"
-          },
-          summary: {
-            subtotal: 698.99,
-            shipping_cost: 20.00,
-            total_tax: 57.67,
-            total_cost: 626.66
-          },
-          adjustments: [{
-            name: "New Customer Discount",
-            amount: -50
-          }, {
-            name: "$100 Off Coupon",
-            amount: -100
-          }]
-        }
-      }
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a message with Quick Reply buttons.
- *
- */
-function sendQuickReply(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: "What's your favorite movie genre?",
-      quick_replies: [
-        {
-          "content_type":"text",
-          "title":"Action",
-          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
-        },
-        {
-          "content_type":"text",
-          "title":"Comedy",
-          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
-        },
-        {
-          "content_type":"text",
-          "title":"Drama",
-          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
-        }
-      ]
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a read receipt to indicate the message has been read
- *
- */
-function sendReadReceipt(recipientId) {
-  console.log("Sending a read receipt to mark message as seen");
-
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    sender_action: "mark_seen"
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Turn typing indicator on
- *
- */
-function sendTypingOn(recipientId) {
-  console.log("Turning typing indicator on");
-
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    sender_action: "typing_on"
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Turn typing indicator off
- *
- */
-function sendTypingOff(recipientId) {
-  console.log("Turning typing indicator off");
-
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    sender_action: "typing_off"
-  };
-
-  callSendAPI(messageData);
-}
-
-/*
- * Send a message with the account linking call-to-action
- *
- */
-function sendAccountLinking(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: "Welcome. Link your account.",
-          buttons:[{
-            type: "account_link",
-            url: SERVER_URL + "/authorize"
-          }]
-        }
-      }
-    }
-  };  
-
-  callSendAPI(messageData);
-}
-
-/*
- * Call the Send API. The message data goes in the body. If successful, we'll 
- * get the message id in a response 
- *
- */
-function callSendAPI(messageData) {
-  request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: PAGE_ACCESS_TOKEN },
-    method: 'POST',
-    json: messageData
-
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id;
-      var messageId = body.message_id;
-
-      if (messageId) {
-        console.log("Successfully sent message with id %s to recipient %s", 
-          messageId, recipientId);
-      } else {
-      console.log("Successfully called Send API for recipient %s", 
-        recipientId);
-      }
-    } else {
-      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-    }
-  });  
+    // When a postback is called, we'll send a message back to the sender to
+    // let them know it was successful
+    //M.sendTextMessage(senderID, "Postback called");
 }
 
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
 var server = https.createServer(app).listen(8888, function(){
-	console.log("https");
+	console.log("https 8888");
 });
 
 app.listen(app.get('port'), function() {
