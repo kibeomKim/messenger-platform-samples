@@ -1,4 +1,6 @@
 'use strict';
+var request = require('request');
+var async = require('async');
 
 exports.confirm = function(text)
 {
@@ -14,13 +16,45 @@ exports.order_confirm = function(num)
     var content = "[주문번호:" + num + "]\n--- 제품 ---\nAAAAA\nBBBBB\nCCCCC\n금액:00000원\n[주문상태:"+ current_state + " ]\n[주문매장: " + shop + "]";
     return content;
 }
-exports.identify = function(num)
+exports.identify = function(phone, callback)
 {
-    return true;
+    var phonenumber = "params={'phone':'" + phone + "','req_page':'107','req_channel':'WEB'}";
+    var target = "API-003.phk";
+
+    APICall(phonenumber, target, function(err, result){
+        var output = JSON.parse(result);
+
+        if (err) console.log(err);
+        console.log("identify result!!!!!!!!!!!!!: " + output.RESULT);
+
+        if (result == false || output.RESULT == false) {
+            return false;
+        } else {
+            callback(null, result);
+        }
+    });
 }
-exports.verification = function(num)
+exports.verification = function(phone, authkey, authno, callback)
 {
-    return true;
+    var veri = "params={'phone':'" + phone + "','authKey':'" + authkey +"','authNo':'" + authno + "'}";
+    var target = "API-004.phk";
+
+    APICall(veri, target, function(err, result){
+        var output = JSON.parse(result);
+        if (err) console.log(err);
+
+        if (output == false || output.RESULT == false) {
+            callback(null, false);
+        } else {
+            callback(null, true);
+        }
+    });
+}
+exports.getDoughList = function(callback)
+{
+    APICall("", "API-305.phk", function(err, result){
+        callback(null, result);
+    });
 }
 exports.selectAddress = function(address)
 {
@@ -91,4 +125,29 @@ exports.searchShop = function(text)
 {
     var shop = '1. 종로본점(종로5가)\n2. 약수역2호점(약수동)\n3. 숭인점(숭인동)';
     return shop;
+}
+
+function APICall(inputdata, target, callback)
+{
+    var bodyData = inputdata;       //{'phone':'01092103621','req_page':'101','req_channel':'WEB'}";
+    var options = {
+        uri: "http://apidev.pizzahut.co.kr/" + target,  //API-003.phk",
+    method: "POST",
+        headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+},
+    body: bodyData
+};
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            //console.log(bodyData);
+            console.log('request option : ' + body);
+            callback(null, body);
+
+        } else {
+            console.log('request option error : ' + error);
+            console.log('request option error response : ' + response);
+            callback(err, false);
+        }
+    });
 }

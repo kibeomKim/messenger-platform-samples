@@ -179,6 +179,7 @@ exports.sendTextMessage = function(recipientId, messageText) {
  *
  */
 exports.sendGenericMessage = function(recipientId) {
+
     var messageData = {
         recipient: {
             id: recipientId
@@ -188,33 +189,146 @@ exports.sendGenericMessage = function(recipientId) {
                 type: "template",
                 payload: {
                     template_type: "generic",
+                    image_aspect_ratio: "square",
                     elements: [{
-                        title: "rift",
-                        subtitle: "Next-generation virtual reality",
-                        item_url: "https://www.oculus.com/en-us/rift/",
-                        image_url: SERVER_URL + "/assets/rift.png",
+                        title: "맛있는 피자",
+                        subtitle: "새우랑 브로콜리랑 파인애플이랑 고구마 들어감",
+                        //item_url: "https://www.oculus.com/en-us/rift/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg",
                         buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/rift/",
-                            title: "Open Web URL"
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
                         }, {
                             type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for first bubble",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
                         }],
+                    }, {
+                        title: "세련되어 보이는 피자",
+                        subtitle: "이것저것 좋아보이는 거 넣었는데 맛있는지는 잘 모르겠네",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_BB_MS_1.jpg",
+                        buttons: [{
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
+                        }, {
+                            type: "postback",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
+                        }]
                     }, {
                         title: "touch",
                         subtitle: "Your Hands, Now in VR",
-                        item_url: "https://www.oculus.com/en-us/touch/",
-                        image_url: SERVER_URL + "/assets/touch.png",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_P_SS_1.jpg",
                         buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/touch/",
-                            title: "Open Web URL"
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
                         }, {
                             type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for second bubble",
+                            title: "Medium 28900 원3",
+                            payload: "pizza",
+                        }]
+                    }, {
+                        title: "touch",
+                        subtitle: "Your Hands, Now in VR",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_P_CH_1.jpg",
+                        buttons: [{
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
+                        }, {
+                            type: "postback",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
+                        }]
+                    }, {
+                        title: "touch",
+                        subtitle: "Your Hands, Now in VR",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_DR_GS_1.jpg",
+                        buttons: [{
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
+                        }, {
+                            type: "postback",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
+                        }]
+                    }, {
+                        title: "touch",
+                        subtitle: "Your Hands, Now in VR",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_CK_1.jpg",
+                        buttons: [{
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
+                        }, {
+                            type: "postback",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
+                        }]
+                    }, {
+                        title: "touch",
+                        subtitle: "Your Hands, Now in VR",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_DB_2.jpg",
+                        buttons: [{
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
+                        }, {
+                            type: "postback",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
+                        }]
+                    }, {
+                        title: "touch",
+                        subtitle: "Your Hands, Now in VR",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_RT_1.jpg",
+                        buttons: [{
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
+                        }, {
+                            type: "postback",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
+                        }]
+                    }, {
+                        title: "touch",
+                        subtitle: "Your Hands, Now in VR",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg",
+                        buttons: [{
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
+                        }, {
+                            type: "postback",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
+                        }]
+                    }, {
+                        title: "touch",
+                        subtitle: "Your Hands, Now in VR",
+                        //item_url: "https://www.oculus.com/en-us/touch/",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_OA_2.jpg",
+                        buttons: [{
+                            type: "postback",
+                            title: "Large 34900 원",
+                            payload: "pizza"
+                        }, {
+                            type: "postback",
+                            title: "Medium 28900 원",
+                            payload: "pizza",
                         }]
                     }]
                 }
