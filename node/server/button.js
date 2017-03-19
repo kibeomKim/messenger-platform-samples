@@ -202,7 +202,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 28900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }],
                     }, {
                         title: "리치골드 - 프렌치 블루치즈 스테이크",
@@ -216,7 +216,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 28900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }, {
                         title: "리치골드 - 통베이컨 스테이크",
@@ -230,7 +230,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 28900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }, {
                         title: "리치골드 - 치즈킹",
@@ -244,7 +244,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 28900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }, {
                         title: "리치골드 - 토핑킹",
@@ -258,7 +258,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 28900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }, {
                         title: "리치골드 - 직화불고기",
@@ -272,7 +272,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 28900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }, {
                         title: "리치골드 - 바비큐치킨",
@@ -286,7 +286,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 28900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }, {
                         title: "리치골드 - 더블바비큐",
@@ -300,7 +300,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 26900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }, {
                         title: "리치골드 - 슈퍼슈프림",
@@ -314,7 +314,7 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 26900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }, {
                         title: "리치골드 - 베이컨포테이토",
@@ -328,9 +328,30 @@ exports.sendGenericMessage = function(recipientId) {
                         }, {
                             type: "postback",
                             title: "Medium 26900 원",
-                            payload: "pizza",
+                            payload: "pizza"
                         }]
                     }]
+                }
+            }
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+exports.sendMenuMessage = function(recipientId, contents) {
+
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            attachment: {
+                type: "template",
+                payload: {
+                    template_type: "generic",
+                    image_aspect_ratio: "square",
+                    elements: contents
                 }
             }
         }

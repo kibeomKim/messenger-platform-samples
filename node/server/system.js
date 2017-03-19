@@ -104,6 +104,71 @@ exports.order_now = function()
     var str = '주문번호['+ order_num +'] 주문이 완료되었습니다. 배달 예상 시간은 '+ order_time + ' 입니다.';
     return str;
 }
+exports.getMenuDetail = function(baseID, callback)
+{
+    var input = "params={'Base_Id':'" + baseID + "'}";
+    var target = "API-30701.phk";
+    var sMenu="";
+    var desc = "그릴에 구운 통새우와 바삭한 양파가 올려진 피자";
+    var url = "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg";
+
+    var buttonContents;
+    var menuArray = new Array();
+    var menuContents;
+
+    APICall(input, target, function(err, result){
+        var output = JSON.parse(result);
+        if(err) console.log(err);
+
+        if(output == false || output.RESULT == false){
+            callback(null, false);
+        }else{
+            var n = 0, pivot;
+            while(true){
+                var buttonArray = new Array();
+                var menuContents = new Object();
+                menuContents.title = output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"];
+                menuContents.subtitle = desc;
+                menuContents.image_url = url;
+                //menuContents.button = "";
+
+                pivot = output["LIST"][n]["PRODUCT_DESC"];
+                if (pivot == output["LIST"][n+1]["PRODUCT_DESC"])
+                {
+                    for(var i = n; i < n+2; i++) {
+                        var buttonContents = new Object();
+                        buttonContents.type = 'postback';
+                        buttonContents.title = output["LIST"][i]["SIZE_CD"] + " " + output["LIST"][i]["PRICE"];
+                        buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][i]["CLASS_ID"] + "/" + output["LIST"][i]["PRODUCT_ID"] + "/" + output["LIST"][i]["BASE_ID"] + "/" + output["LIST"][i]["SIZE_ID"];
+                        buttonArray.push(buttonContents);
+
+                        console.log(i+ " !!! " + JSON.stringify(buttonContents));
+                    }console.log("\nTT");
+                    n += 2;
+                }else{
+                    var buttonContents = new Object();
+                    buttonContents.type = 'postback';
+                    buttonContents.title = output["LIST"][n]["SIZE_CD"] + " " + output["LIST"][n]["PRICE"];
+                    buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][n]["CLASS_ID"] + "/" + output["LIST"][n]["PRODUCT_ID"] + "/" + output["LIST"][n]["BASE_ID"] + "/" + output["LIST"][n]["SIZE_ID"];
+                    buttonArray.push(buttonContents);
+
+                    console.log(n + " !!! " + JSON.stringify(buttonContents));
+                    n += 1;
+                }console.log("\nTTTTTTTTTT");
+                menuContents.buttons = buttonArray;
+                menuArray.push(menuContents);
+                if(n >= output["LIST"].length)
+                {
+                    break;
+                }
+            }
+            var jsonInfo = JSON.stringify(menuArray);
+            callback(null, jsonInfo);
+            console.log(JSON.stringify(menuArray) + "MENU!!!!!!!!!!!@!!#!#");
+        }
+    });
+
+}
 exports.findDough = function(text)
 {
     if(text =='1' || text.includes('신제품') | text.includes('세트') | text.includes('셋트'))

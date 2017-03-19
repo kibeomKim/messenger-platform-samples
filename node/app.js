@@ -116,7 +116,7 @@ function findOrCreateSession (fbid){
         sessions[sessionId].context.state = '-1';
         sessions[sessionId].context.nMenu = 0;
         sessions[sessionId].context.price = 0;
-        sessions[sessionId].menu = {};
+        sessions[sessionId].base = {};
         sessions[sessionId].context.phone_number = "";
         sessions[sessionId].context.shop = "";
         sessions[sessionId].context.privacy = "";
@@ -128,7 +128,7 @@ function reset()
 {
     session.context.state = "-1";
     session.context.nMenu = 0;
-    session.menu = {};
+    session.base = {};
     session.context.price = 0;
     session.context.phone_number = "";
     session.context.shop = "";
@@ -495,7 +495,7 @@ function receivedChat(event){
                     for(var i = 0; i < output["LIST"].length; i++)
                     {
                         MenuList += output["LIST"][i]["DISPLAY_SEQ"] + ". " + output["LIST"][i]["DOUGH_DESC"] + "\n";
-
+                        session.base[i] = output["LIST"][i]["BASE_ID"];
                     }
                     M.sendTextMessage(session.fbid, MenuList + "100. 종료\n목록에서 번호를 입력해 주십시오.");
                 });
@@ -515,8 +515,11 @@ function receivedChat(event){
                         session.context.state = 'menu_1';
                     }else {
                         console.log(list_length+"length!!")
-                        if((selectedNumber < list_length) && (selectedNumber > 0) || selectedNumber == 100) {
-                            M.sendGenericMessage(session.fbid);
+                        if((selectedNumber < list_length) && (selectedNumber > 0)) {
+                            //M.sendGenericMessage(session.fbid);                             //메뉴이미지카드 출력
+                            flow.getMenuDetail(session.base[selectedNumber-1], function(err, result){
+                                M.sendMenuMessage(session.fbid, result);
+                            });
                             session.context.state = 'menu_1';
                         }else{
                             M.sendTextMessage(session.fbid, "유효한 숫자만 입력해주세요");          //list 범위 밖의 숫자 입력
