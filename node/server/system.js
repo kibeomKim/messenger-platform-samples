@@ -1,6 +1,7 @@
 'use strict';
 var request = require('request');
 var async = require('async');
+var constants = require('./constant.js');
 
 exports.confirm = function(text)
 {
@@ -9,16 +10,43 @@ exports.confirm = function(text)
         return true;
     }else return false;
 }
-exports.order_confirm = function(num)
+exports.order_confirm = function(orderID, phone, callback)
 {
-    var current_state = "배달 중";
-    var shop = "가나다 매장(02-111-1111)"
-    var content = "[주문번호:" + num + "]\n--- 제품 ---\nAAAAA\nBBBBB\nCCCCC\n금액:00000원\n[주문상태:"+ current_state + " ]\n[주문매장: " + shop + "]";
-    return content;
+    var phonenumber = "params={'orderId':'" + orderID + "','phone':'" + phone + "'}";
+    var target = "API-063.phk";
+
+    APICall(phonenumber, target, function(err, result){
+        var output = JSON.parse(result);
+        var comment = "";
+        var state, menuList = "", size, tmp;
+        if (err) console.log(err);
+        console.log(output);
+
+        if (output == false || output.RESULT == false)
+        {
+            callback(null, "주문 정보가 없습니다");
+        } else {
+            state = getState(output.STATE);
+
+            for(var i=0; i < output["ITEM_LIST"].length; i++)
+            {
+                size = sizeTranslator(output["ITEM_LIST"][i]["SIZE_ID"], output["ITEM_LIST"][i]["PRODUCT_ID"]);
+                if(size == "no") size = "";
+                if(output["ITEM_LIST"][i]["BASE_ID"]) tmp = constants[output["ITEM_LIST"][i]["BASE_ID"]] + "-";       //baseID가 없는 경우가 있음. ex)콜라
+                else tmp = "";
+                menuList += tmp + output["ITEM_LIST"][i]["PRODUCT_DESC"] + " " + size + " [" + output["ITEM_LIST"][i]["QTY"] + "]\n";
+            }
+            comment = "[주문번호: " + orderID + "]\n제품:\n" + menuList + "금액: " + output.LAST_PRICE + "원\n"
+                + "[주문상태: " + state + "]\n" + "[주문매장: " + output.BRANCH_NAME + "(" + output.BRANCH_PHONE + ")]";
+            //comment = output.ORDER_YEAR + "년 " + output.ORDER_MONTH + "월 " + output.DAY + "일 " + output.HOUR + "시 " + output.MINUTE + "분 ";
+            console.log(comment);
+            callback(null, comment);
+        }
+    });
 }
 exports.identify = function(phone, callback)
 {
-    var phonenumber = "params={'phone':'" + phone + "','req_page':'107','req_channel':'WEB'}";
+    var phonenumber = "params={'phone':'" + phone + "','req_page':'101','req_channel':'WEB'}";
     var target = "API-003.phk";
 
     APICall(phonenumber, target, function(err, result){
@@ -28,7 +56,7 @@ exports.identify = function(phone, callback)
         console.log("identify result!!!!!!!!!!!!!: " + output.RESULT);
 
         if (result == false || output.RESULT == false) {
-            return false;
+            callback(null, false);
         } else {
             callback(null, result);
         }
@@ -150,4 +178,44 @@ function APICall(inputdata, target, callback)
             callback(err, false);
         }
     });
+}
+function sizeTranslator(size, product){
+    switch(size){
+        case 'HE':
+        case 'E':
+        case 'TE':
+        case 'M':
+            return "M";
+            break;
+        case 'HL':
+        case 'S':
+        case 'L':
+            return "L";
+            break;
+        case 'MB':
+            return "10개";
+            break;
+        case 'BU':
+            if(product == "SW" ||product == "FS" ||product == "FO" ||product == "TF") return "4조각";
+            else return "10조각";
+            break;
+        case 'PE': return "1.5L"; break;     //콜라
+        case 'PF': return "0.5L"; break;
+        default:    //사이즈 없음 ex)스파게티
+            return "no";
+    };
+}
+function getState(state){
+    if(state == "0")
+    {
+        return "완료";
+    }else if(state == "1")
+    {
+        return "배달준비 중";
+    }else if(state == "2")
+    {
+        return "포장준비";
+    }else{      //에러
+        return "에러-문의요망";
+    }
 }

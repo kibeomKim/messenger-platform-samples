@@ -20,13 +20,13 @@ exports.sendStartMessage = function(recipientId) {
                         title: "주문 확인"
                     }, {
                         type: "postback",
-                        payload: "order",
+                        payload: "privacy",
                         title: "주문 하기"
 
                     }, {
                         type: "postback",
                         title: "도움말",
-                        payload: "help"
+                        payload: "help_1"
                     }]
                 }
             }
@@ -191,8 +191,8 @@ exports.sendGenericMessage = function(recipientId) {
                     template_type: "generic",
                     image_aspect_ratio: "square",
                     elements: [{
-                        title: "맛있는 피자",
-                        subtitle: "새우랑 브로콜리랑 파인애플이랑 고구마 들어감",
+                        title: "리치골드 - 프렌치 어니언 쉬림프",
+                        subtitle: "그릴에 구운 통새우와 바삭한 양파가 올려진 피자",
                         //item_url: "https://www.oculus.com/en-us/rift/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg",
                         buttons: [{
@@ -205,8 +205,8 @@ exports.sendGenericMessage = function(recipientId) {
                             payload: "pizza",
                         }],
                     }, {
-                        title: "세련되어 보이는 피자",
-                        subtitle: "이것저것 좋아보이는 거 넣었는데 맛있는지는 잘 모르겠네",
+                        title: "리치골드 - 프렌치 블루치즈 스테이크",
+                        subtitle: "부드러운 블래게퍼 스테이크(소고기)와 진한 블루치즈소스가 어우러진 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_BB_MS_1.jpg",
                         buttons: [{
@@ -219,8 +219,8 @@ exports.sendGenericMessage = function(recipientId) {
                             payload: "pizza",
                         }]
                     }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
+                        title: "리치골드 - 통베이컨 스테이크",
+                        subtitle: "베이컨 스테이크와 통마늘이 올려진 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_P_SS_1.jpg",
                         buttons: [{
@@ -229,12 +229,12 @@ exports.sendGenericMessage = function(recipientId) {
                             payload: "pizza"
                         }, {
                             type: "postback",
-                            title: "Medium 28900 원3",
+                            title: "Medium 28900 원",
                             payload: "pizza",
                         }]
                     }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
+                        title: "리치골드 - 치즈킹",
+                        subtitle: "소고기와 크림치즈가 듬뿍 올려진 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_P_CH_1.jpg",
                         buttons: [{
@@ -247,8 +247,8 @@ exports.sendGenericMessage = function(recipientId) {
                             payload: "pizza",
                         }]
                     }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
+                        title: "리치골드 - 토핑킹",
+                        subtitle: "7가지 토핑이 통으로 들어간 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_DR_GS_1.jpg",
                         buttons: [{
@@ -261,8 +261,8 @@ exports.sendGenericMessage = function(recipientId) {
                             payload: "pizza",
                         }]
                     }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
+                        title: "리치골드 - 직화불고기",
+                        subtitle: "정통 숯불고기(소고기)를 즐길 수 있는 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_CK_1.jpg",
                         buttons: [{
@@ -275,8 +275,8 @@ exports.sendGenericMessage = function(recipientId) {
                             payload: "pizza",
                         }]
                     }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
+                        title: "리치골드 - 바비큐치킨",
+                        subtitle: "부드러운 바비큐치킨을 즐길 수 있는 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_DB_2.jpg",
                         buttons: [{
@@ -289,45 +289,45 @@ exports.sendGenericMessage = function(recipientId) {
                             payload: "pizza",
                         }]
                     }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
+                        title: "리치골드 - 더블바비큐",
+                        subtitle: "불고기와 바비큐치킨이 반반씩 들어간 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_RT_1.jpg",
                         buttons: [{
                             type: "postback",
-                            title: "Large 34900 원",
+                            title: "Large 32900 원",
                             payload: "pizza"
                         }, {
                             type: "postback",
-                            title: "Medium 28900 원",
+                            title: "Medium 26900 원",
                             payload: "pizza",
                         }]
                     }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
+                        title: "리치골드 - 슈퍼슈프림",
+                        subtitle: "고기, 야채 토핑이 골고루 들어간 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg",
                         buttons: [{
                             type: "postback",
-                            title: "Large 34900 원",
+                            title: "Large 32900 원",
                             payload: "pizza"
                         }, {
                             type: "postback",
-                            title: "Medium 28900 원",
+                            title: "Medium 26900 원",
                             payload: "pizza",
                         }]
                     }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
+                        title: "리치골드 - 베이컨포테이토",
+                        subtitle: "베이컨과 감자를 올린 담백한 피자",
                         //item_url: "https://www.oculus.com/en-us/touch/",
                         image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_OA_2.jpg",
                         buttons: [{
                             type: "postback",
-                            title: "Large 34900 원",
+                            title: "Large 32900 원",
                             payload: "pizza"
                         }, {
                             type: "postback",
-                            title: "Medium 28900 원",
+                            title: "Medium 26900 원",
                             payload: "pizza",
                         }]
                     }]
@@ -356,46 +356,47 @@ exports.sendReceiptMessage = function(recipientId) {
                 type: "template",
                 payload: {
                     template_type: "receipt",
-                    recipient_name: "Peter Chang",
+                    recipient_name: "설현 님",
+                    merchant_name: "피자헛",
                     order_number: receiptId,
-                    currency: "USD",
-                    payment_method: "Visa 1234",
+                    currency: "KRW",
+                    payment_method: "현장결제",
                     timestamp: "1428444852",
                     elements: [{
-                        title: "Oculus Rift",
-                        subtitle: "Includes: headset, sensor, remote",
+                        title: "리치골드-직화불고기 Large",
+                        subtitle: "정동 숯불고기(소고기)를 즐길 수 있는 피자",
                         quantity: 1,
-                        price: 599.00,
-                        currency: "USD",
-                        image_url: SERVER_URL + "/assets/riftsq.png"
+                        price: 28900,
+                        currency: "KRW",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg"
                     }, {
-                        title: "Samsung Gear VR",
-                        subtitle: "Frost White",
+                        title: "더맛있는피자-포테이토크로켓 Medium",
+                        subtitle: "감자와 베이컨, 마요네즈를 올린 피자",
                         quantity: 1,
-                        price: 99.99,
-                        currency: "USD",
-                        image_url: SERVER_URL + "/assets/gearvrsq.png"
+                        price: 14900,
+                        currency: "KRW",
+                        image_url: "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_OA_2.jpg"
                     }],
                     address: {
-                        street_1: "1 Hacker Way",
-                        street_2: "",
-                        city: "Menlo Park",
+                        street_1: "서울대학교",
+                        street_2: "138동",
+                        city: "관악구",
                         postal_code: "94025",
-                        state: "CA",
-                        country: "US"
+                        state: "서울시",
+                        country: "KR"
                     },
                     summary: {
-                        subtotal: 698.99,
-                        shipping_cost: 20.00,
-                        total_tax: 57.67,
-                        total_cost: 626.66
+                        subtotal:63800,
+                        shipping_cost: 0,
+                        total_tax: 6380,
+                        total_cost: 60000
                     },
                     adjustments: [{
-                        name: "New Customer Discount",
-                        amount: -50
+                        name: "신규 고객 할인",
+                        amount: -800
                     }, {
-                        name: "$100 Off Coupon",
-                        amount: -100
+                        name: "페이스북 주문 Coupon",
+                        amount: -3000
                     }]
                 }
             }
