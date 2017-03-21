@@ -46,7 +46,7 @@ exports.order_confirm = function(orderID, phone, callback)
 }
 exports.identify = function(phone, callback)
 {
-    var phonenumber = "params={'phone':'" + phone + "','req_page':'103','req_channel':'WEB'}";
+    var phonenumber = "params={'phone':'" + phone + "','req_page':'104','req_channel':'WEB'}";
     var target = "API-003.phk";
 
     APICall(phonenumber, target, function(err, result){
@@ -176,9 +176,7 @@ exports.order_now = function(branchID, branchName, orderType, timestamp, couponI
     ObjectMasterData.orderGubun = "2";
     ObjectMasterData.phkno = "";
 
-    // console.log("masterDATA:!111111111 " + JSON.stringify(ObjectMasterData));
     MD.aOrderMasterDataVO = ObjectMasterData;
-    /// ======================
 
     var aOrderMasterDataVO = new Array();
     var aOrderItems = new Object();
@@ -235,9 +233,6 @@ exports.order_now = function(branchID, branchName, orderType, timestamp, couponI
     aOrderItems.aOrderItemDataVO = aOrderItemDataVO;
     MD.aOrderItems = aOrderItems;
 
-    console.log("itemDATA:22222222222222 " + JSON.stringify(aOrderItems));
-    /// ======================
-
     var aCustMasterDataVO = new Object();
 
     aCustMasterDataVO.custId = "";
@@ -262,8 +257,6 @@ exports.order_now = function(branchID, branchName, orderType, timestamp, couponI
     aCustMasterDataVO.pointY = "";
 
     MD.aCustMasterDataVO = aCustMasterDataVO;
-    console.log("CustDATA:33333333 " + JSON.stringify(aCustMasterDataVO));
-    /// ====================
 
     result.fullOrderVO = MD;
 
@@ -311,7 +304,9 @@ exports.getMenuDetail = function(baseID, callback)
                         var buttonContents = new Object();
                         buttonContents.type = 'postback';
                         buttonContents.title = output["LIST"][i]["SIZE_CD"] + " " + output["LIST"][i]["PRICE"];
-                        buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][i]["CLASS_ID"] + "/" + output["LIST"][i]["SIZE_ID"] + "/" + output["LIST"][i]["BASE_ID"] + "/" + output["LIST"][i]["PRODUCT_ID"] + "/" + output["LIST"][i]["PRICE"];
+                        buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][i]["CLASS_ID"] + "/" + output["LIST"][i]["SIZE_ID"]
+                            + "/" + output["LIST"][i]["BASE_ID"] + "/" + output["LIST"][i]["PRODUCT_ID"] + "/" + output["LIST"][i]["PRICE"]
+                        + "/" + output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + output["LIST"][i]["SIZE_CD"];
                         buttonArray.push(buttonContents);
                     }
                     n += 2;
@@ -319,7 +314,9 @@ exports.getMenuDetail = function(baseID, callback)
                     var buttonContents = new Object();
                     buttonContents.type = 'postback';
                     buttonContents.title = output["LIST"][n]["SIZE_CD"] + " " + output["LIST"][n]["PRICE"];
-                    buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][n]["CLASS_ID"] + "/" + output["LIST"][n]["SIZE_ID"] + "/" + output["LIST"][n]["BASE_ID"] + "/" + output["LIST"][n]["PRODUCT_ID"] + "/" + output["LIST"][n]["PRICE"];
+                    buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][n]["CLASS_ID"] + "/" + output["LIST"][n]["SIZE_ID"]
+                        + "/" + output["LIST"][n]["BASE_ID"] + "/" + output["LIST"][n]["PRODUCT_ID"] + "/" + output["LIST"][n]["PRICE"]
+                    + "/" + output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + output["LIST"][n]["SIZE_CD"];
                     buttonArray.push(buttonContents);
                     n += 1;
                 }
