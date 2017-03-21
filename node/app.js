@@ -112,11 +112,16 @@ function findOrCreateSession (fbid){
     if (!sessionId) {
         // No session found for user fbid, let's create a new one
         sessionId = new Date().toISOString();
-        sessions[sessionId] = {fbid: fbid, context: {}, menu: {}};
+        sessions[sessionId] = {fbid: fbid, context: {}};
         sessions[sessionId].context.state = '-1';
         sessions[sessionId].context.nMenu = 0;
         sessions[sessionId].context.price = 0;
         sessions[sessionId].base = {};
+        sessions[sessionId].ClassID = {};
+        sessions[sessionId].SizeID = {};
+        sessions[sessionId].BaseID = {};
+        sessions[sessionId].ProductID = {};
+        sessions[sessionId].qty = {};
         sessions[sessionId].context.phone_number = "";
         sessions[sessionId].context.shop = "";
         sessions[sessionId].context.privacy = "";
@@ -124,20 +129,38 @@ function findOrCreateSession (fbid){
     }
     return sessionId;
 }
-function reset()
-{
+function reset() {
     session.context.state = "-1";
     session.context.nMenu = 0;
     session.base = {};
+    session.ClassID = {};
+    session.SizeID = {};
+    session.BaseID = {};
+    session.ProductID = {};
+    session.qty = {};
     session.context.price = 0;
     session.context.phone_number = "";
-    session.context.shop = "";
     session.context.privacy = "0";  //개인정보 수집동의여부, 동의했을 시 1
     session.context.auth_key = "";  //번호인증키
-    session.context.order_number = "";  //주문번호
+    session.context.nCoupon = 0;   //쿠폰 갯수
+    session.couponInfo = {};        //유저의 모든 쿠폰정보
+    session.context.couponID = "";
+    session.context.couponValue = "";
+    session.addrList = {};      //주소 목록
+    session.context.shopName = "";  //매장명
+    session.context.shopID = "";    //매장ID
+    session.context.list_length = "";   //메뉴 리스트
+    session.context.positionX = "";     //매장 x, y좌표
+    session.context.positionY = "";
+    session.context.usable_pnt = "";    //가용포인트
+    session.context.fmcUse = "";   //1:적립, 2:사용
+    session.context.fmcAmount = "";   //사용포인트, 적립일시 0
+    session.context.custName = "";      //멤버십 고객 명
+    session.context.cardNo = "";    //멤버십 카드no
+    session.context.orderType = "";     //2:배달, 3:포장
+    session.context.timestamp = "";     //타임스탬프
+    session.context.discountValue = ""; //할인금액
 }
-
-var list_length;
 
 app.post('/webhook', function (req, res) {
   var data = req.body;
@@ -269,42 +292,59 @@ function receivedChat(event){
         messageText = "true";
     }
     else console.log("receivedchat error");
-
+    console.log("state!!!!!!!!!!!!!!!!!!!!!!!!: " + session.context.state);
     if (messageText)
     {
-        if(messageText == '메뉴주문'){reset(); session.context.state = 'menu_1';session.context.shop = 'aaa매장'; }
+        if(messageText == '메뉴주문'){reset(); session.context.state = 'menu_1';session.context.shopName = 'aaa매장'; }
         if(messageText == '이미지카드'){reset(); session.context.state = 'imagecard';}
         if(messageText == '영수증'){reset(); session.context.state = 'receipt';}
+        if(messageText == '쿠폰확인'){reset(); session.context.state = 'coupon_1';}
+        if(messageText == '주소입력'){reset(); session.context.state = 'delivery';}
+        if(messageText == '포장주문'){reset(); session.context.state='wrap_1';}
+        if(messageText == '멤버십'){reset(); session.context.state = 'bill';session.context.phone_number= "01000000000";}
+        if(messageText == '주문하기'){reset(); session.context.state = 'order_now'; session.context.phone_number = '01092103621'; session.context.shopID = '8817'; session.context.shopName = "신림2호점"; session.context.orderType = '2';
+            session.context.couponID = "couponID"; session.context.discountValue = '2500'; session.context.nMenu = 1; session.context.price = '23900'; session.context.address = '서울시 관악구 관악로1 138동'; session.context.custName = "김기범";
+        session.qty=[1]; session.ClassID=['P']; session.SizeID = ['E']; session.BaseID = ['P']; session.ProductID = ['CH']; session.context.cardNo = ""; session.context.fmcUse = ""; session.context.fmcAmount = "";}
         if (session.context.state == "-1" || flow.start(messageText))           //시작단계
         {
             session.context.state = 'start';
         }else if(session.context.state == 'order_number')
         {
-         session.context.flag = "order_confirm";
+            session.context.flag = "order_confirm";
             session.context.state = "privacy";
         }else if(session.context.state == 'order_method_2')     //배달인지 포장인지 구별
         {
             if(messageText.includes("배달") || messageText.includes("1"))
             {
                 session.context.state = "delivery";
-                session.context.method = 'delivery';
+                session.context.orderType = "2";    //배달
             }else{
                 session.context.state = "wrap_1";
-                session.context.method = 'wrap';
+                session.context.orderType = "3";    //포장
             }
         }else if(session.context.state == 'address_5')      //주소 입력
         {
             if(flow.confirm(messageText) || messageText.includes("1"))
             {
-                var tmp = flow.selectShop(session.context.address);
-                if(tmp != false)       //배달 가능 매장이 있을 때
-                {
-                    session.context.shop = tmp;
+                flow.selectShop(session.context.positionX, session.context.positionY, function(err, result){
+                    var tmp = JSON.parse(result);
+                    var output = JSON.parse(tmp.SEARCH_RESULT);
+
+                    session.context.shopName = output[0].storeName;
+                    session.context.shopID = output[0].storeID;
                     session.context.state = 'menu_1';
 
-                }else{                                        //배달 가능 매장이 없을 때
-                    session.context.state = 'research_address_1';
-                }
+                    /*if(output == false || output[0].storeDelivery == 'N' || output[0].zoneDelivery == 'N' || output == "[]")
+                    {
+                        session.context.state = 'research_address_1';
+                    }else{
+                        session.context.shopName = output[0].storeName;
+                        session.context.shopID = output[0].storeID;
+                        session.context.state = 'menu_1';
+                    }*/
+                });
+                session.context.state = 'menu_1';
+
             }else{        //입력한 주소가 틀렸을 때
                 session.context.state = 'delivery';
             }
@@ -312,9 +352,54 @@ function receivedChat(event){
         {
             if(messageText.includes('1') || messageText.includes('예'))
             {
-                session.context.state = 'bill';
+                session.context.state = 'coupon_1';
             }else{
                 session.context.state = 'menu_1';
+            }
+        }else if(session.context.state.includes("MENUORDER"))
+        {
+            var code = session.context.state.substr(10);
+            var length = Number(session.context.nMenu);
+            session.ClassID[length] = code.substring(0, code.indexOf("/"));
+            code = code.substr(code.indexOf("/")+1);
+            session.SizeID[length] = code.substring(0, code.indexOf("/"));
+            code = code.substr(code.indexOf("/")+1);
+            session.BaseID[length] = code.substring(0, code.indexOf("/"));
+            code = code.substr(code.indexOf("/")+1);
+            session.ProductID[length] = code.substring(0, code.indexOf("/"));
+            code = code.substr(code.indexOf("/")+1);
+            session.context.price += Number(code.substring(0));
+
+            session.context.state = "menu_order";
+        }else if(session.context.state == "ChkMembership")
+        {
+            if(messageText.includes('1'))
+            {
+                M.sendTextMessage(session.fbid, "피자헛 멤버십카드 뒷 4자리를 입력해 주세요.\nXXXX-XXXX-XXXX-OOOO");
+                session.context.state = 'membership_1';
+            }else {
+                session.context.state = 'order_now';
+            }
+        }else if(session.context.state == 'wrap_3')
+        {
+            var selectedNumber = Number(messageText);
+            if(isNaN(selectedNumber)){
+                M.sendTextMessage(session.fbid, "숫자만 입력해주세요");          //숫자가 아닌 다른 값 입력
+                session.context.state = 'wrap_3';
+            }else {
+                if(selectedNumber <= 0 || selectedNumber > session.context.list_length+1)
+                {
+                    M.sendTextMessage(session.fbid, "유효한 숫자를 입력해주세요");
+                    session.context.state = 'wrap_3';
+                }else{
+                    if(selectedNumber == session.context.list_length+1){
+                        session.context.state = 'wrap_1';
+                    }else {
+                        session.context.shopName = session.addrList[selectedNumber - 1].storeName;
+                        session.context.shopID = session.addrList[selectedNumber - 1].storeId;
+                        session.context.state = 'menu_1';
+                    }
+                }
             }
         }
 
@@ -441,27 +526,54 @@ function receivedChat(event){
 
             case 'address_1':
                 session.context.address = messageText;
-                M.sendTextMessage(session.fbid, "상세 주소를 입력해주세요 (00아파트, 00-000)");
-                session.context.state = 'address_2'
+                flow.getAddress(session.context.address, function(err, result){
+                    var output = JSON.parse(result.SEARCH_RESULT);
+                    session.addrList = output;
+                    if(output["addrListVO"] == ""){
+                        M.sendTextMessage(session.fbid, "조회된 주소가 없습니다. 다시 입력해주세요.");
+                        session.context.state = 'address_1';
+                    }else {
+                        var addr = "";
+                        for (var i = 0; i < output["addrListVO"].length; i++) {
+                            addr += (Number(output["addrListVO"][i]["index"]) + 1) + ". " + output["addrListVO"][i]["addr"] + "\n";
+                        }
+                        addr += (output["addrListVO"].length + 1) + ". 다시 검색\n";
+                        M.sendTextMessage(session.fbid, addr + "목록에서 배달 받으실 주소 번호를 입력해 주십시오.");
+                    }
+                });
+
+                session.context.state = 'address_2';
                 break;
 
             case 'address_2':
-                var address;
-                session.context.address = session.context.address + " " + messageText;
-                address = flow.selectAddress(session.context.address);
-                M.sendTextMessage(session.fbid, address + "\n목록에서 배달 받으실 주소 번호를 입력해 주십시오.");
-                session.context.state = 'address_3';
+                var selectedNumber = Number(messageText);
+                if(isNaN(selectedNumber)){
+                    M.sendTextMessage(session.fbid, "숫자만 입력해주세요");          //숫자가 아닌 다른 값 입력
+                    session.context.state = 'address_3';
+                }else {
+                    if((selectedNumber > 0) && selectedNumber <= session.addrList["addrListVO"].length + 1)
+                    {
+                        if(selectedNumber == session.addrList["addrListVO"].length + 1){
+                            M.sendTextMessage(session.fbid, "배달 받으실 주소를 입력해 주세요 (00시 00구 00동/로)");
+                            session.context.state = 'address_1';
+                        }else{
+                            session.context.address = session.addrList["addrListVO"][selectedNumber-1]["addr"];
+                            session.context.positionX = session.addrList["addrListVO"][selectedNumber-1]["x"];
+                            session.context.positionY = session.addrList["addrListVO"][selectedNumber-1]["y"];
+                            M.sendTextMessage(session.fbid, "나머지 주소를 입력해 주십시오.(00아파트 0동 0호, 0층)");
+                            session.context.state = 'address_4';
+                        }
+                    }else{
+                        M.sendTextMessage(session.fbid, "유효한 숫자만 입력해주세요");
+                        session.context.state = 'address_3';
+                    }
+                }
                 break;
 
             case 'address_3':
-                if(messageText.includes("1"))
-                {
-                    session.context.address = session.context.address;
-                }else {
-                    session.context.address = session.context.address;
-                }
-                M.sendTextMessage(session.fbid, "나머지 주소를 입력해 주십시오.(0동 0호, 0층)");
-                session.context.state = 'address_4';
+                session.context.address = session.context.address + " " + messageText;
+                M.sendTextMessage(session.fbid, "상세 주소를 입력해주세요 (00아파트, 00-000)");
+
                 break;
 
             case 'address_4':
@@ -485,12 +597,13 @@ function receivedChat(event){
                 break;
 
             case 'menu_1':
+                session.context.state = 'menu_2';
                 M.sendTextMessage(session.fbid, "주문하시고자 하는 제품군을 선택해 주십시오.");
 
                 flow.getDoughList(function(err, result){
                     var output = JSON.parse(result);
-                    var MenuList="";
-                    list_length = output["LIST"].length + 1;
+                    var MenuList = "";
+                    session.context.list_length = output["LIST"].length;
 
                     for(var i = 0; i < output["LIST"].length; i++)
                     {
@@ -499,7 +612,6 @@ function receivedChat(event){
                     }
                     M.sendTextMessage(session.fbid, MenuList + "100. 종료\n목록에서 번호를 입력해 주십시오.");
                 });
-                session.context.state = 'menu_2';
 
                 break;
 
@@ -509,18 +621,18 @@ function receivedChat(event){
                     session.context.state = 'bill';
                 }else {
                     var selectedNumber = Number(messageText);
-                    console.log(selectedNumber+"selectednumber!!!");
                     if(isNaN(selectedNumber)){
                         M.sendTextMessage(session.fbid, "숫자만 입력해주세요");          //숫자가 아닌 다른 값 입력
                         session.context.state = 'menu_1';
                     }else {
-                        console.log(list_length+"length!!")
-                        if((selectedNumber < list_length) && (selectedNumber > 0)) {
+                        console.log(selectedNumber + " selectedNumber!!");
+                        console.log(session.base[selectedNumber-1] + " selectedBASE!!!!!!!!!!!!!!!");
+                        if((selectedNumber < session.context.list_length) && (selectedNumber > 0)) {
                             //M.sendGenericMessage(session.fbid);                             //메뉴이미지카드 출력
                             flow.getMenuDetail(session.base[selectedNumber-1], function(err, result){
                                 M.sendMenuMessage(session.fbid, result);
                             });
-                            session.context.state = 'menu_1';
+                            session.context.state = 'menu_order';
                         }else{
                             M.sendTextMessage(session.fbid, "유효한 숫자만 입력해주세요");          //list 범위 밖의 숫자 입력
                             session.context.state = 'menu_2';
@@ -529,7 +641,7 @@ function receivedChat(event){
                 }
                 break;
 
-            case 'pizza':
+            case 'menu_order':
                 session.context.state = 'menu_3';
                 M.sendTextMessage(session.fbid, "수량을 입력해주세요.");
                 break;
@@ -545,8 +657,60 @@ function receivedChat(event){
                     session.context.state = 'menu_1';
                 }else{
                     var list = "맛있는피자";
-                    M.sendTextMessage(session.fbid, session.context.shop + "에 " + list + "제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
+                    session.qty[session.context.nMenu] = option;
+                    console.log("qty: " + session.qty[session.context.nMenu]);
+                    session.context.nMenu += 1;
+                    M.sendTextMessage(session.fbid, session.context.shopName + "에 " + list + "제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
                     session.context.state = 'menu_4';
+                }
+                break;
+
+            case 'coupon_1':
+                flow.getCoupon(function(err, result){
+                    var CouponList = "";
+                    var output = JSON.parse(result);
+                    //session.couponInfo = new Array();
+                    session.couponInfo = "";
+                    session.couponInfo = output;
+
+                    if(output == false) {
+                        CouponList = "쿠폰정보가 없습니다.";
+                    }else {
+                        for (var i = 0; i < output["LIST"].length; i++) {
+                            CouponList += output["LIST"][i]["DISPLAY_SEQ"] + ". " + output["LIST"][i]["COUPON_DESC"] + "\n";
+                        }
+                        CouponList += (output["LIST"].length + 1) + ". 선택하지 않음";
+                    }
+                    session.context.nCoupon = Number(output["LIST"].length);
+                    M.sendTextMessage(session.fbid, CouponList);
+                });
+                session.context.state = 'coupon_2';
+                break;
+
+            case 'coupon_2':
+                var selectedNumber = Number(messageText);
+                if(isNaN(selectedNumber)){
+                    M.sendTextMessage(session.fbid, "숫자만 입력해주세요");          //숫자가 아닌 다른 값 입력
+                    session.context.state = 'coupon_2';
+                }else {
+                    if(selectedNumber <= 0 || selectedNumber > session.couponInfo["LIST"].length+1)
+                    {
+                        M.sendTextMessage(session.fbid, "유효한 숫자만 입력해주세요");          //list 범위 밖의 숫자 입력
+                        session.context.state = 'coupon_2';
+                    }else{
+                        if(selectedNumber == session.couponInfo["LIST"].length)
+                        {
+                            session.context.couponID = "";
+                            session.context.couponValue = "";
+                            M.sendTextMessage(session.fbid, "할인 쿠폰을 선택하지 않으셨습니다.");
+                        }else{
+                            session.context.couponID = session.couponInfo["LIST"][selectedNumber-1]["COUPON_ID"];
+                            session.context.couponValue = Number(session.couponInfo["LIST"][selectedNumber-1]["COUPON_VALUE"]);
+                            M.sendTextMessage(session.fbid, session.couponInfo["LIST"][selectedNumber-1]["COUPON_VALUE"] + "% 할인 쿠폰을 선택하셨습니다.");
+                            session.context.discountValue = session.context.price * (session.context.couponValue/100)
+                        }
+                        session.context.state = 'bill';
+                    }
                 }
                 break;
 
@@ -559,45 +723,73 @@ function receivedChat(event){
                  content += (i+1) + ". " + session.menu[i] + "\n";
                  }*/
                 var content = "맛있는피자";
-                M.sendTextMessage(session.fbid, "주문이 완료되었습니다.\n" + content + '금액:' + " "/*session.context.price*/ + "28900 원");
+                M.sendTextMessage(session.fbid, "주문이 준비되었습니다.\n" + content + '금액:' + " "/*session.context.price*/ + "28900 원");
 
-                if(flow.checkMembership())
+                M.sendTextMessage(session.fbid, "멤버십 포인트 적립/사용 확인하시겠습니까?\n1. 예\n2.아니오");
+                session.context.state = 'ChkMembership';
+
+                break;
+
+            case 'membership_1':
+
+                flow.checkMembership(session.context.phone_number, messageText, function(err, result){
+                    var output = JSON.parse(result);
+
+                    if(output.RESULT == false){
+                        M.sendTextMessage(session.fbid, "멤버십 결과가 없습니다.다시 조회하시겠습니까?\n1.예\n2.아니오");
+                        session.context.state = 'ChkMembership';
+                    }else{
+                        session.context.custName = output.NAME;
+                        session.context.cardNo = output.CARD_NO;
+                        M.sendTextMessage(session.fbid, output.NAME + " 고객님의 가용포인트는 " + output.USABLE_PNT + "점 입니다.");
+                        session.context.usable_pnt = output.USABLE_PNT;
+                        if(output.USABLE_PNT > 2000)
+                        {
+                            M.sendTextMessage(session.fbid, "멤버십 적립/사용이 가능합니다.(사용은 2,000점 부터 가능합니다.)\n1. 적립(500점)\n2. 사용(" + output.USABLE_PNT + "점)\n3. 사용안함");
+                        }else{
+                            M.sendTextMessage(session.fbid, "멤버십 적립이 가능합니다.(사용은 2,000점 부터 가능합니다.)\n1. 적립(500점)\n2. 적립안함");
+                        }
+                        session.context.state = "order_now";
+                    }
+                });
+                break;
+
+            case 'membership_2':
+                if(messageText == "1")
                 {
-                    M.sendTextMessage(session.fbid, "멤버십 적립/사용이 가능합니다.(사용은 2,000점 부터 가능합니다.)\n1. 적립(500점)\n2. 사용(2500점)\n3. 사용안함");
-                    session.context.state = 'membership';
-                }else {
-
-                    if(session.context.method == 'wrap')
+                    M.sendTextMessage(session.fbid, "멤버십 포인트 500점이 적립되었습니다.");
+                    session.context.fmcUse = "1";   //1:적립, 2:사용
+                    session.context.fmcAmount = "0";
+                }else{
+                    if(session.context.usable_pnt > 2000)
                     {
-                        M.sendTextMessage(session.fbid, "[포장주문번호: 12345678]\n포장주문이 접수되었습니다. 30분 뒤 찾아가세요.");
-                        M.sendTextMessage(session.fbid, constants.thank);
-                        session.context.state = '-1';
-
-                    }else {
-                        //M.sendTextMessage(session.fbid, flow.order_now());
-                        M.sendReceiptMessage(session.fbid);
-                        M.sendTextMessage(session.fbid, constants.thank);
-                        session.context.state = '-1';
+                        if(messageText == '2')
+                        {
+                            session.context.fmcUse = "2";   //1:적립, 2:사용
+                            session.context.fmcAmount = "" + session.context.usable_pnt;
+                        }
+                    }else{      //멤버십 사용 안함
+                        //session.context.custName = "";
+                        session.context.fmcUse = "";
+                        session.context.fmcAmount = "";
                     }
                 }
-                break;
-
-            case 'membership':
-                if(messageText.includes('1') || messageText.includes('2'))
-                {
-                    M.sendTextMessage(session.fbid, "피자헛 멤버십카드 뒷 4자리를 입력해 주세요.\nXXXX-XXXX-XXXX-OOOO");
-                    session.context.state = 'order_now';
-                }
-                else {
-                    //M.sendTextMessage(session.fbid, flow.order_now());
-                    M.sendReceiptMessage(session.fbid);
-                    M.sendTextMessage(session.fbid, constants.thank);
-                    session.context.state = '-1';
-                }
-                break;
 
             case 'order_now':
-                if(session.context.method == 'wrap')
+
+                session.context.timestamp = flow.getTimeStamp();
+                var phoneRegion = session.context.phone_number.substring(0, 3);
+                var phone = session.context.phone_number.substring(3);
+                flow.order_now(session.context.shopID, session.context.shopName, session.context.orderType, session.context.timestamp,
+                    session.context.couponID, session.context.discountValue, session.context.nMenu, session.context.price,
+                    session.context.address, phoneRegion, phone, session.context.custName,
+                    session.qty, session.ClassID, session.SizeID, session.BaseID, session.ProductID, session.context.cardNo,
+                    session.context.fmcUse, session.context.fmcAmount, function(err, result){
+                    var output = JSON.parse(result);
+                        console.log("ordernow!!!!!!!" + result);
+                    });
+
+                if(session.context.orderType == '3')
                 {
                     M.sendTextMessage(session.fbid, "[포장주문번호: 12345678]\n포장주문이 접수되었습니다. 30분 뒤 찾아가세요.");
                     M.sendTextMessage(session.fbid, constants.thank);
@@ -620,14 +812,27 @@ function receivedChat(event){
                 reset();
                 break;
 
-            case 'wrap_1': M.sendTextMessage(session.fbid, "제품 찾으실 주소를 입력해 주세요.(00시 00구 00동/로)");
+            case 'wrap_1':
+                M.sendTextMessage(session.fbid, "제품 찾으실 주소를 입력해 주세요.(00시 00구 00동/로)");
                 session.context.state = 'wrap_2';
                 break;
 
             case 'wrap_2':
-                M.sendTextMessage(session.fbid, "인근매장을 선택해주세요.\n" + flow.searchShop(messageText));
-                session.context.shop = flow.selectShop(session.context.address);
-                session.context.state = 'menu_1';
+                var shopStr = "";
+                flow.searchWrapShop(messageText, function(err, result){
+                    var output = JSON.parse(result.SEARCH_RESULT);
+                    console.log("wrap!!!!!!!!!!" + output["storeInfo"].length);
+                    session.context.list_length = output["storeInfo"].length;
+                    session.addrList = output["storeInfo"];
+                    for(var i = 0; i < output["storeInfo"].length; i++){
+                        shopStr += (i+1) + ". " + output["storeInfo"][i].storeAddr + "(" + output["storeInfo"][i].storeName + ")\n";
+                    }
+                    shopStr += (output["storeInfo"].length+1) + ". 다시 검색하기\n인근매장을 선택해주세요.";
+
+                    M.sendTextMessage(session.fbid, shopStr);
+                });
+
+                session.context.state = 'wrap_3';
                 break;
 
             case 'imagecard':

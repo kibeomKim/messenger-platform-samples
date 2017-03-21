@@ -46,7 +46,7 @@ exports.order_confirm = function(orderID, phone, callback)
 }
 exports.identify = function(phone, callback)
 {
-    var phonenumber = "params={'phone':'" + phone + "','req_page':'101','req_channel':'WEB'}";
+    var phonenumber = "params={'phone':'" + phone + "','req_page':'103','req_channel':'WEB'}";
     var target = "API-003.phk";
 
     APICall(phonenumber, target, function(err, result){
@@ -84,32 +84,205 @@ exports.getDoughList = function(callback)
         callback(null, result);
     });
 }
-exports.selectAddress = function(address)
+exports.getAddress = function(address, callback)
 {
-    var candidate_address = "1. input Area1" + "\n2. input Area2";
-    return "1. " + address;
+    var inputdata = "params={'searchStr':'" + address + "'}";
+    var target = "gis/getAddress.phk";
+    APICall(inputdata, target, function(err, result){
+        var output = JSON.parse(result);
+        if (err) console.log(err);
+
+        if (output == false || output.RESULT == false) {
+            callback(null, false);
+        } else {
+            callback(null, output);
+        }
+    });
 }
-exports.selectShop = function(address)
+exports.selectShop = function(x, y, callback)
 {
-    return 'aaa매장';
+    var inputdata = "params={'x':'" + x + "','y':'" + y + "'}";
+    var target = 'gis/getDeliveryStore.phk';
+    APICall(inputdata, target, function(err, result){
+        var output = JSON.parse(result);
+        if (err) console.log(err);
+
+        if (output == false /*|| output.SEARCH_RESULT.zoneDelivery == "N"*/) {
+            callback(null, false);
+        } else {
+            callback(null, result);
+        }
+    });
+
 }
-exports.checkMembership = function()
+exports.checkMembership = function(phone, cardNo, callback)
 {
+    var inputdata = "params={'phone':'" + phone + "', 'cardNo':'" + cardNo + "'}";
+    var target = "API-310.phk";
+    APICall(inputdata, target, function(err, result){
+        var output = JSON.parse(result);
+        if (err) console.log(err);
+
+        if (output == false) {
+            callback(null, false);
+        } else {
+            callback(null, result);
+        }
+    });
     return true;
 }
-exports.order_now = function()
+exports.order_now = function(branchID, branchName, orderType, timestamp, couponID, discountValue, nMenu, price, address, phoneRegion, phone,
+                             custName, qty, ClassID, SizeID, BaseID, ProductID, cardNo, fmcUse, fmcAmount, callback)
 {
-    var order_num = "12345678";
-    var order_time = "18:30";
-    var str = '주문번호['+ order_num +'] 주문이 완료되었습니다. 배달 예상 시간은 '+ order_time + ' 입니다.';
-    return str;
+    var inputdata = "params=";
+    var target = "API-309.phk";
+    var result = new Object();
+    var MD = new Object();
+
+    var ObjectMasterData = new Object();
+
+    ObjectMasterData.orderId = "";
+    ObjectMasterData.custId = "";
+    ObjectMasterData.agentId = "WEB";
+    ObjectMasterData.branchId = branchID;
+    ObjectMasterData.orderType = orderType;
+    ObjectMasterData.orderDateTime = timestamp;
+    ObjectMasterData.packDataTime = timestamp;
+    ObjectMasterData.reserveDateTime = "";
+    ObjectMasterData.couponId = couponID;
+    ObjectMasterData.discount = "";
+    ObjectMasterData.couponVal = discountValue;
+    ObjectMasterData.empMeal = "";
+    ObjectMasterData.items = nMenu;
+    ObjectMasterData.listPrice = String(Number(price) - Number(discountValue));
+    ObjectMasterData.discPrice = discountValue;
+    ObjectMasterData.prodId = "";
+    ObjectMasterData.cdate = "";
+    ObjectMasterData.chour = "";
+    ObjectMasterData.delayTime = "";
+    ObjectMasterData.si = "";
+    ObjectMasterData.gu = "";
+    ObjectMasterData.dong = "";
+    ObjectMasterData.addr1 = "";
+    ObjectMasterData.addr2 = "";
+    ObjectMasterData.addrDesc = address;
+    ObjectMasterData.phoneRegion = phoneRegion;
+    ObjectMasterData.phone = phone;
+    ObjectMasterData.anti = "";
+    ObjectMasterData.flag = "Y";
+    ObjectMasterData.custName = custName;
+    ObjectMasterData.sector = "";
+    ObjectMasterData.zipcode = "";
+    ObjectMasterData.orderGubun = "2";
+    ObjectMasterData.phkno = "";
+
+    // console.log("masterDATA:!111111111 " + JSON.stringify(ObjectMasterData));
+    MD.aOrderMasterDataVO = ObjectMasterData;
+    /// ======================
+
+    var aOrderMasterDataVO = new Array();
+    var aOrderItems = new Object();
+    var aOrderItemDataVO = new Array();
+
+    for(var i = 0; i < nMenu; i++) {
+
+        var ObjectItemData = new Object();
+        ObjectItemData.orderId = "";
+        ObjectItemData.orderSeq = String(i);
+        ObjectItemData.agentid = "WEB";
+        ObjectItemData.branchId = branchID;
+        ObjectItemData.createDateTime = timestamp;
+        ObjectItemData.mDeal = "";
+        ObjectItemData.mGroup = "";
+        ObjectItemData.qty = String(qty[i]);
+        ObjectItemData.classId = ClassID[i];
+        ObjectItemData.sizeId = SizeID[i];
+        ObjectItemData.baseId = BaseID[i];
+        ObjectItemData.productId = ProductID[i];
+        ObjectItemData.half = "N";
+        ObjectItemData.topp1 = "";
+        ObjectItemData.topp2 = "";
+        ObjectItemData.topp3 = "";
+        ObjectItemData.topp4 = "";
+        ObjectItemData.topp5 = "";
+        ObjectItemData.topp6 = "";
+        ObjectItemData.topp7 = "";
+        ObjectItemData.topp8 = "";
+        ObjectItemData.topp9 = "";
+        ObjectItemData.topp10 = "";
+        ObjectItemData.topp11 = "";
+        ObjectItemData.bProductId = "";
+        ObjectItemData.bTopp1 = "";
+        ObjectItemData.bTopp2 = "";
+        ObjectItemData.bTopp3 = "";
+        ObjectItemData.bTopp4 = "";
+        ObjectItemData.bTopp5 = "";
+        ObjectItemData.bTopp6 = "";
+        ObjectItemData.bTopp7 = "";
+        ObjectItemData.bTopp8 = "";
+        ObjectItemData.bTopp9 = "";
+        ObjectItemData.bTopp10 = "";
+        ObjectItemData.bTopp11 = "";
+        ObjectItemData.couponId = "";
+        ObjectItemData.couponVal= "";
+        ObjectItemData.listPrice = "";
+        ObjectItemData.discPrice = "";
+        ObjectItemData.cdate = "";
+        ObjectItemData.chour = "";
+
+        aOrderItemDataVO.push(ObjectItemData);
+    }
+    aOrderItems.aOrderItemDataVO = aOrderItemDataVO;
+    MD.aOrderItems = aOrderItems;
+
+    console.log("itemDATA:22222222222222 " + JSON.stringify(aOrderItems));
+    /// ======================
+
+    var aCustMasterDataVO = new Object();
+
+    aCustMasterDataVO.custId = "";
+    aCustMasterDataVO.custName = custName;
+    aCustMasterDataVO.fmcCard = cardNo;
+    aCustMasterDataVO.addrDesc = address;
+    aCustMasterDataVO.phoneRegion = phoneRegion;
+    aCustMasterDataVO.phone = phone;
+    aCustMasterDataVO.branchId = branchID;
+    aCustMasterDataVO.branchName = branchName;
+    aCustMasterDataVO.custType = "10";
+    aCustMasterDataVO.fmcUse = fmcUse;
+    aCustMasterDataVO.fmcAmount = fmcAmount;
+    aCustMasterDataVO.lastUpdate = "";
+    aCustMasterDataVO.lastUpdateTime = "";
+    aCustMasterDataVO.createUpdate = "";
+    aCustMasterDataVO.createUpdateTime = "";
+    aCustMasterDataVO.zipcode = "";
+    aCustMasterDataVO.orderAmt = "";
+    aCustMasterDataVO.custMemo = "";
+    aCustMasterDataVO.pointX = "";
+    aCustMasterDataVO.pointY = "";
+
+    MD.aCustMasterDataVO = aCustMasterDataVO;
+    console.log("CustDATA:33333333 " + JSON.stringify(aCustMasterDataVO));
+    /// ====================
+
+    result.fullOrderVO = MD;
+
+    console.log("inputARRAY!@#@#@#@#@#@#@#@## " + JSON.stringify(result));
+    inputdata = inputdata + JSON.stringify(result);
+    console.log("inputDATA!!!!!!!!!!!!!!!!! " + inputdata);
+
+    /*APICall(inputdata, target, function(err, result){
+        var output = JSON.parse(result);
+
+        console.log();
+    });*/
+
+    callback(null, result);
 }
 exports.getMenuDetail = function(baseID, callback)
 {
     var input = "params={'Base_Id':'" + baseID + "'}";
     var target = "API-30701.phk";
-    var sMenu="";
-    var desc = "그릴에 구운 통새우와 바삭한 양파가 올려진 피자";
     var url = "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg";
 
     var buttonContents;
@@ -128,9 +301,8 @@ exports.getMenuDetail = function(baseID, callback)
                 var buttonArray = new Array();
                 var menuContents = new Object();
                 menuContents.title = output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"];
-                menuContents.subtitle = desc;
+                menuContents.subtitle = output["LIST"][n]["PRODUCT_DESC_SHORT"];
                 menuContents.image_url = url;
-                //menuContents.button = "";
 
                 pivot = output["LIST"][n]["PRODUCT_DESC"];
                 if (pivot == output["LIST"][n+1]["PRODUCT_DESC"])
@@ -139,73 +311,49 @@ exports.getMenuDetail = function(baseID, callback)
                         var buttonContents = new Object();
                         buttonContents.type = 'postback';
                         buttonContents.title = output["LIST"][i]["SIZE_CD"] + " " + output["LIST"][i]["PRICE"];
-                        buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][i]["CLASS_ID"] + "/" + output["LIST"][i]["PRODUCT_ID"] + "/" + output["LIST"][i]["BASE_ID"] + "/" + output["LIST"][i]["SIZE_ID"];
+                        buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][i]["CLASS_ID"] + "/" + output["LIST"][i]["SIZE_ID"] + "/" + output["LIST"][i]["BASE_ID"] + "/" + output["LIST"][i]["PRODUCT_ID"] + "/" + output["LIST"][i]["PRICE"];
                         buttonArray.push(buttonContents);
-
-                        console.log(i+ " !!! " + JSON.stringify(buttonContents));
-                    }console.log("\nTT");
+                    }
                     n += 2;
                 }else{
                     var buttonContents = new Object();
                     buttonContents.type = 'postback';
                     buttonContents.title = output["LIST"][n]["SIZE_CD"] + " " + output["LIST"][n]["PRICE"];
-                    buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][n]["CLASS_ID"] + "/" + output["LIST"][n]["PRODUCT_ID"] + "/" + output["LIST"][n]["BASE_ID"] + "/" + output["LIST"][n]["SIZE_ID"];
+                    buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][n]["CLASS_ID"] + "/" + output["LIST"][n]["SIZE_ID"] + "/" + output["LIST"][n]["BASE_ID"] + "/" + output["LIST"][n]["PRODUCT_ID"] + "/" + output["LIST"][n]["PRICE"];
                     buttonArray.push(buttonContents);
-
-                    console.log(n + " !!! " + JSON.stringify(buttonContents));
                     n += 1;
-                }console.log("\nTTTTTTTTTT");
+                }
+
                 menuContents.buttons = buttonArray;
                 menuArray.push(menuContents);
-                if(n >= output["LIST"].length)
+
+                if(n >= output["LIST"].length-1)
                 {
                     break;
                 }
+
             }
             var jsonInfo = JSON.stringify(menuArray);
             callback(null, jsonInfo);
-            console.log(JSON.stringify(menuArray) + "MENU!!!!!!!!!!!@!!#!#");
         }
     });
 
 }
-exports.findDough = function(text)
+exports.getCoupon = function(callback)
 {
-    if(text =='1' || text.includes('신제품') | text.includes('세트') | text.includes('셋트'))
-    {
-        //return '세트';
-        return '와우세븐박스';
-    }else if(text.includes('2') || text.includes('인기메뉴'))
-    {
-        return '치즈크러스트';
-    }else if(text.includes('3') || text.includes('리치골드'))
-    {
-        return '리치골드';
-    }else if(text.includes('4') || text.includes('치즈크러스트'))
-    {
-        return '치즈크러스트';
-    }else if(text.includes('5') || text.includes('팬'))
-    {
-        return '팬';
-    }else if(text.includes('6') || text.includes('맛'))
-    {
-        return 'The맛있는피자2';
-    }else if(text.includes('7') || text.includes('트리플'))
-    {
-        return '트리플박스';
-    }else if(text.includes('8') || text.includes('세븐'))
-    {
-        return '와우세븐박스';
-    }else if(text.includes('9') || text.includes('사이드'))
-    {
-        return 'side';
-    }else if(text.includes('10') || text.includes('음료'))
-    {
-        return 'drink';
-    }else if(text.includes('11') || text.includes('기타'))
-    {
-        return 'etc';
-    }
+    var inputdata = "";
+    var target = "API-308.phk";
+
+    APICall(inputdata, target, function(err, result){
+        var output = JSON.parse(result);
+        if(err) console.log(err);
+
+        if(output == false || output.RESULT == false){
+            callback(null, false);
+        }else{
+            callback(null, result);
+        }
+    });
 }
 exports.start = function(text)
 {
@@ -214,12 +362,43 @@ exports.start = function(text)
         return true;
     }else return false;
 }
-exports.searchShop = function(text)
+exports.searchWrapShop = function(address, callback)
 {
-    var shop = '1. 종로본점(종로5가)\n2. 약수역2호점(약수동)\n3. 숭인점(숭인동)';
-    return shop;
+    var inputdata = "params={'searchStr':'" + address + "'}";
+    var target = "gis/getPackStoreInfo.phk";
+
+    APICall(inputdata, target, function(err, result){
+        var output = JSON.parse(result);
+
+        callback(null, output);
+
+    });
+}
+exports.getTimeStamp = function()
+{
+    var d = new Date();
+    var s =
+        leadingZeros(d.getFullYear(), 4) +
+        leadingZeros(d.getMonth() + 1, 2) +
+        leadingZeros(d.getDate(), 2) +
+
+        leadingZeros(d.getHours()+9, 2) +
+        leadingZeros(d.getMinutes(), 2) +
+        leadingZeros(d.getSeconds(), 2);
+
+    return s;
 }
 
+function leadingZeros(n, digits) {
+    var zero = '';
+    n = n.toString();
+
+    if (n.length < digits) {
+        for (var i = 0; i < digits - n.length; i++)
+            zero += '0';
+    }
+    return zero + n;
+}
 function APICall(inputdata, target, callback)
 {
     var bodyData = inputdata;       //{'phone':'01092103621','req_page':'101','req_channel':'WEB'}";
