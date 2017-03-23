@@ -5910,3 +5910,886 @@ messageingEvent.delivery
 Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhH-UIvVa7p_AE2pet
 All message before 1490062131389 were delivered.
 messageingEvent.delivery
+
+> messenger-get-started@1.0.0 start /home/ubuntu/messenger-platform-samples/node
+> node app.js
+
+https 8888
+Node app is running on port 5000
+connection successful...
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490109772662 with message:
+{"mid":"mid.$cAATRGKv5rlVhIrv7dla8Xa0jBhdv","seq":25526,"text":"안녕"}
+state!!!!!!!!!!!!!!!!!!!!!!!!: -1
+Successfully sent message with id mid.$cAATRGKv5rlVhIrv-cFa8Xa185gUZ to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490109773424 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAATRGKv5rlVhIrv-cFa8Xa185gUZ","seq":25528,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"privacy"},{"type":"postback","title":"도움말","payload":"help_1"}]}}]}
+Received echo for message mid.$cAATRGKv5rlVhIrv-cFa8Xa185gUZ and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhIrv-cFa8Xa185gUZ
+All message before 1490109773424 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhIrv-cFa8Xa185gUZ
+All message before 1490109773424 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 with payload 'help_1' at 1490109780488
+state!!!!!!!!!!!!!!!!!!!!!!!!: help_1
+Successfully sent message with id mid.$cAATRGKv5rlVhIrwb5Va8XbToz6jv to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490109780965 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhIrwb5Va8XbToz6jv","seq":25533,"text":"Q & A\n1. 주소 입력은 어떻게 하나요?\n2. 피자헛 멤버십은 어떻게 적립하나요?"}
+Received echo for message mid.$cAATRGKv5rlVhIrwb5Va8XbToz6jv and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhIrwb5Va8XbToz6jv
+All message before 1490109780965 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhIrwb5Va8XbToz6jv
+All message before 1490109780965 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490109782649 with message:
+{"mid":"mid.$cAATRGKv5rlVhIrwieVa8XbbnPShL","seq":25536,"text":"1"}
+state!!!!!!!!!!!!!!!!!!!!!!!!: help_2
+Successfully sent message with id mid.$cAATRGKv5rlVhIrwkmFa8XbcVvoX8 to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490109783192 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhIrwkmFa8XbcVvoX8","seq":25538,"text":"주소 입력은 잘 하시면 됩니다."}
+Received echo for message mid.$cAATRGKv5rlVhIrwkmFa8XbcVvoX8 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhIrwkmFa8XbcVvoX8
+All message before 1490109783192 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhIrwkmFa8XbcVvoX8
+All message before 1490109783192 were delivered.
+messageingEvent.delivery
+Terminated
+
+npm ERR! Linux 4.4.0-66-generic
+npm ERR! argv "/usr/bin/nodejs" "/usr/bin/npm" "start"
+npm ERR! node v6.10.0
+npm ERR! npm  v3.10.10
+npm ERR! code ELIFECYCLE
+npm ERR! messenger-get-started@1.0.0 start: `node app.js`
+npm ERR! Exit status 143
+npm ERR! 
+npm ERR! Failed at the messenger-get-started@1.0.0 start script 'node app.js'.
+npm ERR! Make sure you have the latest version of node.js and npm installed.
+npm ERR! If you do, this is most likely a problem with the messenger-get-started package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     node app.js
+npm ERR! You can get information on how to open an issue for this project with:
+npm ERR!     npm bugs messenger-get-started
+npm ERR! Or if that isn't available, you can get their info via:
+npm ERR!     npm owner ls messenger-get-started
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/ubuntu/messenger-platform-samples/node/npm-debug.log
+
+> messenger-get-started@1.0.0 start /home/ubuntu/messenger-platform-samples/node
+> node app.js
+
+https 8888
+Node app is running on port 5000
+connection successful...
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490162243615 with message:
+{"mid":"mid.$cAATRGKv5rlVhJdygH1a9Jdb0egPZ","seq":26504,"text":"영수증"}
+state!!!: -1
+cost2500
+discount배달할인
+[ { title: 1,
+    quantity: '23900',
+    price: NaN,
+    currency: 'KRW',
+    image_url: 'http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg' } ]
+totalcostNaN
+{"order_contents":[{"title":1,"quantity":"23900","price":null,"currency":"KRW","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg"}],"address_contents":{"street_1":"23900","city":"서울","state":"관악구","postal_code":"08912","country":"KR"},"total":{"subtotal":2500,"total_cost":null},"sale_contents":[{"name":"30","amount":null}]}
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490162243615 with message:
+{"mid":"mid.$cAATRGKv5rlVhJdygH1a9Jdb0egPZ","seq":26504,"text":"영수증"}
+state!!!: receipt
+cost2500
+discount배달할인
+[ { title: 1,
+    quantity: '23900',
+    price: NaN,
+    currency: 'KRW',
+    image_url: 'http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg' } ]
+totalcostNaN
+{"order_contents":[{"title":1,"quantity":"23900","price":null,"currency":"KRW","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg"}],"address_contents":{"street_1":"23900","city":"서울","state":"관악구","postal_code":"08912","country":"KR"},"total":{"subtotal":2500,"total_cost":null},"sale_contents":[{"name":"30","amount":null}]}
+TypeError: callback is not a function
+    at Object.exports.getReceipData (/home/ubuntu/messenger-platform-samples/node/server/system.js:459:5)
+    at receivedChat (/home/ubuntu/messenger-platform-samples/node/app.js:924:22)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:192:15
+    at Array.forEach (native)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:186:27
+    at Array.forEach (native)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:181:16
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/route.js:131:13)
+    at Route.dispatch (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:277:22
+    at Function.process_params (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:271:10)
+    at serveStatic (/home/ubuntu/messenger-platform-samples/node/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+TypeError: callback is not a function
+    at Object.exports.getReceipData (/home/ubuntu/messenger-platform-samples/node/server/system.js:459:5)
+    at receivedChat (/home/ubuntu/messenger-platform-samples/node/app.js:924:22)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:192:15
+    at Array.forEach (native)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:186:27
+    at Array.forEach (native)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:181:16
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/route.js:131:13)
+    at Route.dispatch (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:277:22
+    at Function.process_params (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:271:10)
+    at serveStatic (/home/ubuntu/messenger-platform-samples/node/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490162243615 with message:
+{"mid":"mid.$cAATRGKv5rlVhJdygH1a9Jdb0egPZ","seq":26504,"text":"영수증"}
+state!!!: receipt
+cost2500
+discount배달할인
+[ { title: 1,
+    quantity: '23900',
+    price: NaN,
+    currency: 'KRW',
+    image_url: 'http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg' } ]
+totalcostNaN
+{"order_contents":[{"title":1,"quantity":"23900","price":null,"currency":"KRW","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg"}],"address_contents":{"street_1":"23900","city":"서울","state":"관악구","postal_code":"08912","country":"KR"},"total":{"subtotal":2500,"total_cost":null},"sale_contents":[{"name":"30","amount":null}]}
+TypeError: callback is not a function
+    at Object.exports.getReceipData (/home/ubuntu/messenger-platform-samples/node/server/system.js:459:5)
+    at receivedChat (/home/ubuntu/messenger-platform-samples/node/app.js:924:22)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:192:15
+    at Array.forEach (native)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:186:27
+    at Array.forEach (native)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:181:16
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/route.js:131:13)
+    at Route.dispatch (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:277:22
+    at Function.process_params (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:271:10)
+    at serveStatic (/home/ubuntu/messenger-platform-samples/node/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490162243615 with message:
+{"mid":"mid.$cAATRGKv5rlVhJdygH1a9Jdb0egPZ","seq":26504,"text":"영수증"}
+state!!!: receipt
+cost2500
+discount배달할인
+[ { title: 1,
+    quantity: '23900',
+    price: NaN,
+    currency: 'KRW',
+    image_url: 'http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg' } ]
+totalcostNaN
+{"order_contents":[{"title":1,"quantity":"23900","price":null,"currency":"KRW","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg"}],"address_contents":{"street_1":"23900","city":"서울","state":"관악구","postal_code":"08912","country":"KR"},"total":{"subtotal":2500,"total_cost":null},"sale_contents":[{"name":"30","amount":null}]}
+TypeError: callback is not a function
+    at Object.exports.getReceipData (/home/ubuntu/messenger-platform-samples/node/server/system.js:459:5)
+    at receivedChat (/home/ubuntu/messenger-platform-samples/node/app.js:924:22)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:192:15
+    at Array.forEach (native)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:186:27
+    at Array.forEach (native)
+    at /home/ubuntu/messenger-platform-samples/node/app.js:181:16
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/route.js:131:13)
+    at Route.dispatch (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:277:22
+    at Function.process_params (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/index.js:271:10)
+    at serveStatic (/home/ubuntu/messenger-platform-samples/node/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/home/ubuntu/messenger-platform-samples/node/node_modules/express/lib/router/layer.js:95:5)
+Terminated
+
+npm ERR! Linux 4.4.0-66-generic
+npm ERR! argv "/usr/bin/nodejs" "/usr/bin/npm" "start"
+npm ERR! node v6.10.0
+npm ERR! npm  v3.10.10
+npm ERR! code ELIFECYCLE
+npm ERR! messenger-get-started@1.0.0 start: `node app.js`
+npm ERR! Exit status 143
+npm ERR! 
+npm ERR! Failed at the messenger-get-started@1.0.0 start script 'node app.js'.
+npm ERR! Make sure you have the latest version of node.js and npm installed.
+npm ERR! If you do, this is most likely a problem with the messenger-get-started package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     node app.js
+npm ERR! You can get information on how to open an issue for this project with:
+npm ERR!     npm bugs messenger-get-started
+npm ERR! Or if that isn't available, you can get their info via:
+npm ERR!     npm owner ls messenger-get-started
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/ubuntu/messenger-platform-samples/node/npm-debug.log
+
+> messenger-get-started@1.0.0 start /home/ubuntu/messenger-platform-samples/node
+> node app.js
+
+https 8888
+Node app is running on port 5000
+connection successful...
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490162654381 with message:
+{"mid":"mid.$cAATRGKv5rlVhJeLkrVa9J2gUFQIH","seq":26511,"text":"안녕하세요"}
+state!!!: -1
+Successfully sent message with id mid.$cAATRGKv5rlVhJeLoJVa9J2fu2L8u to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490162655269 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAATRGKv5rlVhJeLoJVa9J2fu2L8u","seq":26513,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"privacy"},{"type":"postback","title":"도움말","payload":"help_1"}]}}]}
+Received echo for message mid.$cAATRGKv5rlVhJeLoJVa9J2fu2L8u and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJeLoJVa9J2fu2L8u
+All message before 1490162655269 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJeLoJVa9J2fu2L8u
+All message before 1490162655269 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 with payload 'help_1' at 1490162666534
+state!!!: help_1
+Successfully sent message with id mid.$cAATRGKv5rlVhJeMWd1a9J3ONro94 to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490162667127 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhJeMWd1a9J3ONro94","seq":26517,"text":"Q & A\n1. 주소 입력은 어떻게 하나요?\n2. 피자헛 멤버십은 어떻게 적립하나요?"}
+Received echo for message mid.$cAATRGKv5rlVhJeMWd1a9J3ONro94 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJeMWd1a9J3ONro94
+All message before 1490162667127 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJeMWd1a9J3ONro94
+All message before 1490162667127 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490162669978 with message:
+{"mid":"mid.$cAATRGKv5rlVhJeMhmla9J3dRoK4P","seq":26519,"text":"1"}
+state!!!: help_2
+Successfully sent message with id mid.$cAATRGKv5rlVhJeMj11a9J3bl5Usq to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490162670551 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhJeMj11a9J3bl5Usq","seq":26521,"text":"주소 입력은 잘 하시면 됩니다."}
+Received echo for message mid.$cAATRGKv5rlVhJeMj11a9J3bl5Usq and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJeMj11a9J3bl5Usq
+All message before 1490162670551 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJeMj11a9J3bl5Usq
+All message before 1490162670551 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 with payload 'order_number' at 1490164071237
+state!!!: order_number
+Successfully sent message with id mid.$cAASL7vrMNqphJfiFtla9LM9dnKJK to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164071862 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfiFtla9LM9dnKJK","seq":6580,"text":"고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)"}
+Received echo for message mid.$cAASL7vrMNqphJfiFtla9LM9dnKJK and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfiFtla9LM9dnKJK
+All message before 1490164071862 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164077694 with message:
+{"mid":"mid.$cAASL7vrMNqphJficfla9LNTtjAev","seq":6582,"text":"2"}
+state!!!: phone_number
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164083851 with message:
+{"mid":"mid.$cAASL7vrMNqphJfi0i1a9LNrxDb41","seq":6584,"text":"시작"}
+state!!!: 0
+Successfully sent message with id mid.$cAASL7vrMNqphJfi3Bla9LNumZZov to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164084486 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAASL7vrMNqphJfi3Bla9LNumZZov","seq":6586,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"privacy"},{"type":"postback","title":"도움말","payload":"help_1"}]}}]}
+Received echo for message mid.$cAASL7vrMNqphJfi3Bla9LNumZZov and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfi3Bla9LNumZZov
+All message before 1490164084486 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 with payload 'privacy' at 1490164090038
+state!!!: privacy
+Successfully sent message with id mid.$cAASL7vrMNqphJfjO61a9LOGqnQdC to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164090603 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfjO61a9LOGqnQdC","seq":6590,"text":"고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)"}
+Received echo for message mid.$cAASL7vrMNqphJfjO61a9LOGqnQdC and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfjO61a9LOGqnQdC
+All message before 1490164090603 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164100248 with message:
+{"mid":"mid.$cAASL7vrMNqphJfj0mFa9LOsCxCtc","seq":6592,"text":"1"}
+state!!!: phone_number
+Successfully sent message with id mid.$cAASL7vrMNqphJfj2fla9LOuPbRh4 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164100734 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfj2fla9LOuPbRh4","seq":6594,"text":"정확한 주문을 위해 휴대폰 번호를 입력해 주세요."}
+Received echo for message mid.$cAASL7vrMNqphJfj2fla9LOuPbRh4 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfj2fla9LOuPbRh4
+All message before 1490164100734 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164111827 with message:
+{"mid":"mid.$cAASL7vrMNqphJfkh01a9LPYtErMV","seq":6596,"text":"01043344655"}
+state!!!: phone_number_confirm_1
+Successfully sent message with id mid.$cAASL7vrMNqphJfkkCFa9LPbnYajE to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164112392 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfkkCFa9LPbnYajE","seq":6598,"text":"휴대폰 번호가 01043344655가 맞습니까?\n1. 예\n2. 아니요"}
+Received echo for message mid.$cAASL7vrMNqphJfkkCFa9LPbnYajE and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfkkCFa9LPbnYajE
+All message before 1490164112392 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164116292 with message:
+{"mid":"mid.$cAASL7vrMNqphJfkzRFa9LPqbVwA2","seq":6600,"text":"1"}
+state!!!: identify
+request option : {"PHONE":"01043344655","RESULTMSG":"OK","AUTH_KEY":"0SUT6AOCSMGSU4D1","RESULT":true,"SEND_AUTH_CNT":0}
+identify result!!!!!!!!!!!!!: true
+Successfully sent message with id mid.$cAASL7vrMNqphJfk8Bla9LPzvy6W3 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164118534 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfk8Bla9LPzvy6W3","seq":6602,"text":"휴대폰번호로 발송된 인증번호를 입력해주세요. 입력하신 번호는01043344655입니다."}
+Received echo for message mid.$cAASL7vrMNqphJfk8Bla9LPzvy6W3 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfk8Bla9LPzvy6W3
+All message before 1490164118534 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1222610814520674, session: 1222610814520674 and page 1355803134478878 at 1490164125558 with message:
+{"mid":"mid.$cAASL68NrWF9hJflXdla9LQOnqPe9","seq":6069,"text":"주문하기"}
+state!!!: -1
+inputARRAY!@#@#@#@#@#@#@#@## {"fullOrderVO":{"aOrderMasterDataVO":{"orderId":"","custId":"","agentId":"WEB","branchId":"8817","orderType":"2","orderDateTime":"20170322152845","packDataTime":"20170322152845","reserveDateTime":"","couponId":"","discount":"","couponVal":"","empMeal":"","items":1,"listPrice":"23900","discPrice":null,"prodId":"","cdate":"","chour":"","delayTime":"","si":"","gu":"","dong":"","addr1":"","addr2":"","addrDesc":"서울시 관악구 관악로1 138동","phoneRegion":"010","phone":"92103621","anti":"","flag":"Y","custName":"김기범","sector":"","zipcode":"","orderGubun":"2","phkno":""},"aOrderItems":{"aOrderItemDataVO":[{"orderId":"","orderSeq":"0","agentid":"WEB","branchId":"8817","createDateTime":"20170322152845","mDeal":"","mGroup":"","qty":"1","classId":"P","sizeId":"E","baseId":"P","productId":"CH","half":"N","topp1":"","topp2":"","topp3":"","topp4":"","topp5":"","topp6":"","topp7":"","topp8":"","topp9":"","topp10":"","topp11":"","bProductId":"","bTopp1":"","bTopp2":"","bTopp3":"","bTopp4":"","bTopp5":"","bTopp6":"","bTopp7":"","bTopp8":"","bTopp9":"","bTopp10":"","bTopp11":"","couponId":"couponID","couponVal":null,"listPrice":null,"discPrice":null,"cdate":"","chour":""}]},"aCustMasterDataVO":{"custId":"","custName":"김기범","fmcCard":"","addrDesc":"서울시 관악구 관악로1 138동","phoneRegion":"010","phone":"92103621","branchId":"8817","branchName":"신림2호점","custType":"10","fmcUse":"","fmcAmount":"","lastUpdate":"","lastUpdateTime":"","createUpdate":"","createUpdateTime":"","zipcode":"","orderAmt":"","custMemo":"","pointX":"","pointY":""}}}
+inputDATA!!!!!!!!!!!!!!!!! params={"fullOrderVO":{"aOrderMasterDataVO":{"orderId":"","custId":"","agentId":"WEB","branchId":"8817","orderType":"2","orderDateTime":"20170322152845","packDataTime":"20170322152845","reserveDateTime":"","couponId":"","discount":"","couponVal":"","empMeal":"","items":1,"listPrice":"23900","discPrice":null,"prodId":"","cdate":"","chour":"","delayTime":"","si":"","gu":"","dong":"","addr1":"","addr2":"","addrDesc":"서울시 관악구 관악로1 138동","phoneRegion":"010","phone":"92103621","anti":"","flag":"Y","custName":"김기범","sector":"","zipcode":"","orderGubun":"2","phkno":""},"aOrderItems":{"aOrderItemDataVO":[{"orderId":"","orderSeq":"0","agentid":"WEB","branchId":"8817","createDateTime":"20170322152845","mDeal":"","mGroup":"","qty":"1","classId":"P","sizeId":"E","baseId":"P","productId":"CH","half":"N","topp1":"","topp2":"","topp3":"","topp4":"","topp5":"","topp6":"","topp7":"","topp8":"","topp9":"","topp10":"","topp11":"","bProductId":"","bTopp1":"","bTopp2":"","bTopp3":"","bTopp4":"","bTopp5":"","bTopp6":"","bTopp7":"","bTopp8":"","bTopp9":"","bTopp10":"","bTopp11":"","couponId":"couponID","couponVal":null,"listPrice":null,"discPrice":null,"cdate":"","chour":""}]},"aCustMasterDataVO":{"custId":"","custName":"김기범","fmcCard":"","addrDesc":"서울시 관악구 관악로1 138동","phoneRegion":"010","phone":"92103621","branchId":"8817","branchName":"신림2호점","custType":"10","fmcUse":"","fmcAmount":"","lastUpdate":"","lastUpdateTime":"","createUpdate":"","createUpdateTime":"","zipcode":"","orderAmt":"","custMemo":"","pointX":"","pointY":""}}}
+ordernow!!!!!!![object Object]
+Failed calling Send API 400 Bad Request { message: '(#10) Cannot message users who are not admins, developers or testers of the app until pages_messaging permission is reviewed and the app is live.',
+  type: 'OAuthException',
+  code: 10,
+  error_subcode: 2018028,
+  fbtrace_id: 'BS8MrN9TxYd' }
+Failed calling Send API 400 Bad Request { message: '(#10) Cannot message users who are not admins, developers or testers of the app until pages_messaging permission is reviewed and the app is live.',
+  type: 'OAuthException',
+  code: 10,
+  error_subcode: 2018028,
+  fbtrace_id: 'GRizkUtyPpU' }
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164127629 with message:
+{"mid":"mid.$cAASL7vrMNqphJflfjVa9LQWyRIMF","seq":6604,"text":"4938"}
+state!!!: order_method_1
+request option : {"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAASL7vrMNqphJflkw1a9LQcgxnHE to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164128963 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJflkw1a9LQcgxnHE","seq":6606,"text":"주문 방법을 선택해주세요.\n1. 배달 주문\n2. 포장 주문"}
+Received echo for message mid.$cAASL7vrMNqphJflkw1a9LQcgxnHE and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJflkw1a9LQcgxnHE
+All message before 1490164128963 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164133891 with message:
+{"mid":"mid.$cAASL7vrMNqphJfl4A1a9LQvXuXaz","seq":6608,"text":"1"}
+state!!!: order_method_2
+Successfully sent message with id mid.$cAASL7vrMNqphJfl55Fa9LQxpD2p6 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164134372 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfl55Fa9LQxpD2p6","seq":6610,"text":"배달 받으실 주소를 입력해 주세요 (00시 00구 00동/로)"}
+Received echo for message mid.$cAASL7vrMNqphJfl55Fa9LQxpD2p6 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfl55Fa9LQxpD2p6
+All message before 1490164134372 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1222610814520674, session: 1222610814520674 and page 1355803134478878 at 1490164138129 with message:
+{"mid":"mid.$cAASL68NrWF9hJfmIkVa9LRAI9r8y","seq":6071,"text":"시작"}
+state!!!: -1
+Failed calling Send API 400 Bad Request { message: '(#10) Cannot message users who are not admins, developers or testers of the app until pages_messaging permission is reviewed and the app is live.',
+  type: 'OAuthException',
+  code: 10,
+  error_subcode: 2018028,
+  fbtrace_id: 'DXkRrprl/YX' }
+Received message for user ID: 1222610814520674, session: 1222610814520674 and page 1355803134478878 at 1490164146635 with message:
+{"mid":"mid.$cAASL68NrWF9hJfmpy1a9LRhSpYvk","seq":6073,"text":"피자주문"}
+state!!!: -1
+Failed calling Send API 400 Bad Request { message: '(#10) Cannot message users who are not admins, developers or testers of the app until pages_messaging permission is reviewed and the app is live.',
+  type: 'OAuthException',
+  code: 10,
+  error_subcode: 2018028,
+  fbtrace_id: 'EizM104YqHv' }
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164148915 with message:
+{"mid":"mid.$cAASL7vrMNqphJfmys1a9LRqCltBH","seq":6612,"text":"서울 강남구 수서동"}
+state!!!: address_1
+request option : {"SEARCH_RESULT":"{\"data\":{\"queryStr\":\"서울 강남구 수서동\",\"addrDesc\":\"\"},\"addrListVO\":[{\"index\":\"0\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 산3-1\",\"newAddr\":null,\"name\":\"수서동\",\"x\":\"964495\",\"y\":\"1942193\"},{\"index\":\"1\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 537\",\"newAddr\":\"서울특별시 강남구 광평로34길 35\",\"name\":\"강남더샵포레스트아파트\",\"x\":\"964210\",\"y\":\"1942529\"},{\"index\":\"2\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동\",\"newAddr\":null,\"name\":\"서울세곡보금자리\",\"x\":\"964024\",\"y\":\"1942556\"},{\"index\":\"3\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 591\",\"newAddr\":null,\"name\":\"푸르미건설\",\"x\":\"964162\",\"y\":\"1942722\"},{\"index\":\"4\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 490-2\",\"newAddr\":null,\"name\":\"아리랑난원\",\"x\":\"964444\",\"y\":\"1942849\"},{\"index\":\"5\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 522-2\",\"newAddr\":null,\"name\":\"SK중앙에너비스주유소 수서지점\",\"x\":\"964217\",\"y\":\"1942833\"},{\"index\":\"6\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 592\",\"newAddr\":\"서울특별시 강남구 광평로34길 10\",\"name\":\"수서교회\",\"x\":\"964127\",\"y\":\"1942783\"},{\"index\":\"7\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 559\",\"newAddr\":\"서울특별시 강남구 광평로34길 55\",\"name\":\"강남데시앙포레아파트\",\"x\":\"963855\",\"y\":\"1942495\"},{\"index\":\"8\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 559\",\"newAddr\":\"서울특별시 강남구 광평로34길 55\",\"name\":\"주영보아스\",\"x\":\"963855\",\"y\":\"1942495\"},{\"index\":\"9\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 749\",\"newAddr\":\"서울특별시 강남구 광평로 144\",\"name\":\"수서청소년수련관\",\"x\":\"963626\",\"y\":\"1942784\"},{\"index\":\"10\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 595\",\"newAddr\":\"서울특별시 강남구 광평로 196\",\"name\":\"성모봄소아청소년과의원\",\"x\":\"964130\",\"y\":\"1942829\"},{\"index\":\"11\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 595\",\"newAddr\":\"서울특별시 강남구 광평로 196\",\"name\":\"수서제이스프라자\",\"x\":\"964130\",\"y\":\"1942829\"},{\"index\":\"12\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 502-1\",\"newAddr\":\"서울특별시 강남구 광평로 220\",\"name\":\"은혜와진리교회\",\"x\":\"964372\",\"y\":\"1942911\"},{\"index\":\"13\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 474-10\",\"newAddr\":\"서울특별시 강남구 광평로42길 20\",\"name\":\"수서교회\",\"x\":\"964602\",\"y\":\"1942917\"},{\"index\":\"14\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 595\",\"newAddr\":\"서울특별시 강남구 광평로 196\",\"name\":\"서울허브치과\",\"x\":\"964130\",\"y\":\"1942829\"},{\"index\":\"15\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 713\",\"newAddr\":\"서울특별시 강남구 밤고개로1길 10\",\"name\":\"수서현대벤처빌\",\"x\":\"964798\",\"y\":\"1943247\"},{\"index\":\"16\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 560\",\"newAddr\":\"서울특별시 강남구 광평로34길 55\",\"name\":\"세곡2지구1단지아파트\",\"x\":\"963823\",\"y\":\"1942502\"},{\"index\":\"17\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 471-11\",\"newAddr\":\"서울특별시 강남구 광평로42길 18\",\"name\":\"궁마을경로당\",\"x\":\"964571\",\"y\":\"1942931\"},{\"index\":\"18\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 474-1\",\"newAddr\":\"서울특별시 강남구 광평로46길 22\",\"name\":\"시엔에스디자인연구소\",\"x\":\"964623\",\"y\":\"1942935\"},{\"index\":\"19\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 467-11\",\"newAddr\":\"서울특별시 강남구 광평로42길 14\",\"name\":\"실리기업\",\"x\":\"964559\",\"y\":\"1942943\"},{\"index\":\"20\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 739\",\"newAddr\":\"서울특별시 강남구 광평로 199\",\"name\":\"천주교수서동성당\",\"x\":\"964183\",\"y\":\"1942904\"},{\"index\":\"21\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 738\",\"newAddr\":\"서울특별시 강남구 광평로39길 3\",\"name\":\"수서동익아파트\",\"x\":\"964331\",\"y\":\"1942956\"},{\"index\":\"22\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 462-11\",\"newAddr\":\"서울특별시 강남구 광평로 228-1\",\"name\":\"궁마을\",\"x\":\"964470\",\"y\":\"1942961\"},{\"index\":\"23\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 462-6\",\"newAddr\":\"서울특별시 강남구 광평로 230\",\"name\":\"송파농협수서동지점\",\"x\":\"964457\",\"y\":\"1942979\"},{\"index\":\"24\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 738\",\"newAddr\":\"서울특별시 강남구 광평로39길 3\",\"name\":\"라이브피자\",\"x\":\"964347\",\"y\":\"1942970\"},{\"index\":\"25\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 738\",\"newAddr\":\"서울특별시 강남구 광평로39길 3\",\"name\":\"서울교회\",\"x\":\"964347\",\"y\":\"1942970\"},{\"index\":\"26\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 738\",\"newAddr\":\"서울특별시 강남구 광평로39길 3\",\"name\":\"산요서비스센터\",\"x\":\"964347\",\"y\":\"1942970\"},{\"index\":\"27\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 512\",\"newAddr\":null,\"name\":\"천주교수서동성당\",\"x\":\"964190\",\"y\":\"1942945\"},{\"index\":\"28\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 산4-1\",\"newAddr\":\"서울특별시 강남구 광평로34길 124\",\"name\":\"서울여성보호센터\",\"x\":\"963685\",\"y\":\"1942325\"},{\"index\":\"29\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 741\",\"newAddr\":\"서울특별시 강남구 광평로 185\",\"name\":\"태화기독교사회복지관\",\"x\":\"964048\",\"y\":\"1942906\"},{\"index\":\"30\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 741\",\"newAddr\":\"서울특별시 강남구 광평로 185\",\"name\":\"강남청소년쉼터\",\"x\":\"964059\",\"y\":\"1942917\"},{\"index\":\"31\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 738\",\"newAddr\":\"서울특별시 강남구 광평로39길 3\",\"name\":\"미래정보\",\"x\":\"964427\",\"y\":\"1943037\"},{\"index\":\"32\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 741\",\"newAddr\":\"서울특별시 강남구 광평로 185\",\"name\":\"신우상사\",\"x\":\"964057\",\"y\":\"1942916\"},{\"index\":\"33\",\"addrType\":\"2\",\"addr\":\"서울특별시 강남구 수서동 산4-1\",\"newAddr\":\"서울특별시 강남구 광평로34길 124\",\"name\":\"서울특별시여성보호센터\",\"x\":\"963667\",\"y\":\"1942336\"}],\"resultMessage\":\"34건 조회되었습니다.\"}"}
+Failed calling Send API 400 Bad Request { message: '(#100) Length of param message[text] must be less than or equal to 640',
+  type: 'OAuthException',
+  code: 100,
+  fbtrace_id: 'H0PQGS7spNe' }
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164177621 with message:
+{"mid":"mid.$cAASL7vrMNqphJfoi1Va9LTaLMHxf","seq":6614,"text":"12"}
+state!!!: address_2
+Successfully sent message with id mid.$cAASL7vrMNqphJfok9la9LTcr5Z9L to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164178166 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfok9la9LTcr5Z9L","seq":6616,"text":"나머지 주소를 입력해 주십시오.(00아파트 0동 0호, 0층)"}
+Received echo for message mid.$cAASL7vrMNqphJfok9la9LTcr5Z9L and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfok9la9LTcr5Z9L
+All message before 1490164178166 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164194858 with message:
+{"mid":"mid.$cAASL7vrMNqphJfpmKla9LUdWehWA","seq":6618,"text":"201-1201"}
+state!!!: address_4
+Successfully sent message with id mid.$cAASL7vrMNqphJfpoDla9LUfx-wxQ to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164195342 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfpoDla9LUfx-wxQ","seq":6620,"text":"배달 받으실 주소가 서울특별시 강남구 수서동 595 201-1201 이 맞습니까?\n1. 예\n2. 아니오"}
+Received echo for message mid.$cAASL7vrMNqphJfpoDla9LUfx-wxQ and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfpoDla9LUfx-wxQ
+All message before 1490164195342 were delivered.
+messageingEvent.delivery
+request option : {"SEARCH_RESULT":"[{\"delay\":7,\"zoneId\":\"H-06\",\"storeID\":\"8928\",\"storeName\":\"수서일원점\",\"distance\":1236.0,\"storeDelivery\":\"Y\",\"zoneDelivery\":\"Y\",\"storeXCoord\":963060.59,\"storeYCoord\":1943447.85,\"storeAddr\":\"서울 강남구 일원동 685-6호 1층\"}]"}
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164206019 with message:
+{"mid":"mid.$cAASL7vrMNqphJfqRw1a9LVJKjFUM","seq":6622,"text":"1"}
+state!!!: address_5
+request option : {"LIST":[{"BASE_ID":"AA","DOUGH_DESC":"신제품세트AA","DISPLAY_SEQ":1},{"BASE_ID":"DD","DOUGH_DESC":"인기메뉴DD","DISPLAY_SEQ":2},{"BASE_ID":"TD","DOUGH_DESC":"더블박스","DISPLAY_SEQ":3},{"BASE_ID":"AP","DOUGH_DESC":"음료/소스","DISPLAY_SEQ":4},{"BASE_ID":"BB","DOUGH_DESC":"버거바이트","DISPLAY_SEQ":5},{"BASE_ID":"MC","DOUGH_DESC":"치즈크러스트","DISPLAY_SEQ":6},{"BASE_ID":"DR","DOUGH_DESC":"더 맛있는 피자","DISPLAY_SEQ":7},{"BASE_ID":"P","DOUGH_DESC":"팬","DISPLAY_SEQ":8},{"BASE_ID":"RG","DOUGH_DESC":"리치골드","DISPLAY_SEQ":9},{"BASE_ID":"AP","DOUGH_DESC":"사이드(윙,어니언링)","DISPLAY_SEQ":10},{"BASE_ID":"PA","DOUGH_DESC":"사이드(파스타)","DISPLAY_SEQ":11},{"BASE_ID":"SA","DOUGH_DESC":"사이드(샐러드)","DISPLAY_SEQ":12}],"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAASL7vrMNqphJfqVQla9LVLZxEF9 to recipient 1311646552226831
+Successfully sent message with id mid.$cAASL7vrMNqphJfqVo1a9LVNMac9l to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164206914 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfqVQla9LVLZxEF9","seq":6624,"text":"주문하시고자 하는 제품군을 선택해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJfqVQla9LVLZxEF9 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfqVQla9LVLZxEF9
+All message before 1490164206914 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfqVo1a9LVNMac9l
+All message before 1490164207011 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164207011 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfqVo1a9LVNMac9l","seq":6625,"text":"1. 신제품세트AA\n2. 인기메뉴DD\n3. 더블박스\n4. 음료/소스\n5. 버거바이트\n6. 치즈크러스트\n7. 더 맛있는 피자\n8. 팬\n9. 리치골드\n10. 사이드(윙,어니언링)\n11. 사이드(파스타)\n12. 사이드(샐러드)\n100. 종료\n목록에서 번호를 입력해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJfqVo1a9LVNMac9l and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164218910 with message:
+{"mid":"mid.$cAASL7vrMNqphJfrEHla9LV7bSnuU","seq":6628,"text":"6"}
+state!!!: menu_2
+request option : {"LIST":[{"PRODUCT_DESC_SHORT":"탱글탱글 통새우에 고소한 갈릭버터를 입혀 풍성한 맛과 탱글함이 입 안 가득 터지다","PRICE":34900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"갈릭버터쉬림프","CLASS_ID":"P","PRODUCT_ID":"GB","DISPLAY_SEQ":1,"BASE_ID":"MC","SIZE_ID":"S","SIZE_CD":"L"},{"PRODUCT_DESC_SHORT":"탱글탱글 통새우에 고소한 갈릭버터를 입혀 풍성한 맛과 탱글함이 입 안 가득 터지다","PRICE":28900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"갈릭버터쉬림프","CLASS_ID":"P","PRODUCT_ID":"GB","DISPLAY_SEQ":1,"BASE_ID":"MC","SIZE_ID":"E","SIZE_CD":"M"},{"PRODUCT_DESC_SHORT":"통새우, 후레시 베이컨, 스테이크 프리미엄 토핑을 한 판에 모두 쏟아부은 토핑 끝판왕!","PRICE":28900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"토핑킹","CLASS_ID":"P","PRODUCT_ID":"RT","DISPLAY_SEQ":2,"BASE_ID":"MC","SIZE_ID":"E","SIZE_CD":"M"},{"PRODUCT_DESC_SHORT":"통새우, 후레시 베이컨, 스테이크 프리미엄 토핑을 한 판에 모두 쏟아부은 토핑 끝판왕!","PRICE":34900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"토핑킹","CLASS_ID":"P","PRODUCT_ID":"RT","DISPLAY_SEQ":2,"BASE_ID":"MC","SIZE_ID":"S","SIZE_CD":"L"},{"PRODUCT_DESC_SHORT":"쫄깃 고소한 모짜렐라 치즈에 부드러운 크림치즈, 그리고 환상의 궁합인 고급 와인비프를 얹어 깊고 진한 치즈의 풍미가 가득~한 프리미엄 토핑","PRICE":34900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"치즈킹","CLASS_ID":"P","PRODUCT_ID":"HK","DISPLAY_SEQ":3,"BASE_ID":"MC","SIZE_ID":"S","SIZE_CD":"L"},{"PRODUCT_DESC_SHORT":"쫄깃 고소한 모짜렐라 치즈에 부드러운 크림치즈, 그리고 환상의 궁합인 고급 와인비프를 얹어 깊고 진한 치즈의 풍미가 가득~한 프리미엄 토핑","PRICE":28900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"치즈킹","CLASS_ID":"P","PRODUCT_ID":"HK","DISPLAY_SEQ":3,"BASE_ID":"MC","SIZE_ID":"E","SIZE_CD":"M"},{"PRODUCT_DESC_SHORT":"육즙 가득 안창살 스테이크와 갈릭&올리브 오일에 구운 버섯의 환상적 케미","PRICE":28900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"그릴드 스테이크 머쉬룸","CLASS_ID":"P","PRODUCT_ID":"GM","DISPLAY_SEQ":4,"BASE_ID":"MC","SIZE_ID":"E","SIZE_CD":"M"},{"PRODUCT_DESC_SHORT":"육즙 가득 안창살 스테이크와 갈릭&올리브 오일에 구운 버섯의 환상적 케미","PRICE":34900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"그릴드 스테이크 머쉬룸","CLASS_ID":"P","PRODUCT_ID":"GM","DISPLAY_SEQ":4,"BASE_ID":"MC","SIZE_ID":"S","SIZE_CD":"L"},{"PRODUCT_DESC_SHORT":"특제 씨즈닝을 입힌 통새우와 바삭한 식감의 어니언 프라이즈, 깊고 진한 프렌치 어니언 소스가 만나 감칠맛 가득한 깊은 풍미","PRICE":28900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"프렌치 어니언 쉬림프","CLASS_ID":"P","PRODUCT_ID":"FH","DISPLAY_SEQ":5,"BASE_ID":"MC","SIZE_ID":"E","SIZE_CD":"M"},{"PRODUCT_DESC_SHORT":"특제 씨즈닝을 입힌 통새우와 바삭한 식감의 어니언 프라이즈, 깊고 진한 프렌치 어니언 소스가 만나 감칠맛 가득한 깊은 풍미","PRICE":34900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"프렌치 어니언 쉬림프","CLASS_ID":"P","PRODUCT_ID":"FH","DISPLAY_SEQ":5,"BASE_ID":"MC","SIZE_ID":"S","SIZE_CD":"L"},{"PRODUCT_DESC_SHORT":"한국이 사랑하는 달콤한 정통 불고기와 신선한 야채, 고소한 모짜렐라 치즈를 듬뿍 올려 화끈하게 구웠다! 남녀노소 모두가 좋아하는 피자헛의 대표 메뉴 ","PRICE":28900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"직화불고기","CLASS_ID":"P","PRODUCT_ID":"PG","DISPLAY_SEQ":6,"BASE_ID":"MC","SIZE_ID":"E","SIZE_CD":"M"},{"PRODUCT_DESC_SHORT":"한국이 사랑하는 달콤한 정통 불고기와 신선한 야채, 고소한 모짜렐라 치즈를 듬뿍 올려 화끈하게 구웠다! 남녀노소 모두가 좋아하는 피자헛의 대표 메뉴","PRICE":34900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"직화불고기","CLASS_ID":"P","PRODUCT_ID":"PG","DISPLAY_SEQ":6,"BASE_ID":"MC","SIZE_ID":"S","SIZE_CD":"L"},{"PRODUCT_DESC_SHORT":"담백한 포테이토 큐브 위에 육즙 가득한 훈연 베이컨을 듬뿍 얹어 화르륵 구어낸 후, 고소한 렌치드레싱으로 마무리! 고소함하면서도 담백한 맛을 동시에 즐길 수 있는 피자","PRICE":32900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"베이컨포테이토","CLASS_ID":"P","PRODUCT_ID":"OA","DISPLAY_SEQ":8,"BASE_ID":"MC","SIZE_ID":"S","SIZE_CD":"L"},{"PRODUCT_DESC_SHORT":"담백한 포테이토 큐브 위에 육즙 가득한 훈연 베이컨을 듬뿍 얹어 화르륵 구어낸 후, 고소한 렌치드레싱으로 마무리! 고소함하면서도 담백한 맛을 동시에 즐길 수 있는 피자","PRICE":26900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"베이컨포테이토","CLASS_ID":"P","PRODUCT_ID":"OA","DISPLAY_SEQ":8,"BASE_ID":"MC","SIZE_ID":"E","SIZE_CD":"M"},{"PRODUCT_DESC_SHORT":"진한 토마토 소스에 신선한 각종 야채와 고기, 쫄깃하고 고소한 모짜렐라 치즈까지 환상의 콤비를 자랑하는 정통 콤비네이션 피자","PRICE":32900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"수퍼슈프림","CLASS_ID":"P","PRODUCT_ID":"SS","DISPLAY_SEQ":9,"BASE_ID":"MC","SIZE_ID":"S","SIZE_CD":"L"},{"PRODUCT_DESC_SHORT":"진한 토마토 소스에 신선한 각종 야채와 고기, 쫄깃하고 고소한 모짜렐라 치즈까지 환상의 콤비를 자랑하는 정통 콤비네이션 피자","PRICE":26900,"BASE_DESC":"치즈크러스트","PRODUCT_DESC":"수퍼슈프림","CLASS_ID":"P","PRODUCT_ID":"SS","DISPLAY_SEQ":9,"BASE_ID":"MC","SIZE_ID":"E","SIZE_CD":"M"}],"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAASL7vrMNqphJfrI0Fa9LWAXqdOM to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164220112 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAASL7vrMNqphJfrI0Fa9LWAXqdOM","seq":6630,"attachments":[{"title":"치즈크러스트-프렌치 어니언 쉬림프, 치즈크러스트-그릴드 스테이크 머쉬룸, 치즈크러스트-베이컨포테이토, 치즈크러스트-직화불고기, 치즈크러스트-토핑킹, 치즈크러스트-치즈킹, 치즈크러스트-수퍼슈프림, 치즈크러스트-갈릭버터쉬림프","url":null,"type":"template","payload":{"template_type":"generic","sharable":false,"elements":[{"title":"치즈크러스트-프렌치 어니언 쉬림프","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","subtitle":"특제 씨즈닝을 입힌 통새우와 바삭한 식감의 어니언 프라이즈, 깊고 진한 프렌치 어니언 소스가 만나 감칠맛 가득한 깊은 풍미","buttons":[{"type":"postback","title":"M 28900","payload":"MENUORDER/P/E/MC/FH/28900/치즈크러스트-프렌치 어니언 쉬림프 M"},{"type":"postback","title":"L 34900","payload":"MENUORDER/P/S/MC/FH/34900/치즈크러스트-프렌치 어니언 쉬림프 L"}]},{"title":"치즈크러스트-그릴드 스테이크 머쉬룸","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","subtitle":"육즙 가득 안창살 스테이크와 갈릭&올리브 오일에 구운 버섯의 환상적 케미","buttons":[{"type":"postback","title":"M 28900","payload":"MENUORDER/P/E/MC/GM/28900/치즈크러스트-그릴드 스테이크 머쉬룸 M"},{"type":"postback","title":"L 34900","payload":"MENUORDER/P/S/MC/GM/34900/치즈크러스트-그릴드 스테이크 머쉬룸 L"}]},{"title":"치즈크러스트-베이컨포테이토","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","subtitle":"담백한 포테이토 큐브 위에 육즙 가득한 훈연 베이컨을 듬뿍 얹어 화르륵 구어낸 후, 고소한 렌치드레싱으로 마무리! 고소함하면서도 담백한 맛을 동...","buttons":[{"type":"postback","title":"L 32900","payload":"MENUORDER/P/S/MC/OA/32900/치즈크러스트-베이컨포테이토 L"},{"type":"postback","title":"M 26900","payload":"MENUORDER/P/E/MC/OA/26900/치즈크러스트-베이컨포테이토 M"}]},{"title":"치즈크러스트-직화불고기","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","subtitle":"한국이 사랑하는 달콤한 정통 불고기와 신선한 야채, 고소한 모짜렐라 치즈를 듬뿍 올려 화끈하게 구웠다! 남녀노소 모두가 좋아하는 피자헛의 대표 ...","buttons":[{"type":"postback","title":"M 28900","payload":"MENUORDER/P/E/MC/PG/28900/치즈크러스트-직화불고기 M"},{"type":"postback","title":"L 34900","payload":"MENUORDER/P/S/MC/PG/34900/치즈크러스트-직화불고기 L"}]},{"title":"치즈크러스트-토핑킹","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","subtitle":"통새우, 후레시 베이컨, 스테이크 프리미엄 토핑을 한 판에 모두 쏟아부은 토핑 끝판왕!","buttons":[{"type":"postback","title":"M 28900","payload":"MENUORDER/P/E/MC/RT/28900/치즈크러스트-토핑킹 M"},{"type":"postback","title":"L 34900","payload":"MENUORDER/P/S/MC/RT/34900/치즈크러스트-토핑킹 L"}]},{"title":"치즈크러스트-치즈킹","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","subtitle":"쫄깃 고소한 모짜렐라 치즈에 부드러운 크림치즈, 그리고 환상의 궁합인 고급 와인비프를 얹어 깊고 진한 치즈의 풍미가 가득~한 프리미엄 토핑","buttons":[{"type":"postback","title":"L 34900","payload":"MENUORDER/P/S/MC/HK/34900/치즈크러스트-치즈킹 L"},{"type":"postback","title":"M 28900","payload":"MENUORDER/P/E/MC/HK/28900/치즈크러스트-치즈킹 M"}]},{"title":"치즈크러스트-수퍼슈프림","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","subtitle":"진한 토마토 소스에 신선한 각종 야채와 고기, 쫄깃하고 고소한 모짜렐라 치즈까지 환상의 콤비를 자랑하는 정통 콤비네이션 피자","buttons":[{"type":"postback","title":"L 32900","payload":"MENUORDER/P/S/MC/SS/32900/치즈크러스트-수퍼슈프림 L"},{"type":"postback","title":"M 26900","payload":"MENUORDER/P/E/MC/SS/26900/치즈크러스트-수퍼슈프림 M"}]},{"title":"치즈크러스트-갈릭버터쉬림프","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","subtitle":"탱글탱글 통새우에 고소한 갈릭버터를 입혀 풍성한 맛과 탱글함이 입 안 가득 터지다","buttons":[{"type":"postback","title":"L 34900","payload":"MENUORDER/P/S/MC/GB/34900/치즈크러스트-갈릭버터쉬림프 L"},{"type":"postback","title":"M 28900","payload":"MENUORDER/P/E/MC/GB/28900/치즈크러스트-갈릭버터쉬림프 M"}]}],"image_aspect_ratio":"square"}}]}
+Received echo for message mid.$cAASL7vrMNqphJfrI0Fa9LWAXqdOM and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfrI0Fa9LWAXqdOM
+All message before 1490164220112 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 with payload 'MENUORDER/P/S/MC/HK/34900/치즈크러스트-치즈킹 L' at 1490164240447
+state!!!: MENUORDER/P/S/MC/HK/34900/치즈크러스트-치즈킹 L
+selectedMenuPrice!!!!!:: 34900
+Successfully sent message with id mid.$cAASL7vrMNqphJfsaKla9LXR6BaGj to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164240938 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfsaKla9LXR6BaGj","seq":6634,"text":"수량을 입력해주세요."}
+Received echo for message mid.$cAASL7vrMNqphJfsaKla9LXR6BaGj and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfsaKla9LXR6BaGj
+All message before 1490164240938 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164246361 with message:
+{"mid":"mid.$cAASL7vrMNqphJfsvWVa9LXm1R3E_","seq":6636,"text":"1"}
+state!!!: menu_3
+selectedMenuPrice!!!!!::::: 34900, qyt: 1
+qty: 1
+Successfully sent message with id mid.$cAASL7vrMNqphJfsxm1a9LXpU9OEf to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164246939 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfsxm1a9LXpU9OEf","seq":6638,"text":"치즈크러스트-치즈킹 L 34900원 [1]\n현재 총 금액은 34900원 입니다.\n수서일원점에 위 제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다."}
+Received echo for message mid.$cAASL7vrMNqphJfsxm1a9LXpU9OEf and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfsxm1a9LXpU9OEf
+All message before 1490164246939 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164267257 with message:
+{"mid":"mid.$cAASL7vrMNqphJfuA-Va9LY4PmI_E","seq":6640,"text":"아니오"}
+state!!!: menu_4
+Successfully sent message with id mid.$cAASL7vrMNqphJfuC-Fa9LY6t6Rz1 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164267768 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfuC-Fa9LY6t6Rz1","seq":6642,"text":"주문하시고자 하는 제품군을 선택해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJfuC-Fa9LY6t6Rz1 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfuC-Fa9LY6t6Rz1
+All message before 1490164267768 were delivered.
+messageingEvent.delivery
+request option : {"LIST":[{"BASE_ID":"AA","DOUGH_DESC":"신제품세트AA","DISPLAY_SEQ":1},{"BASE_ID":"DD","DOUGH_DESC":"인기메뉴DD","DISPLAY_SEQ":2},{"BASE_ID":"TD","DOUGH_DESC":"더블박스","DISPLAY_SEQ":3},{"BASE_ID":"AP","DOUGH_DESC":"음료/소스","DISPLAY_SEQ":4},{"BASE_ID":"BB","DOUGH_DESC":"버거바이트","DISPLAY_SEQ":5},{"BASE_ID":"MC","DOUGH_DESC":"치즈크러스트","DISPLAY_SEQ":6},{"BASE_ID":"DR","DOUGH_DESC":"더 맛있는 피자","DISPLAY_SEQ":7},{"BASE_ID":"P","DOUGH_DESC":"팬","DISPLAY_SEQ":8},{"BASE_ID":"RG","DOUGH_DESC":"리치골드","DISPLAY_SEQ":9},{"BASE_ID":"AP","DOUGH_DESC":"사이드(윙,어니언링)","DISPLAY_SEQ":10},{"BASE_ID":"PA","DOUGH_DESC":"사이드(파스타)","DISPLAY_SEQ":11},{"BASE_ID":"SA","DOUGH_DESC":"사이드(샐러드)","DISPLAY_SEQ":12}],"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAASL7vrMNqphJfuJRFa9LZA_3Emz to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164269380 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfuJRFa9LZA_3Emz","seq":6644,"text":"1. 신제품세트AA\n2. 인기메뉴DD\n3. 더블박스\n4. 음료/소스\n5. 버거바이트\n6. 치즈크러스트\n7. 더 맛있는 피자\n8. 팬\n9. 리치골드\n10. 사이드(윙,어니언링)\n11. 사이드(파스타)\n12. 사이드(샐러드)\n100. 종료\n목록에서 번호를 입력해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJfuJRFa9LZA_3Emz and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfuJRFa9LZA_3Emz
+All message before 1490164269380 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164276721 with message:
+{"mid":"mid.$cAASL7vrMNqphJful8Va9LZdOy_Fo","seq":6646,"text":"음료"}
+state!!!: menu_2
+Successfully sent message with id mid.$cAASL7vrMNqphJfun4Va9LZfoO2V6 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164277217 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfun4Va9LZfoO2V6","seq":6648,"text":"숫자만 입력해주세요"}
+Received echo for message mid.$cAASL7vrMNqphJfun4Va9LZfoO2V6 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfun4Va9LZfoO2V6
+All message before 1490164277217 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164284915 with message:
+{"mid":"mid.$cAASL7vrMNqphJfvF81a9LZ9PpDc9","seq":6650,"text":"4"}
+state!!!: menu_1
+Successfully sent message with id mid.$cAASL7vrMNqphJfvIKVa9LZ_6Ici5 to recipient 1311646552226831
+request option : {"LIST":[{"BASE_ID":"AA","DOUGH_DESC":"신제품세트AA","DISPLAY_SEQ":1},{"BASE_ID":"DD","DOUGH_DESC":"인기메뉴DD","DISPLAY_SEQ":2},{"BASE_ID":"TD","DOUGH_DESC":"더블박스","DISPLAY_SEQ":3},{"BASE_ID":"AP","DOUGH_DESC":"음료/소스","DISPLAY_SEQ":4},{"BASE_ID":"BB","DOUGH_DESC":"버거바이트","DISPLAY_SEQ":5},{"BASE_ID":"MC","DOUGH_DESC":"치즈크러스트","DISPLAY_SEQ":6},{"BASE_ID":"DR","DOUGH_DESC":"더 맛있는 피자","DISPLAY_SEQ":7},{"BASE_ID":"P","DOUGH_DESC":"팬","DISPLAY_SEQ":8},{"BASE_ID":"RG","DOUGH_DESC":"리치골드","DISPLAY_SEQ":9},{"BASE_ID":"AP","DOUGH_DESC":"사이드(윙,어니언링)","DISPLAY_SEQ":10},{"BASE_ID":"PA","DOUGH_DESC":"사이드(파스타)","DISPLAY_SEQ":11},{"BASE_ID":"SA","DOUGH_DESC":"사이드(샐러드)","DISPLAY_SEQ":12}],"RESULTMSG":"OK","RESULT":true}
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164285481 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfvIKVa9LZ_6Ici5","seq":6652,"text":"주문하시고자 하는 제품군을 선택해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJfvIKVa9LZ_6Ici5 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Successfully sent message with id mid.$cAASL7vrMNqphJfvJ4Fa9LaBngbJW to recipient 1311646552226831
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfvIKVa9LZ_6Ici5
+All message before 1490164285481 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164285920 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfvJ4Fa9LaBngbJW","seq":6654,"text":"1. 신제품세트AA\n2. 인기메뉴DD\n3. 더블박스\n4. 음료/소스\n5. 버거바이트\n6. 치즈크러스트\n7. 더 맛있는 피자\n8. 팬\n9. 리치골드\n10. 사이드(윙,어니언링)\n11. 사이드(파스타)\n12. 사이드(샐러드)\n100. 종료\n목록에서 번호를 입력해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJfvJ4Fa9LaBngbJW and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfvJ4Fa9LaBngbJW
+All message before 1490164285920 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164290974 with message:
+{"mid":"mid.$cAASL7vrMNqphJfvdnla9LaU4mFdz","seq":6656,"text":"4"}
+state!!!: menu_2
+request option : {"LIST":[{"PRICE":7800,"BASE_DESC":"애피타이저","PRODUCT_DESC":"오리지날 윙","CLASS_ID":"A","PRODUCT_ID":"WI","DISPLAY_SEQ":1,"BASE_ID":"AP","SIZE_ID":"BU","SIZE_CD":"8조각"},{"PRICE":3900,"BASE_DESC":"애피타이저","PRODUCT_DESC":"오리지날 윙","CLASS_ID":"A","PRODUCT_ID":"FO","DISPLAY_SEQ":2,"BASE_ID":"AP","SIZE_ID":"BU","SIZE_CD":"4조각"},{"PRICE":7800,"BASE_DESC":"애피타이저","PRODUCT_DESC":"소이갈릭 윙","CLASS_ID":"A","PRODUCT_ID":"KK","DISPLAY_SEQ":3,"BASE_ID":"AP","SIZE_ID":"BU","SIZE_CD":"8조각"},{"PRICE":3900,"BASE_DESC":"애피타이저","PRODUCT_DESC":"소이갈릭 윙","CLASS_ID":"A","PRODUCT_ID":"FS","DISPLAY_SEQ":4,"BASE_ID":"AP","SIZE_ID":"BU","SIZE_CD":"4조각"},{"PRICE":7800,"BASE_DESC":"애피타이저","PRODUCT_DESC":"스파이시윙","CLASS_ID":"A","PRODUCT_ID":"SN","DISPLAY_SEQ":5,"BASE_ID":"AP","SIZE_ID":"BU","SIZE_CD":"8조각"},{"PRICE":3900,"BASE_DESC":"애피타이저","PRODUCT_DESC":"스파이시윙","CLASS_ID":"A","PRODUCT_ID":"SW","DISPLAY_SEQ":6,"BASE_ID":"AP","SIZE_ID":"BU","SIZE_CD":"4조각"},{"PRICE":8900,"BASE_DESC":"애피타이저","PRODUCT_DESC":"치킨텐더","CLASS_ID":"A","PRODUCT_ID":"TT","DISPLAY_SEQ":7,"BASE_ID":"AP","SIZE_ID":"BU","SIZE_CD":"10조각"},{"PRICE":3900,"BASE_DESC":"애피타이저","PRODUCT_DESC":"치킨텐더","CLASS_ID":"A","PRODUCT_ID":"TF","DISPLAY_SEQ":8,"BASE_ID":"AP","SIZE_ID":"BU","SIZE_CD":"4조각"},{"BASE_ID":"AP","PRODUCT_ID":"OR","PRODUCT_DESC":"어니언링 10개","CLASS_ID":"A","SIZE_CD":"10조각","SIZE_ID":"MB","PRICE":3900,"BASE_DESC":"애피타이저"}],"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAASL7vrMNqphJfvitla9LaaSPwsH to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164292278 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAASL7vrMNqphJfvitla9LaaSPwsH","seq":6658,"attachments":[{"title":"애피타이저-소이갈릭 윙, 애피타이저-치킨텐더, 애피타이저-오리지날 윙, 애피타이저-스파이시윙","url":null,"type":"template","payload":{"template_type":"generic","sharable":false,"elements":[{"title":"애피타이저-소이갈릭 윙","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","buttons":[{"type":"postback","title":"8조각 7800","payload":"MENUORDER/A/BU/AP/KK/7800/애피타이저-소이갈릭 윙 8조각"},{"type":"postback","title":"4조각 3900","payload":"MENUORDER/A/BU/AP/FS/3900/애피타이저-소이갈릭 윙 4조각"}]},{"title":"애피타이저-치킨텐더","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","buttons":[{"type":"postback","title":"10조각 8900","payload":"MENUORDER/A/BU/AP/TT/8900/애피타이저-치킨텐더 10조각"},{"type":"postback","title":"4조각 3900","payload":"MENUORDER/A/BU/AP/TF/3900/애피타이저-치킨텐더 4조각"}]},{"title":"애피타이저-오리지날 윙","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","buttons":[{"type":"postback","title":"8조각 7800","payload":"MENUORDER/A/BU/AP/WI/7800/애피타이저-오리지날 윙 8조각"},{"type":"postback","title":"4조각 3900","payload":"MENUORDER/A/BU/AP/FO/3900/애피타이저-오리지날 윙 4조각"}]},{"title":"애피타이저-스파이시윙","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","buttons":[{"type":"postback","title":"8조각 7800","payload":"MENUORDER/A/BU/AP/SN/7800/애피타이저-스파이시윙 8조각"},{"type":"postback","title":"4조각 3900","payload":"MENUORDER/A/BU/AP/SW/3900/애피타이저-스파이시윙 4조각"}]}],"image_aspect_ratio":"square"}}]}
+Received echo for message mid.$cAASL7vrMNqphJfvitla9LaaSPwsH and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfvitla9LaaSPwsH
+All message before 1490164292278 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 with payload 'MENUORDER/A/BU/AP/FO/3900/애피타이저-오리지날 윙 4조각' at 1490164317049
+state!!!: MENUORDER/A/BU/AP/FO/3900/애피타이저-오리지날 윙 4조각
+selectedMenuPrice!!!!!:: 3900
+Successfully sent message with id mid.$cAASL7vrMNqphJfxFMla9Lb88BiNP to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164317490 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfxFMla9Lb88BiNP","seq":6662,"text":"수량을 입력해주세요."}
+Received echo for message mid.$cAASL7vrMNqphJfxFMla9Lb88BiNP and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfxFMla9Lb88BiNP
+All message before 1490164317490 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164322936 with message:
+{"mid":"mid.$cAASL7vrMNqphJfxaeFa9LcR0H3Ba","seq":6664,"text":"1"}
+state!!!: menu_3
+selectedMenuPrice!!!!!::::: 3900, qyt: 1
+qty: 1
+Successfully sent message with id mid.$cAASL7vrMNqphJfxcYFa9LcUG0641 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164323424 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfxcYFa9LcUG0641","seq":6666,"text":"치즈크러스트-치즈킹 L 34900원 [1]\n애피타이저-오리지날 윙 4조각 3900원 [1]\n현재 총 금액은 38800원 입니다.\n수서일원점에 위 제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다."}
+Received echo for message mid.$cAASL7vrMNqphJfxcYFa9LcUG0641 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfxcYFa9LcUG0641
+All message before 1490164323424 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164328253 with message:
+{"mid":"mid.$cAASL7vrMNqphJfxvPVa9LcmSHgKq","seq":6668,"text":"2"}
+state!!!: menu_4
+Successfully sent message with id mid.$cAASL7vrMNqphJfxxfFa9LcpPY6Nx to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164328828 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfxxfFa9LcpPY6Nx","seq":6670,"text":"주문하시고자 하는 제품군을 선택해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJfxxfFa9LcpPY6Nx and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfxxfFa9LcpPY6Nx
+All message before 1490164328828 were delivered.
+messageingEvent.delivery
+request option : {"LIST":[{"BASE_ID":"AA","DOUGH_DESC":"신제품세트AA","DISPLAY_SEQ":1},{"BASE_ID":"DD","DOUGH_DESC":"인기메뉴DD","DISPLAY_SEQ":2},{"BASE_ID":"TD","DOUGH_DESC":"더블박스","DISPLAY_SEQ":3},{"BASE_ID":"AP","DOUGH_DESC":"음료/소스","DISPLAY_SEQ":4},{"BASE_ID":"BB","DOUGH_DESC":"버거바이트","DISPLAY_SEQ":5},{"BASE_ID":"MC","DOUGH_DESC":"치즈크러스트","DISPLAY_SEQ":6},{"BASE_ID":"DR","DOUGH_DESC":"더 맛있는 피자","DISPLAY_SEQ":7},{"BASE_ID":"P","DOUGH_DESC":"팬","DISPLAY_SEQ":8},{"BASE_ID":"RG","DOUGH_DESC":"리치골드","DISPLAY_SEQ":9},{"BASE_ID":"AP","DOUGH_DESC":"사이드(윙,어니언링)","DISPLAY_SEQ":10},{"BASE_ID":"PA","DOUGH_DESC":"사이드(파스타)","DISPLAY_SEQ":11},{"BASE_ID":"SA","DOUGH_DESC":"사이드(샐러드)","DISPLAY_SEQ":12}],"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAASL7vrMNqphJfx361a9Lcvq4c5f to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164330475 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfx361a9Lcvq4c5f","seq":6672,"text":"1. 신제품세트AA\n2. 인기메뉴DD\n3. 더블박스\n4. 음료/소스\n5. 버거바이트\n6. 치즈크러스트\n7. 더 맛있는 피자\n8. 팬\n9. 리치골드\n10. 사이드(윙,어니언링)\n11. 사이드(파스타)\n12. 사이드(샐러드)\n100. 종료\n목록에서 번호를 입력해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJfx361a9Lcvq4c5f and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfx361a9Lcvq4c5f
+All message before 1490164330475 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164345854 with message:
+{"mid":"mid.$cAASL7vrMNqphJfyz_la9LdrGXCAQ","seq":6674,"text":"12"}
+state!!!: menu_2
+Successfully sent message with id mid.$cAASL7vrMNqphJfy2C1a9LdtyhbS7 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164346379 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfy2C1a9LdtyhbS7","seq":6676,"text":"유효한 숫자만 입력해주세요"}
+Received echo for message mid.$cAASL7vrMNqphJfy2C1a9LdtyhbS7 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfy2C1a9LdtyhbS7
+All message before 1490164346379 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164351696 with message:
+{"mid":"mid.$cAASL7vrMNqphJfzK0Fa9LeCJPPur","seq":6678,"text":"11"}
+state!!!: menu_2
+request option : {"LIST":[{"BASE_ID":"PA","PRODUCT_ID":"RC","PRODUCT_DESC":"리치치즈파스타(베이크)","CLASS_ID":"PS","SIZE_ID":"SP","PRICE":7900,"BASE_DESC":"파스타"},{"BASE_ID":"PA","PRODUCT_ID":"AC","PRODUCT_DESC":"베이크카르보나라(베이크)","CLASS_ID":"PS","SIZE_ID":"SP","PRICE":7900,"BASE_DESC":"파스타"}],"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAASL7vrMNqphJfzPRFa9LeG1xere to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164352836 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAASL7vrMNqphJfzPRFa9LeG1xere","seq":6680,"attachments":[{"title":"파스타-리치치즈파스타(베이크)","url":null,"type":"template","payload":{"template_type":"generic","sharable":false,"elements":[{"title":"파스타-리치치즈파스타(베이크)","image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_GB_1.jpg","buttons":[{"type":"postback","title":"undefined 7900","payload":"MENUORDER/PS/SP/PA/RC/7900/파스타-리치치즈파스타(베이크) undefined"}]}],"image_aspect_ratio":"square"}}]}
+Received echo for message mid.$cAASL7vrMNqphJfzPRFa9LeG1xere and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfzPRFa9LeG1xere
+All message before 1490164352836 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 with payload 'MENUORDER/PS/SP/PA/RC/7900/파스타-리치치즈파스타(베이크) undefined' at 1490164361741
+state!!!: MENUORDER/PS/SP/PA/RC/7900/파스타-리치치즈파스타(베이크) undefined
+selectedMenuPrice!!!!!:: 7900
+Successfully sent message with id mid.$cAASL7vrMNqphJfz07Fa9LesnFY_K to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164362476 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJfz07Fa9LesnFY_K","seq":6684,"text":"수량을 입력해주세요."}
+Received echo for message mid.$cAASL7vrMNqphJfz07Fa9LesnFY_K and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJfz07Fa9LesnFY_K
+All message before 1490164362476 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164366205 with message:
+{"mid":"mid.$cAASL7vrMNqphJf0DfVa9Le66qtY8","seq":6686,"text":"1"}
+state!!!: menu_3
+selectedMenuPrice!!!!!::::: 7900, qyt: 1
+qty: 1
+Successfully sent message with id mid.$cAASL7vrMNqphJf0GmVa9Le9Q7k13 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164367001 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJf0GmVa9Le9Q7k13","seq":6688,"text":"치즈크러스트-치즈킹 L 34900원 [1]\n애피타이저-오리지날 윙 4조각 3900원 [1]\n파스타-리치치즈파스타(베이크) undefined 7900원 [1]\n현재 총 금액은 46700원 입니다.\n수서일원점에 위 제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다."}
+Received echo for message mid.$cAASL7vrMNqphJf0GmVa9Le9Q7k13 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJf0GmVa9Le9Q7k13
+All message before 1490164367001 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164378885 with message:
+{"mid":"mid.$cAASL7vrMNqphJf01BVa9LfsWmrBi","seq":6690,"text":"1"}
+state!!!: menu_4
+request option : {"LIST":[{"COUPON_ID":"FC0","DISPLAY_SEQ":1,"COUPON_DESC":"FC) 배달 30%할인","COUPON_VALUE":30},{"COUPON_ID":"TI0","DISPLAY_SEQ":2,"COUPON_DESC":"TI) 방문포장 40%할인","COUPON_VALUE":40}],"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAASL7vrMNqphJf04s1a9LfwciEVX to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164379827 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJf04s1a9LfwciEVX","seq":6692,"text":"1. FC) 배달 30%할인\n2. TI) 방문포장 40%할인\n3. 선택하지 않음"}
+Received echo for message mid.$cAASL7vrMNqphJf04s1a9LfwciEVX and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJf04s1a9LfwciEVX
+All message before 1490164379827 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164390349 with message:
+{"mid":"mid.$cAASL7vrMNqphJf1hzVa9LgZE1AgJ","seq":6694,"text":"1"}
+state!!!: coupon_2
+Successfully sent message with id mid.$cAASL7vrMNqphJf1jsla9LgbbMG56 to recipient 1311646552226831
+Successfully sent message with id mid.$cAASL7vrMNqphJf1jyla9LgbhHJb0 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164390834 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJf1jsla9LgbbMG56","seq":6696,"text":"멤버십 포인트 적립/사용 확인하시겠습니까?\n1. 예\n2.아니오"}
+Received echo for message mid.$cAASL7vrMNqphJf1jsla9LgbbMG56 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164390858 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJf1jyla9LgbhHJb0","seq":6697,"text":"30% 할인 쿠폰으로 14010 원 이 할인되어서 32690 원 입니다."}
+Received echo for message mid.$cAASL7vrMNqphJf1jyla9LgbhHJb0 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJf1jsla9LgbbMG56
+All message before 1490164390834 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJf1jyla9LgbhHJb0
+All message before 1490164390858 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164401285 with message:
+{"mid":"mid.$cAASL7vrMNqphJf2MhVa9LhD88JcB","seq":6699,"text":"1"}
+state!!!: ChkMembership
+Successfully sent message with id mid.$cAASL7vrMNqphJf2Obla9LhGLTqXh to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164401774 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJf2Obla9LhGLTqXh","seq":6701,"text":"피자헛 멤버십카드 뒷 4자리를 입력해 주세요.\nXXXX-XXXX-XXXX-OOOO"}
+Received echo for message mid.$cAASL7vrMNqphJf2Obla9LhGLTqXh and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJf2Obla9LhGLTqXh
+All message before 1490164401774 were delivered.
+messageingEvent.delivery
+request option : {"RESULTMSG":"결과 값이 없습니다.","RESULT":false}
+Successfully sent message with id mid.$cAASL7vrMNqphJf2VLVa9LhM3VVTe to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164403501 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJf2VLVa9LhM3VVTe","seq":6703,"text":"멤버십 결과가 없습니다.다시 조회하시겠습니까?\n1.예\n2.아니오"}
+Received echo for message mid.$cAASL7vrMNqphJf2VLVa9LhM3VVTe and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJf2VLVa9LhM3VVTe
+All message before 1490164403501 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164412886 with message:
+{"mid":"mid.$cAASL7vrMNqphJf251la9LhxKVDEt","seq":6705,"text":"2"}
+state!!!: ChkMembership
+inputARRAY!@#@#@#@#@#@#@#@## {"fullOrderVO":{"aOrderMasterDataVO":{"orderId":"","custId":"","agentId":"WEB","branchId":"8928","orderType":"2","orderDateTime":"20170322153333","packDataTime":"20170322153333","reserveDateTime":"","couponId":"","discount":"","couponVal":"","empMeal":"","items":3,"listPrice":46700,"discPrice":10470,"prodId":"","cdate":"","chour":"","delayTime":"","si":"","gu":"","dong":"","addr1":"","addr2":"","addrDesc":"서울특별시 강남구 수서동 595 201-1201","phoneRegion":"010","phone":"43344655","anti":"","flag":"Y","custName":"","sector":"","zipcode":"","orderGubun":"2","phkno":""},"aOrderItems":{"aOrderItemDataVO":[{"orderId":"","orderSeq":"0","agentid":"WEB","branchId":"8928","createDateTime":"20170322153333","mDeal":"","mGroup":"","qty":"1","classId":"P","sizeId":"S","baseId":"MC","productId":"HK","half":"N","topp1":"","topp2":"","topp3":"","topp4":"","topp5":"","topp6":"","topp7":"","topp8":"","topp9":"","topp10":"","topp11":"","bProductId":"","bTopp1":"","bTopp2":"","bTopp3":"","bTopp4":"","bTopp5":"","bTopp6":"","bTopp7":"","bTopp8":"","bTopp9":"","bTopp10":"","bTopp11":"","couponId":"FC0","couponVal":10470,"listPrice":34900,"discPrice":10470,"cdate":"","chour":""},{"orderId":"","orderSeq":"1","agentid":"WEB","branchId":"8928","createDateTime":"20170322153333","mDeal":"","mGroup":"","qty":"1","classId":"A","sizeId":"BU","baseId":"AP","productId":"FO","half":"N","topp1":"","topp2":"","topp3":"","topp4":"","topp5":"","topp6":"","topp7":"","topp8":"","topp9":"","topp10":"","topp11":"","bProductId":"","bTopp1":"","bTopp2":"","bTopp3":"","bTopp4":"","bTopp5":"","bTopp6":"","bTopp7":"","bTopp8":"","bTopp9":"","bTopp10":"","bTopp11":"","couponId":"","couponVal":"","listPrice":3900,"discPrice":"","cdate":"","chour":""},{"orderId":"","orderSeq":"2","agentid":"WEB","branchId":"8928","createDateTime":"20170322153333","mDeal":"","mGroup":"","qty":"1","classId":"PS","sizeId":"SP","baseId":"PA","productId":"RC","half":"N","topp1":"","topp2":"","topp3":"","topp4":"","topp5":"","topp6":"","topp7":"","topp8":"","topp9":"","topp10":"","topp11":"","bProductId":"","bTopp1":"","bTopp2":"","bTopp3":"","bTopp4":"","bTopp5":"","bTopp6":"","bTopp7":"","bTopp8":"","bTopp9":"","bTopp10":"","bTopp11":"","couponId":"","couponVal":"","listPrice":7900,"discPrice":"","cdate":"","chour":""}]},"aCustMasterDataVO":{"custId":"","custName":"","fmcCard":"","addrDesc":"서울특별시 강남구 수서동 595 201-1201","phoneRegion":"010","phone":"43344655","branchId":"8928","branchName":"수서일원점","custType":"10","fmcUse":"","fmcAmount":"","lastUpdate":"","lastUpdateTime":"","createUpdate":"","createUpdateTime":"","zipcode":"","orderAmt":"","custMemo":"","pointX":"964130","pointY":"1942829"}}}
+inputDATA!!!!!!!!!!!!!!!!! params={"fullOrderVO":{"aOrderMasterDataVO":{"orderId":"","custId":"","agentId":"WEB","branchId":"8928","orderType":"2","orderDateTime":"20170322153333","packDataTime":"20170322153333","reserveDateTime":"","couponId":"","discount":"","couponVal":"","empMeal":"","items":3,"listPrice":46700,"discPrice":10470,"prodId":"","cdate":"","chour":"","delayTime":"","si":"","gu":"","dong":"","addr1":"","addr2":"","addrDesc":"서울특별시 강남구 수서동 595 201-1201","phoneRegion":"010","phone":"43344655","anti":"","flag":"Y","custName":"","sector":"","zipcode":"","orderGubun":"2","phkno":""},"aOrderItems":{"aOrderItemDataVO":[{"orderId":"","orderSeq":"0","agentid":"WEB","branchId":"8928","createDateTime":"20170322153333","mDeal":"","mGroup":"","qty":"1","classId":"P","sizeId":"S","baseId":"MC","productId":"HK","half":"N","topp1":"","topp2":"","topp3":"","topp4":"","topp5":"","topp6":"","topp7":"","topp8":"","topp9":"","topp10":"","topp11":"","bProductId":"","bTopp1":"","bTopp2":"","bTopp3":"","bTopp4":"","bTopp5":"","bTopp6":"","bTopp7":"","bTopp8":"","bTopp9":"","bTopp10":"","bTopp11":"","couponId":"FC0","couponVal":10470,"listPrice":34900,"discPrice":10470,"cdate":"","chour":""},{"orderId":"","orderSeq":"1","agentid":"WEB","branchId":"8928","createDateTime":"20170322153333","mDeal":"","mGroup":"","qty":"1","classId":"A","sizeId":"BU","baseId":"AP","productId":"FO","half":"N","topp1":"","topp2":"","topp3":"","topp4":"","topp5":"","topp6":"","topp7":"","topp8":"","topp9":"","topp10":"","topp11":"","bProductId":"","bTopp1":"","bTopp2":"","bTopp3":"","bTopp4":"","bTopp5":"","bTopp6":"","bTopp7":"","bTopp8":"","bTopp9":"","bTopp10":"","bTopp11":"","couponId":"","couponVal":"","listPrice":3900,"discPrice":"","cdate":"","chour":""},{"orderId":"","orderSeq":"2","agentid":"WEB","branchId":"8928","createDateTime":"20170322153333","mDeal":"","mGroup":"","qty":"1","classId":"PS","sizeId":"SP","baseId":"PA","productId":"RC","half":"N","topp1":"","topp2":"","topp3":"","topp4":"","topp5":"","topp6":"","topp7":"","topp8":"","topp9":"","topp10":"","topp11":"","bProductId":"","bTopp1":"","bTopp2":"","bTopp3":"","bTopp4":"","bTopp5":"","bTopp6":"","bTopp7":"","bTopp8":"","bTopp9":"","bTopp10":"","bTopp11":"","couponId":"","couponVal":"","listPrice":7900,"discPrice":"","cdate":"","chour":""}]},"aCustMasterDataVO":{"custId":"","custName":"","fmcCard":"","addrDesc":"서울특별시 강남구 수서동 595 201-1201","phoneRegion":"010","phone":"43344655","branchId":"8928","branchName":"수서일원점","custType":"10","fmcUse":"","fmcAmount":"","lastUpdate":"","lastUpdateTime":"","createUpdate":"","createUpdateTime":"","zipcode":"","orderAmt":"","custMemo":"","pointX":"964130","pointY":"1942829"}}}
+ordernow!!!!!!![object Object]
+Successfully sent message with id mid.$cAASL7vrMNqphJf27xla9LhzhmAvu to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164413382 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJf27xla9LhzhmAvu","seq":6707,"text":"이용해주셔서 감사합니다."}
+Received echo for message mid.$cAASL7vrMNqphJf27xla9LhzhmAvu and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Successfully sent message with id mid.$cAASL7vrMNqphJf29mVa9Lh1JfsCE to recipient 1311646552226831
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJf27xla9LhzhmAvu
+All message before 1490164413382 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164413849 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAASL7vrMNqphJf29mVa9Lh1JfsCE","seq":6709,"attachments":[{"title":"더맛있는피자-포테이토크로켓 Medium, 리치골드-직화불고기 Large","url":null,"type":"template","payload":{"template_type":"receipt","recipient_name":"설현 님","merchant_name":"피자헛","order_number":"order152","currency":"KRW","timestamp":1428444912,"payment_method":"현장결제","summary":{"total_cost":60000,"total_tax":0,"subtotal":63800,"shipping_cost":0},"address":{"city":"관악구","country":"KR","postal_code":"94025","state":"서울시","street_1":"서울대학교","street_2":"138동"},"elements":[{"title":"더맛있는피자-포테이토크로켓 Medium","quantity":1,"image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_OA_2.jpg","price":14900,"subtitle":"감자와 베이컨, 마요네즈를 올린 피자"},{"title":"리치골드-직화불고기 Large","quantity":1,"image_url":"http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/top/P_RG_PG_2.jpg","price":28900,"subtitle":"정동 숯불고기(소고기)를 즐길 수 있는 피자"}],"adjustments":[{"name":"신규 고객 할인","amount":-800},{"name":"페이스북 주문 Coupon","amount":-3000}]}}]}
+Received echo for message mid.$cAASL7vrMNqphJf29mVa9Lh1JfsCE and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJf29mVa9Lh1JfsCE
+All message before 1490164413849 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164785661 with message:
+{"mid":"mid.$cAASL7vrMNqphJgNp_Va9L4hX9WCX","seq":6711,"text":"안녕"}
+state!!!: -1
+Successfully sent message with id mid.$cAASL7vrMNqphJgNsala9L4j_RxCk to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164786282 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAASL7vrMNqphJgNsala9L4j_RxCk","seq":6713,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"privacy"},{"type":"postback","title":"도움말","payload":"help_1"}]}}]}
+Received echo for message mid.$cAASL7vrMNqphJgNsala9L4j_RxCk and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJgNsala9L4j_RxCk
+All message before 1490164786282 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 with payload 'order_number' at 1490164790853
+state!!!: order_number
+Successfully sent message with id mid.$cAASL7vrMNqphJgN__Fa9L43umqHH to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164791292 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJgN__Fa9L43umqHH","seq":6717,"text":"고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)"}
+Received echo for message mid.$cAASL7vrMNqphJgN__Fa9L43umqHH and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJgN__Fa9L43umqHH
+All message before 1490164791292 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164796888 with message:
+{"mid":"mid.$cAASL7vrMNqphJgOV2Fa9L5M_YtwR","seq":6719,"text":"1"}
+state!!!: phone_number
+Successfully sent message with id mid.$cAASL7vrMNqphJgOX6la9L5PqHki2 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164797418 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJgOX6la9L5PqHki2","seq":6721,"text":"정확한 주문을 위해 휴대폰 번호를 입력해 주세요."}
+Received echo for message mid.$cAASL7vrMNqphJgOX6la9L5PqHki2 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJgOX6la9L5PqHki2
+All message before 1490164797418 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164809807 with message:
+{"mid":"mid.$cAASL7vrMNqphJgPIT1a9L5_yW_xj","seq":6723,"text":"01043344655"}
+state!!!: phone_number_confirm_1
+Successfully sent message with id mid.$cAASL7vrMNqphJgPKd1a9L6CL21mY to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164810359 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJgPKd1a9L6CL21mY","seq":6725,"text":"휴대폰 번호가 01043344655가 맞습니까?\n1. 예\n2. 아니요"}
+Received echo for message mid.$cAASL7vrMNqphJgPKd1a9L6CL21mY and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJgPKd1a9L6CL21mY
+All message before 1490164810359 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164816345 with message:
+{"mid":"mid.$cAASL7vrMNqphJgPh2Va9L6ZGKdT6","seq":6727,"text":"예"}
+state!!!: identify
+Successfully sent message with id mid.$cAASL7vrMNqphJgPjvFa9L6be5-6x to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164816828 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJgPjvFa9L6be5-6x","seq":6729,"text":"주문 번호를 입력해 주십시오."}
+Received echo for message mid.$cAASL7vrMNqphJgPjvFa9L6be5-6x and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJgPjvFa9L6be5-6x
+All message before 1490164816828 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164842184 with message:
+{"mid":"mid.$cAASL7vrMNqphJgRGyFa9L7-KkkVR","seq":6731,"text":"몰라"}
+state!!!: order_confirm
+request option : {"RESULTMSG":"결과 값이 없습니다.","RESULT":false}
+{ RESULTMSG: '결과 값이 없습니다.', RESULT: false }
+Successfully sent message with id mid.$cAASL7vrMNqphJgRTmla9L8LWoS93 to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164845466 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJgRTmla9L8LWoS93","seq":6733,"text":"주문 정보가 없습니다"}
+Received echo for message mid.$cAASL7vrMNqphJgRTmla9L8LWoS93 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJgRTmla9L8LWoS93
+All message before 1490164845466 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 at 1490164850063 with message:
+{"mid":"mid.$cAASL7vrMNqphJgRlj1a9L8dA2U5j","seq":6735,"text":"0000"}
+state!!!: -1
+Successfully sent message with id mid.$cAASL7vrMNqphJgRpIFa9L8gqOCMA to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164850976 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAASL7vrMNqphJgRpIFa9L8gqOCMA","seq":6737,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"privacy"},{"type":"postback","title":"도움말","payload":"help_1"}]}}]}
+Received echo for message mid.$cAASL7vrMNqphJgRpIFa9L8gqOCMA and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJgRpIFa9L8gqOCMA
+All message before 1490164850976 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1311646552226831, session: 1311646552226831 and page 1355803134478878 with payload 'help_1' at 1490164863972
+state!!!: help_1
+Successfully sent message with id mid.$cAASL7vrMNqphJgSePVa9L9V_eTJI to recipient 1311646552226831
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1311646552226831 at 1490164864573 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAASL7vrMNqphJgSePVa9L9V_eTJI","seq":6741,"text":"Q & A\n1. 주소 입력은 어떻게 하나요?\n2. 피자헛 멤버십은 어떻게 적립하나요?"}
+Received echo for message mid.$cAASL7vrMNqphJgSePVa9L9V_eTJI and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAASL7vrMNqphJgSePVa9L9V_eTJI
+All message before 1490164864573 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490166918623 with message:
+{"mid":"mid.$cAATRGKv5rlVhJiP131a9N6xSg194","seq":26523,"text":"안녕하세요"}
+state!!!: -1
+Successfully sent message with id mid.$cAATRGKv5rlVhJiP4m1a9N6wIESvn to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490166919323 with message:
+{"is_echo":true,"app_id":773019919517171,"mid":"mid.$cAATRGKv5rlVhJiP4m1a9N6wIESvn","seq":26525,"text":"맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?","attachments":[{"title":"","url":null,"type":"template","payload":{"template_type":"button","buttons":[{"type":"postback","title":"주문 확인","payload":"order_number"},{"type":"postback","title":"주문 하기","payload":"privacy"},{"type":"postback","title":"도움말","payload":"help_1"}]}}]}
+Received echo for message mid.$cAATRGKv5rlVhJiP4m1a9N6wIESvn and app 773019919517171 with metadata undefined
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiP4m1a9N6wIESvn
+All message before 1490166919323 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiP4m1a9N6wIESvn
+All message before 1490166919323 were delivered.
+messageingEvent.delivery
+Received postback for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 with payload 'privacy' at 1490166922604
+state!!!: privacy
+Successfully sent message with id mid.$cAATRGKv5rlVhJiQHM1a9N6-9PSvh to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490166923059 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhJiQHM1a9N6-9PSvh","seq":26529,"text":"고객님의 개인정보 수집 및 이용에 동의 하시겠습니까?\n1. 예\n2. 아니요(주문 취소)"}
+Received echo for message mid.$cAATRGKv5rlVhJiQHM1a9N6-9PSvh and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiQHM1a9N6-9PSvh
+All message before 1490166923059 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiQHM1a9N6-9PSvh
+All message before 1490166923059 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490166927271 with message:
+{"mid":"mid.$cAATRGKv5rlVhJiQXp1a9N7THhA-f","seq":26531,"text":"네"}
+state!!!: phone_number
+Successfully sent message with id mid.$cAATRGKv5rlVhJiQZn1a9N7RXphbZ to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490166927775 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhJiQZn1a9N7RXphbZ","seq":26533,"text":"정확한 주문을 위해 휴대폰 번호를 입력해 주세요."}
+Received echo for message mid.$cAATRGKv5rlVhJiQZn1a9N7RXphbZ and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiQZn1a9N7RXphbZ
+All message before 1490166927775 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiQZn1a9N7RXphbZ
+All message before 1490166927775 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490166931905 with message:
+{"mid":"mid.$cAATRGKv5rlVhJiQpwVa9N7lJ0H2Y","seq":26535,"text":"01092103621"}
+state!!!: phone_number_confirm_1
+Successfully sent message with id mid.$cAATRGKv5rlVhJiQrula9N7jdTg-k to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490166932410 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhJiQrula9N7jdTg-k","seq":26537,"text":"휴대폰 번호가 01092103621가 맞습니까?\n1. 예\n2. 아니요"}
+Received echo for message mid.$cAATRGKv5rlVhJiQrula9N7jdTg-k and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiQrula9N7jdTg-k
+All message before 1490166932410 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiQrula9N7jdTg-k
+All message before 1490166932410 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490166934521 with message:
+{"mid":"mid.$cAATRGKv5rlVhJiQz-Va9N7vdnYWF","seq":26539,"text":"1"}
+state!!!: identify
+request option : {"PHONE":"01092103621","RESULTMSG":"OK","AUTH_KEY":"IIOLEGCLUQ93PPL4","RESULT":true,"SEND_AUTH_CNT":4}
+identify result!!!!!!!!!!!!!: true
+Successfully sent message with id mid.$cAATRGKv5rlVhJiQ_mFa9N73UBS5p to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490166937496 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhJiQ_mFa9N73UBS5p","seq":26541,"text":"휴대폰번호로 발송된 인증번호를 입력해주세요. 입력하신 번호는01092103621입니다."}
+Received echo for message mid.$cAATRGKv5rlVhJiQ_mFa9N73UBS5p and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiQ_mFa9N73UBS5p
+All message before 1490166937496 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiQ_mFa9N73UBS5p
+All message before 1490166937496 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490166957902 with message:
+{"mid":"mid.$cAATRGKv5rlVhJiSPTla9N9KhLy5Y","seq":26544,"text":"6062"}
+state!!!: order_method_1
+request option : {"RESULTMSG":"OK","RESULT":true}
+Successfully sent message with id mid.$cAATRGKv5rlVhJiSTE1a9N9K1DzZ0 to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490166958867 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhJiSTE1a9N9K1DzZ0","seq":26546,"text":"주문 방법을 선택해주세요.\n1. 배달 주문\n2. 포장 주문"}
+Received echo for message mid.$cAATRGKv5rlVhJiSTE1a9N9K1DzZ0 and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiSTE1a9N9K1DzZ0
+All message before 1490166958867 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiSTE1a9N9K1DzZ0
+All message before 1490166958867 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490166963577 with message:
+{"mid":"mid.$cAATRGKv5rlVhJiSleVa9N9g89SBH","seq":26549,"text":"1"}
+state!!!: order_method_2
+Successfully sent message with id mid.$cAATRGKv5rlVhJiSnc1a9N9fNKpFs to recipient 1163191487127028
+Received message for user ID: 1355803134478878, session: 1355803134478878 and page 1163191487127028 at 1490166964083 with message:
+{"is_echo":true,"app_id":773019919517171,"metadata":"DEVELOPER_DEFINED_METADATA","mid":"mid.$cAATRGKv5rlVhJiSnc1a9N9fNKpFs","seq":26551,"text":"배달 받으실 주소를 입력해 주세요 (00시 00구 00동/로)"}
+Received echo for message mid.$cAATRGKv5rlVhJiSnc1a9N9fNKpFs and app 773019919517171 with metadata DEVELOPER_DEFINED_METADATA
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiSnc1a9N9fNKpFs
+All message before 1490166964083 were delivered.
+messageingEvent.delivery
+Received delivery confirmation for message ID: mid.$cAATRGKv5rlVhJiSnc1a9N9fNKpFs
+All message before 1490166964083 were delivered.
+messageingEvent.delivery
+Received message for user ID: 1163191487127028, session: 1163191487127028 and page 1355803134478878 at 1490166983266 with message:
+{"mid":"mid.$cAATRGKv5rlVhJiTyYla9N-t2qZwK","seq":26553,"text":"서울시 관악구 봉천동"}
+state!!!: address_1
+request option : {"SEARCH_RESULT":"{\"data\":{\"queryStr\":\"서울시 관악구 봉천동\",\"addrDesc\":\"\"},\"addrListVO\":[{\"index\":\"0\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 885-23\",\"newAddr\":\"서울특별시 관악구 봉천로45길 5-8\",\"name\":\"봉천동\",\"x\":\"951285\",\"y\":\"1942777\"},{\"index\":\"1\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 1589-13\",\"newAddr\":\"서울특별시 관악구 관악로5길 95\",\"name\":\"관악구민회관\",\"x\":\"951478\",\"y\":\"1942127\"},{\"index\":\"2\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 885-29\",\"newAddr\":\"서울특별시 관악구 봉천로 439\",\"name\":\"우림빌딩\",\"x\":\"951276\",\"y\":\"1942764\"},{\"index\":\"3\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 885-29\",\"newAddr\":\"서울특별시 관악구 봉천로 439\",\"name\":\"귀뚜라미보일러\",\"x\":\"951276\",\"y\":\"1942764\"},{\"index\":\"4\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 885-29\",\"newAddr\":\"서울특별시 관악구 봉천로 439\",\"name\":\"우림오피스텔\",\"x\":\"951276\",\"y\":\"1942764\"},{\"index\":\"5\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 885-33\",\"newAddr\":\"서울특별시 관악구 봉천로 441\",\"name\":\"선주빌딩\",\"x\":\"951303\",\"y\":\"1942761\"},{\"index\":\"6\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 873-40\",\"newAddr\":\"서울특별시 관악구 봉천로 445\",\"name\":\"튼튼영어 관악봉천지사\",\"x\":\"951332\",\"y\":\"1942755\"},{\"index\":\"7\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 873-40\",\"newAddr\":\"서울특별시 관악구 봉천로 445\",\"name\":\"그린램프환경교육연합\",\"x\":\"951332\",\"y\":\"1942755\"},{\"index\":\"8\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 873-40\",\"newAddr\":\"서울특별시 관악구 봉천로 445\",\"name\":\"대한저널\",\"x\":\"951332\",\"y\":\"1942755\"},{\"index\":\"9\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 885-6\",\"newAddr\":\"서울특별시 관악구 양녕로2길 30\",\"name\":\"롯데캐논 관악점\",\"x\":\"951224\",\"y\":\"1942804\"},{\"index\":\"10\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-6\",\"newAddr\":\"서울특별시 관악구 봉천로 442\",\"name\":\"태정빌딩\",\"x\":\"951284\",\"y\":\"1942709\"},{\"index\":\"11\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-10\",\"newAddr\":\"서울특별시 관악구 봉천로 440\",\"name\":\"신광기업\",\"x\":\"951268\",\"y\":\"1942713\"},{\"index\":\"12\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-18\",\"newAddr\":\"서울특별시 관악구 봉천로 438\",\"name\":\"동은빌딩\",\"x\":\"951242\",\"y\":\"1942714\"},{\"index\":\"13\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 885-47\",\"newAddr\":\"서울특별시 관악구 봉천로 435\",\"name\":\"명강기업\",\"x\":\"951219\",\"y\":\"1942765\"},{\"index\":\"14\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 874-12\",\"newAddr\":\"서울특별시 관악구 봉천로 446\",\"name\":\"동양빌딩\",\"x\":\"951318\",\"y\":\"1942701\"},{\"index\":\"15\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-10\",\"newAddr\":\"서울특별시 관악구 봉천로 440\",\"name\":\"한빛엔지니어링\",\"x\":\"951269\",\"y\":\"1942707\"},{\"index\":\"16\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 873-36\",\"newAddr\":\"서울특별시 관악구 봉천로 447-1\",\"name\":\"광성하이테크\",\"x\":\"951358\",\"y\":\"1942750\"},{\"index\":\"17\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-18\",\"newAddr\":null,\"name\":\"린나이코리아\",\"x\":\"951242\",\"y\":\"1942713\"},{\"index\":\"18\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 874-12\",\"newAddr\":\"서울특별시 관악구 봉천로 446\",\"name\":\"유원이앤티\",\"x\":\"951318\",\"y\":\"1942701\"},{\"index\":\"19\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-10\",\"newAddr\":\"서울특별시 관악구 봉천로 440\",\"name\":\"도성테크\",\"x\":\"951269\",\"y\":\"1942707\"},{\"index\":\"20\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-18\",\"newAddr\":null,\"name\":\"SK큐비클화장실칸막이\",\"x\":\"951238\",\"y\":\"1942717\"},{\"index\":\"21\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-18\",\"newAddr\":null,\"name\":\"거산세라믹\",\"x\":\"951242\",\"y\":\"1942713\"},{\"index\":\"22\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 885-46\",\"newAddr\":\"서울특별시 관악구 봉천로 433\",\"name\":\"금강목공인테리어\",\"x\":\"951202\",\"y\":\"1942772\"},{\"index\":\"23\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-18\",\"newAddr\":null,\"name\":\"린나이써비스\",\"x\":\"951242\",\"y\":\"1942713\"},{\"index\":\"24\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 886-17\",\"newAddr\":\"서울특별시 관악구 봉천로43길 1\",\"name\":\"피자칩\",\"x\":\"951230\",\"y\":\"1942820\"},{\"index\":\"25\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 873-35\",\"newAddr\":\"서울특별시 관악구 봉천로 449\",\"name\":\"베스트간판\",\"x\":\"951368\",\"y\":\"1942747\"},{\"index\":\"26\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-19\",\"newAddr\":\"서울특별시 관악구 봉천로 436-1\",\"name\":\"대성쎌틱에너시스관악제일지점\",\"x\":\"951229\",\"y\":\"1942717\"},{\"index\":\"27\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 874-13\",\"newAddr\":\"서울특별시 관악구 봉천로 446-1\",\"name\":\"삼진빌딩\",\"x\":\"951331\",\"y\":\"1942699\"},{\"index\":\"28\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 874-13\",\"newAddr\":\"서울특별시 관악구 봉천로 446-1\",\"name\":\"대한예수교장로회총회개혁합동총회\",\"x\":\"951331\",\"y\":\"1942699\"},{\"index\":\"29\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 892-5\",\"newAddr\":\"서울특별시 관악구 봉천로 431\",\"name\":\"칠성종합건축자재\",\"x\":\"951181\",\"y\":\"1942774\"},{\"index\":\"30\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 874-14\",\"newAddr\":\"서울특별시 관악구 봉천로 448\",\"name\":\"동백시티빌\",\"x\":\"951344\",\"y\":\"1942700\"},{\"index\":\"31\",\"addrType\":\"2\",\"addr\":\"서울특별시 관악구 봉천동 884-46\",\"newAddr\":\"서울특별시 관악구 남부순환로 1787\",\"name\":\"이지정형외과\",\"x\":\"951276\",\"y\":\"1942674\"}],\"resultMessage\":\"32건 조회되었습니다.\"}"}
+Failed calling Send API 400 Bad Request { message: '(#100) Length of param message[text] must be less than or equal to 640',
+  type: 'OAuthException',
+  code: 100,
+  fbtrace_id: 'B6qxzjUMxd5' }
+Received message for user ID: 1222610814520674, session: 1222610814520674 and page 1355803134478878 at 1490167041598 with message:
+{"mid":"mid.$cAASL68NrWF9hJiXWPla9OCN0MTNk","seq":6078,"text":"안녕"}
+state!!!: -1
+Failed calling Send API 400 Bad Request { message: '(#10) Cannot message users who are not admins, developers or testers of the app until pages_messaging permission is reviewed and the app is live.',
+  type: 'OAuthException',
+  code: 10,
+  error_subcode: 2018028,
+  fbtrace_id: 'CZfpr8Hc+YL' }
+Terminated
+
+npm ERR! Linux 4.4.0-66-generic
+npm ERR! argv "/usr/bin/nodejs" "/usr/bin/npm" "start"
+npm ERR! node v6.10.0
+npm ERR! npm  v3.10.10
+npm ERR! code ELIFECYCLE
+npm ERR! messenger-get-started@1.0.0 start: `node app.js`
+npm ERR! Exit status 143
+npm ERR! 
+npm ERR! Failed at the messenger-get-started@1.0.0 start script 'node app.js'.
+npm ERR! Make sure you have the latest version of node.js and npm installed.
+npm ERR! If you do, this is most likely a problem with the messenger-get-started package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     node app.js
+npm ERR! You can get information on how to open an issue for this project with:
+npm ERR!     npm bugs messenger-get-started
+npm ERR! Or if that isn't available, you can get their info via:
+npm ERR!     npm owner ls messenger-get-started
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/ubuntu/messenger-platform-samples/node/npm-debug.log
+
+> messenger-get-started@1.0.0 start /home/ubuntu/messenger-platform-samples/node
+> node app.js
+
+https 8888
+Node app is running on port 5000
+connection successful...

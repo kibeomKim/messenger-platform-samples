@@ -46,7 +46,7 @@ exports.order_confirm = function(orderID, phone, callback)
 }
 exports.identify = function(phone, callback)
 {
-    var phonenumber = "params={'phone':'" + phone + "','req_page':'104','req_channel':'WEB'}";
+    var phonenumber = "params={'phone':'" + phone + "','req_page':'101','req_channel':'WEB'}";
     var target = "API-003.phk";
 
     APICall(phonenumber, target, function(err, result){
@@ -113,11 +113,10 @@ exports.selectShop = function(x, y, callback)
             callback(null, result);
         }
     });
-
 }
-exports.checkMembership = function(phone, cardNo, callback)
+exports.checkMembership = function(cardNo, callback)
 {
-    var inputdata = "params={'phone':'" + phone + "', 'cardNo':'" + cardNo + "'}";
+    var inputdata = "params={'cardNo':'" + cardNo + "'}";
     var target = "API-310.phk";
     APICall(inputdata, target, function(err, result){
         var output = JSON.parse(result);
@@ -131,52 +130,15 @@ exports.checkMembership = function(phone, cardNo, callback)
     });
     return true;
 }
-exports.order_now = function(branchID, branchName, orderType, timestamp, couponID, discountValue, nMenu, price, address, phoneRegion, phone,
-                             custName, qty, ClassID, SizeID, BaseID, ProductID, cardNo, fmcUse, fmcAmount, callback)
+exports.order_now = function(NumOrder, branchID, branchName, orderType, timestamp, couponID, couponValue, discountValue, nMenu, price, address, phoneRegion, phone,
+                             custName, qty, ClassID, SizeID, BaseID, ProductID, selectedMenu, selectedMenuPrice, cardNo, fmcUse, fmcAmount, x, y, callback)
 {
     var inputdata = "params=";
     var target = "API-309.phk";
     var result = new Object();
     var MD = new Object();
 
-    var ObjectMasterData = new Object();
-
-    ObjectMasterData.orderId = "";
-    ObjectMasterData.custId = "";
-    ObjectMasterData.agentId = "WEB";
-    ObjectMasterData.branchId = branchID;
-    ObjectMasterData.orderType = orderType;
-    ObjectMasterData.orderDateTime = timestamp;
-    ObjectMasterData.packDataTime = timestamp;
-    ObjectMasterData.reserveDateTime = "";
-    ObjectMasterData.couponId = couponID;
-    ObjectMasterData.discount = "";
-    ObjectMasterData.couponVal = discountValue;
-    ObjectMasterData.empMeal = "";
-    ObjectMasterData.items = nMenu;
-    ObjectMasterData.listPrice = String(Number(price) - Number(discountValue));
-    ObjectMasterData.discPrice = discountValue;
-    ObjectMasterData.prodId = "";
-    ObjectMasterData.cdate = "";
-    ObjectMasterData.chour = "";
-    ObjectMasterData.delayTime = "";
-    ObjectMasterData.si = "";
-    ObjectMasterData.gu = "";
-    ObjectMasterData.dong = "";
-    ObjectMasterData.addr1 = "";
-    ObjectMasterData.addr2 = "";
-    ObjectMasterData.addrDesc = address;
-    ObjectMasterData.phoneRegion = phoneRegion;
-    ObjectMasterData.phone = phone;
-    ObjectMasterData.anti = "";
-    ObjectMasterData.flag = "Y";
-    ObjectMasterData.custName = custName;
-    ObjectMasterData.sector = "";
-    ObjectMasterData.zipcode = "";
-    ObjectMasterData.orderGubun = "2";
-    ObjectMasterData.phkno = "";
-
-    MD.aOrderMasterDataVO = ObjectMasterData;
+    var totalSaleSum = 0;
 
     var aOrderMasterDataVO = new Array();
     var aOrderItems = new Object();
@@ -185,7 +147,7 @@ exports.order_now = function(branchID, branchName, orderType, timestamp, couponI
     for(var i = 0; i < nMenu; i++) {
 
         var ObjectItemData = new Object();
-        ObjectItemData.orderId = "";
+        ObjectItemData.orderId = NumOrder;
         ObjectItemData.orderSeq = String(i);
         ObjectItemData.agentid = "WEB";
         ObjectItemData.branchId = branchID;
@@ -221,17 +183,68 @@ exports.order_now = function(branchID, branchName, orderType, timestamp, couponI
         ObjectItemData.bTopp9 = "";
         ObjectItemData.bTopp10 = "";
         ObjectItemData.bTopp11 = "";
-        ObjectItemData.couponId = "";
-        ObjectItemData.couponVal= "";
-        ObjectItemData.listPrice = "";
-        ObjectItemData.discPrice = "";
+        if(ClassID[i] == 'P')
+        {
+            ObjectItemData.couponId = couponID;
+            ObjectItemData.couponVal= selectedMenuPrice[i]*(couponValue/100);
+            totalSaleSum += selectedMenuPrice[i]*(couponValue/100);
+            ObjectItemData.listPrice = selectedMenuPrice[i] * qty[i];
+            ObjectItemData.discPrice = selectedMenuPrice[i]*(couponValue/100);
+        }else{
+            ObjectItemData.couponId = "";
+            ObjectItemData.couponVal= "";
+            ObjectItemData.listPrice = selectedMenuPrice[i];
+            ObjectItemData.discPrice = "";
+        }
+
         ObjectItemData.cdate = "";
         ObjectItemData.chour = "";
 
         aOrderItemDataVO.push(ObjectItemData);
     }
     aOrderItems.aOrderItemDataVO = aOrderItemDataVO;
-    MD.aOrderItems = aOrderItems;
+
+
+    var ObjectMasterData = new Object();
+
+    ObjectMasterData.orderId = "";
+    ObjectMasterData.custId = "";
+    ObjectMasterData.agentId = "WEB";
+    ObjectMasterData.branchId = branchID;
+    ObjectMasterData.orderType = orderType;
+    ObjectMasterData.orderDateTime = timestamp;
+    ObjectMasterData.packDataTime = timestamp;
+    ObjectMasterData.reserveDateTime = "";
+    ObjectMasterData.couponId = "";
+    ObjectMasterData.discount = "";
+    ObjectMasterData.couponVal = "";
+    ObjectMasterData.empMeal = "";
+    ObjectMasterData.items = nMenu;
+    ObjectMasterData.listPrice = price;
+    ObjectMasterData.discPrice = totalSaleSum;
+    ObjectMasterData.prodId = "";
+    ObjectMasterData.cdate = "";
+    ObjectMasterData.chour = "";
+    ObjectMasterData.delayTime = "";
+    ObjectMasterData.si = "";
+    ObjectMasterData.gu = "";
+    ObjectMasterData.dong = "";
+    ObjectMasterData.addr1 = "";
+    ObjectMasterData.addr2 = "";
+    ObjectMasterData.addrDesc = address;
+    ObjectMasterData.phoneRegion = phoneRegion;
+    ObjectMasterData.phone = phone;
+    ObjectMasterData.anti = "";
+    ObjectMasterData.flag = "Y";
+    ObjectMasterData.custName = custName;
+    ObjectMasterData.sector = "";
+    ObjectMasterData.zipcode = "";
+    ObjectMasterData.orderGubun = "2";
+    ObjectMasterData.phkno = "";
+
+    MD.aOrderMasterDataVO = ObjectMasterData;           //주문 마스터정보
+
+    MD.aOrderItems = aOrderItems;           //주문 아이템
 
     var aCustMasterDataVO = new Object();
 
@@ -253,10 +266,10 @@ exports.order_now = function(branchID, branchName, orderType, timestamp, couponI
     aCustMasterDataVO.zipcode = "";
     aCustMasterDataVO.orderAmt = "";
     aCustMasterDataVO.custMemo = "";
-    aCustMasterDataVO.pointX = "";
-    aCustMasterDataVO.pointY = "";
+    aCustMasterDataVO.pointX = x;
+    aCustMasterDataVO.pointY = y;
 
-    MD.aCustMasterDataVO = aCustMasterDataVO;
+    MD.aCustMasterDataVO = aCustMasterDataVO;           //주문 고객 정보
 
     result.fullOrderVO = MD;
 
@@ -281,6 +294,7 @@ exports.getMenuDetail = function(baseID, callback)
     var buttonContents;
     var menuArray = new Array();
     var menuContents;
+    var size = "";
 
     APICall(input, target, function(err, result){
         var output = JSON.parse(result);
@@ -295,22 +309,36 @@ exports.getMenuDetail = function(baseID, callback)
                 var menuContents = new Object();
                 menuContents.title = output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"];
                 menuContents.subtitle = output["LIST"][n]["PRODUCT_DESC_SHORT"];
-                menuContents.image_url = url;
+                //menuContents.image_url = url;
+                menuContents.image_url = "http://akamai.pizzahut.co.kr/IPizzahut/mobile/menu/pizza/MENU_IMG_"
+                    + output["LIST"][n]["CLASS_ID"] + "_" + output["LIST"][n]["BASE_ID"] + "_" + output["LIST"][n]["PRODUCT_ID"] + ".png";
 
                 pivot = output["LIST"][n]["PRODUCT_DESC"];
                 if (pivot == output["LIST"][n+1]["PRODUCT_DESC"])
                 {
                     for(var i = n; i < n+2; i++) {
+                        if(output["LIST"][i]["SIZE_CD"] === undefined)
+                        {
+                            size = "";
+                        }else {
+                            size = output["LIST"][i]["SIZE_CD"];
+                        }
                         var buttonContents = new Object();
                         buttonContents.type = 'postback';
                         buttonContents.title = output["LIST"][i]["SIZE_CD"] + " " + output["LIST"][i]["PRICE"];
                         buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][i]["CLASS_ID"] + "/" + output["LIST"][i]["SIZE_ID"]
                             + "/" + output["LIST"][i]["BASE_ID"] + "/" + output["LIST"][i]["PRODUCT_ID"] + "/" + output["LIST"][i]["PRICE"]
-                        + "/" + output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + output["LIST"][i]["SIZE_CD"];
+                        + "/" + output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + size;
                         buttonArray.push(buttonContents);
                     }
                     n += 2;
                 }else{
+                    if(output["LIST"][n]["SIZE_CD"] === undefined)
+                    {
+                        size = "";
+                    }else {
+                        size = output["LIST"][n]["SIZE_CD"];
+                    }
                     var buttonContents = new Object();
                     buttonContents.type = 'postback';
                     buttonContents.title = output["LIST"][n]["SIZE_CD"] + " " + output["LIST"][n]["PRICE"];
@@ -336,9 +364,9 @@ exports.getMenuDetail = function(baseID, callback)
     });
 
 }
-exports.getCoupon = function(callback)
+exports.getCoupon = function(gbn, callback)
 {
-    var inputdata = "";
+    var inputdata = "params={'gbn':" + gbn + "'}";
     var target = "API-308.phk";
 
     APICall(inputdata, target, function(err, result){
@@ -370,6 +398,76 @@ exports.searchWrapShop = function(address, callback)
         callback(null, output);
 
     });
+}
+exports.getReceipData = function(nMenu, selectedMenu, qty, ClassID, SizeID, BaseID, ProductID, selectedMenuPrice,
+                                 address, price, discountValue, couponName, couponValue, fmcUse, fmcAmount, callback)
+{
+    var order_Array = new Array();
+    var result = new Object();
+
+    var nPrice = Number(price);
+    var nDiscountValue = Number(discountValue);
+    var nFmcAmount = Number(fmcAmount);
+
+    for(var i = 0; i < nMenu; i++) {
+        var order_Object = new Object();
+
+        order_Object.title = selectedMenu[i];
+        order_Object.quantity = qty[i];
+        order_Object.price = Number(selectedMenuPrice[i]);
+        order_Object.currency = "KRW";
+        order_Object.image_url = "http://akamai.pizzahut.co.kr/IPizzahut/mobile/menu/pizza/MENU_IMG_" + ClassID[i] + "_" + BASE_ID[i] + "_" + PRODUCT_ID[i] + ".png";
+
+        order_Array.push(order_Object);
+    }
+    console.log(order_Array);
+    result.order_contents = order_Array;
+
+    var address_object = new Object();
+
+    address_object.street_1 = address;
+    address_object.city = "서울";
+    address_object.state = "관악구";
+    address_object.postal_code = "08912";
+    address_object.country = "KR";
+
+    result.address_contents = address_object;
+
+    var cost_object = new Object();
+    var sale_array = new Array();
+    var sale_object = new Object();
+
+    cost_object.subtotal = nPrice;
+    if(fmcUse =='2')
+    {
+        cost_object.total_cost = (nPrice - nDiscountValue - nFmcAmount);
+
+        var sale_object = new Object();
+        sale_object.name = couponName;
+        sale_object.amount = (- nDiscountValue);
+
+        sale_array.push(sale_object);
+
+        sale_object = new Object();
+        sale_object.name = "멤버십 할인";
+        sale_objects.amount = (- nFmcAmount);
+        sale_array.push(sale_object);
+
+    }else{
+        cost_object.total_cost = nPrice - nDiscountValue;
+
+        var sale_object = new Object();
+        sale_object.name = couponName;
+        sale_object.amount = (-nDiscountValue);
+        sale_array.push(sale_object);
+    }
+
+    result.total = cost_object;
+    result.sale_contents = sale_array;
+
+    console.log(JSON.stringify(result));
+
+    callback(null, result);
 }
 exports.getTimeStamp = function()
 {
@@ -416,7 +514,7 @@ function APICall(inputdata, target, callback)
         } else {
             console.log('request option error : ' + error);
             console.log('request option error response : ' + response);
-            callback(err, false);
+            callback(error, false);
         }
     });
 }

@@ -350,7 +350,7 @@ exports.sendMenuMessage = function(recipientId, contents) {
                 type: "template",
                 payload: {
                     template_type: "generic",
-                    image_aspect_ratio: "square",
+                    image_aspect_ratio: "horizontal",
                     elements: contents
                 }
             }
@@ -382,7 +382,7 @@ exports.sendReceiptMessage = function(recipientId) {
                     order_number: receiptId,
                     currency: "KRW",
                     payment_method: "현장결제",
-                    timestamp: "1428444852",
+                    timestamp: "1428444912",
                     elements: [{
                         title: "리치골드-직화불고기 Large",
                         subtitle: "정동 숯불고기(소고기)를 즐길 수 있는 피자",
@@ -409,7 +409,7 @@ exports.sendReceiptMessage = function(recipientId) {
                     summary: {
                         subtotal:63800,
                         shipping_cost: 0,
-                        total_tax: 6380,
+                        //total_tax: 6380,
                         total_cost: 60000
                     },
                     adjustments: [{
@@ -419,6 +419,37 @@ exports.sendReceiptMessage = function(recipientId) {
                         name: "페이스북 주문 Coupon",
                         amount: -3000
                     }]
+                }
+            }
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+exports.sendReceipt = function(recipientId, NumOrder, custName, order_contents, address_contents, total, sale) {
+    // Generate a random receipt ID as the API requires a unique ID
+    //var receiptId = "order" + Math.floor(Math.random()*1000);
+
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message:{
+            attachment: {
+                type: "template",
+                payload: {
+                    template_type: "receipt",
+                    recipient_name: custName,
+                    merchant_name: "피자헛",
+                    order_number: NumOrder,
+                    currency: "KRW",
+                    payment_method: "현장결제",
+                    //timestamp: timestamp,
+                    elements: order_contents,
+                    address: address_contents,
+                    summary: total,
+                    adjustments: sale
                 }
             }
         }
