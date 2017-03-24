@@ -46,7 +46,7 @@ exports.order_confirm = function(orderID, phone, callback)
 }
 exports.identify = function(phone, callback)
 {
-    var phonenumber = "params={'phone':'" + phone + "','req_page':'101','req_channel':'WEB'}";
+    var phonenumber = "params={'phone':'" + phone + "','req_page':'102','req_channel':'WEB'}";
     var target = "API-003.phk";
 
     APICall(phonenumber, target, function(err, result){
@@ -147,8 +147,8 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
     for(var i = 0; i < nMenu; i++) {
 
         var ObjectItemData = new Object();
-        ObjectItemData.orderId = NumOrder;
-        ObjectItemData.orderSeq = String(i);
+        ObjectItemData.orderId = "";
+        ObjectItemData.orderSeq = String(i+1);
         ObjectItemData.agentid = "WEB";
         ObjectItemData.branchId = branchID;
         ObjectItemData.createDateTime = timestamp;
@@ -157,7 +157,12 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
         ObjectItemData.qty = String(qty[i]);
         ObjectItemData.classId = ClassID[i];
         ObjectItemData.sizeId = SizeID[i];
-        ObjectItemData.baseId = BaseID[i];
+        if(BaseID[i] == "SB")
+        {
+            ObjectItemData.baseId = "";
+        }else{
+            ObjectItemData.baseId = BaseID[i];
+        }
         ObjectItemData.productId = ProductID[i];
         ObjectItemData.half = "N";
         ObjectItemData.topp1 = "";
@@ -186,10 +191,10 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
         if(ClassID[i] == 'P')
         {
             ObjectItemData.couponId = couponID;
-            ObjectItemData.couponVal= selectedMenuPrice[i]*(couponValue/100);
-            totalSaleSum += selectedMenuPrice[i]*(couponValue/100);
-            ObjectItemData.listPrice = selectedMenuPrice[i] * qty[i];
-            ObjectItemData.discPrice = selectedMenuPrice[i]*(couponValue/100);
+            ObjectItemData.couponVal= String(selectedMenuPrice[i]*(couponValue/100));
+            totalSaleSum += selectedMenuPrice[i]* qty[i] *(couponValue/100);
+            ObjectItemData.listPrice = String(selectedMenuPrice[i] * qty[i]);
+            ObjectItemData.discPrice = String(selectedMenuPrice[i]*(couponValue/100));
         }else{
             ObjectItemData.couponId = "";
             ObjectItemData.couponVal= "";
@@ -220,8 +225,8 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
     ObjectMasterData.couponVal = "";
     ObjectMasterData.empMeal = "";
     ObjectMasterData.items = nMenu;
-    ObjectMasterData.listPrice = price;
-    ObjectMasterData.discPrice = totalSaleSum;
+    ObjectMasterData.listPrice = String(price);
+    ObjectMasterData.discPrice = String(totalSaleSum);
     ObjectMasterData.prodId = "";
     ObjectMasterData.cdate = "";
     ObjectMasterData.chour = "";
@@ -241,6 +246,7 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
     ObjectMasterData.zipcode = "";
     ObjectMasterData.orderGubun = "2";
     ObjectMasterData.phkno = "";
+    ObjectMasterData.allyCouponId = NumOrder;
 
     MD.aOrderMasterDataVO = ObjectMasterData;           //주문 마스터정보
 
@@ -258,7 +264,7 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
     aCustMasterDataVO.branchName = branchName;
     aCustMasterDataVO.custType = "10";
     aCustMasterDataVO.fmcUse = fmcUse;
-    aCustMasterDataVO.fmcAmount = fmcAmount;
+    aCustMasterDataVO.fmcAmount = String(fmcAmount);
     aCustMasterDataVO.lastUpdate = "";
     aCustMasterDataVO.lastUpdateTime = "";
     aCustMasterDataVO.createUpdate = "";
@@ -273,17 +279,22 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
 
     result.fullOrderVO = MD;
 
-    console.log("inputARRAY!@#@#@#@#@#@#@#@## " + JSON.stringify(result));
     inputdata = inputdata + JSON.stringify(result);
     console.log("inputDATA!!!!!!!!!!!!!!!!! " + inputdata);
 
-    /*APICall(inputdata, target, function(err, result){
+    APICall(inputdata, target, function(err, result){
         var output = JSON.parse(result);
 
-        console.log();
-    });*/
+        console.log(output);
+        if(output == false || output.RESULT == false){
+            callback(null, false);
+        }else{
+            callback(null, result);
+        }
 
-    callback(null, result);
+    });
+
+
 }
 exports.getMenuDetail = function(baseID, callback)
 {
@@ -295,6 +306,7 @@ exports.getMenuDetail = function(baseID, callback)
     var menuArray = new Array();
     var menuContents;
     var size = "";
+    var base_desc = "";
 
     APICall(input, target, function(err, result){
         var output = JSON.parse(result);
@@ -307,11 +319,24 @@ exports.getMenuDetail = function(baseID, callback)
             while(true){
                 var buttonArray = new Array();
                 var menuContents = new Object();
-                menuContents.title = output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"];
+                if(output["LIST"][n]["BASE_DESC"] === undefined)
+                {
+                    base_desc = " ";
+                }else{
+                    base_desc = output["LIST"][n]["BASE_DESC"] + "-";
+                }
+                menuContents.title = base_desc + output["LIST"][n]["PRODUCT_DESC"];
                 menuContents.subtitle = output["LIST"][n]["PRODUCT_DESC_SHORT"];
                 //menuContents.image_url = url;
-                menuContents.image_url = "http://akamai.pizzahut.co.kr/IPizzahut/mobile/menu/pizza/MENU_IMG_"
-                    + output["LIST"][n]["CLASS_ID"] + "_" + output["LIST"][n]["BASE_ID"] + "_" + output["LIST"][n]["PRODUCT_ID"] + ".png";
+                if(output["LIST"][n]["CLASS_ID"] != "P")
+                {
+                    menuContents.image_url = "http://cdn.pizzahut.co.kr/IPizzahut/mobile/menu/drink/MENU_IMG_"
+                        + output["LIST"][n]["CLASS_ID"] + "__" + output["LIST"][n]["PRODUCT_ID"] + "_" + output["LIST"][n]["SIZE_ID"] + ".png";
+
+                }else{
+                    menuContents.image_url = "http://akamai.pizzahut.co.kr/IPizzahut/mobile/menu/pizza/MENU_IMG_"
+                        + output["LIST"][n]["CLASS_ID"] + "_" + output["LIST"][n]["BASE_ID"] + "_" + output["LIST"][n]["PRODUCT_ID"] + ".png";
+                }
 
                 pivot = output["LIST"][n]["PRODUCT_DESC"];
                 if (pivot == output["LIST"][n+1]["PRODUCT_DESC"])
@@ -319,32 +344,32 @@ exports.getMenuDetail = function(baseID, callback)
                     for(var i = n; i < n+2; i++) {
                         if(output["LIST"][i]["SIZE_CD"] === undefined)
                         {
-                            size = "";
+                            size = " ";
                         }else {
                             size = output["LIST"][i]["SIZE_CD"];
                         }
                         var buttonContents = new Object();
                         buttonContents.type = 'postback';
-                        buttonContents.title = output["LIST"][i]["SIZE_CD"] + " " + output["LIST"][i]["PRICE"];
+                        buttonContents.title = size + " " + output["LIST"][i]["PRICE"] + " 원";
                         buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][i]["CLASS_ID"] + "/" + output["LIST"][i]["SIZE_ID"]
                             + "/" + output["LIST"][i]["BASE_ID"] + "/" + output["LIST"][i]["PRODUCT_ID"] + "/" + output["LIST"][i]["PRICE"]
-                        + "/" + output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + size;
+                        + "/" + base_desc + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + size;
                         buttonArray.push(buttonContents);
                     }
                     n += 2;
                 }else{
                     if(output["LIST"][n]["SIZE_CD"] === undefined)
                     {
-                        size = "";
+                        size = " ";
                     }else {
                         size = output["LIST"][n]["SIZE_CD"];
                     }
                     var buttonContents = new Object();
                     buttonContents.type = 'postback';
-                    buttonContents.title = output["LIST"][n]["SIZE_CD"] + " " + output["LIST"][n]["PRICE"];
+                    buttonContents.title = size + " " + output["LIST"][n]["PRICE"] + " 원";
                     buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][n]["CLASS_ID"] + "/" + output["LIST"][n]["SIZE_ID"]
                         + "/" + output["LIST"][n]["BASE_ID"] + "/" + output["LIST"][n]["PRODUCT_ID"] + "/" + output["LIST"][n]["PRICE"]
-                    + "/" + output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + output["LIST"][n]["SIZE_CD"];
+                    + "/" + output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + size;
                     buttonArray.push(buttonContents);
                     n += 1;
                 }
@@ -366,14 +391,14 @@ exports.getMenuDetail = function(baseID, callback)
 }
 exports.getCoupon = function(gbn, callback)
 {
-    var inputdata = "params={'gbn':" + gbn + "'}";
+    var inputdata = "params={'gbn':'" + gbn + "'}";
     var target = "API-308.phk";
 
     APICall(inputdata, target, function(err, result){
         var output = JSON.parse(result);
         if(err) console.log(err);
 
-        if(output == false || output.RESULT == false){
+        if(output == false || output["RESULT"] === false){
             callback(null, false);
         }else{
             callback(null, result);
@@ -400,7 +425,7 @@ exports.searchWrapShop = function(address, callback)
     });
 }
 exports.getReceipData = function(nMenu, selectedMenu, qty, ClassID, SizeID, BaseID, ProductID, selectedMenuPrice,
-                                 address, price, discountValue, couponName, couponValue, fmcUse, fmcAmount, callback)
+                                 address, price, discountValue, couponName, couponValue, fmcUse, fmcAmount, orderType, callback)
 {
     var order_Array = new Array();
     var result = new Object();
@@ -416,7 +441,15 @@ exports.getReceipData = function(nMenu, selectedMenu, qty, ClassID, SizeID, Base
         order_Object.quantity = qty[i];
         order_Object.price = Number(selectedMenuPrice[i]);
         order_Object.currency = "KRW";
-        order_Object.image_url = "http://akamai.pizzahut.co.kr/IPizzahut/mobile/menu/pizza/MENU_IMG_" + ClassID[i] + "_" + BASE_ID[i] + "_" + PRODUCT_ID[i] + ".png";
+        if(ClassID[i] != "P")
+        {
+            order_Object.image_url = "http://cdn.pizzahut.co.kr/IPizzahut/mobile/menu/drink/MENU_IMG_"
+                + ClassID[i] + "__" + ProductID[i] + "_"+ SizeID[i] + ".png";
+
+        }else{
+            order_Object.image_url = "http://akamai.pizzahut.co.kr/IPizzahut/mobile/menu/pizza/MENU_IMG_"
+                + ClassID[i] + "_" + BaseID[i] + "_" + ProductID[i] + ".png";
+        }
 
         order_Array.push(order_Object);
     }
@@ -429,7 +462,13 @@ exports.getReceipData = function(nMenu, selectedMenu, qty, ClassID, SizeID, Base
     address_object.city = "서울";
     address_object.state = "관악구";
     address_object.postal_code = "08912";
-    address_object.country = "KR";
+    if(orderType == "2")        //배달
+    {
+        address_object.country = "[배달주문]";
+    }else{      //3: 포장
+        address_object.country = "[포장주문]";
+    }
+
 
     result.address_contents = address_object;
 
@@ -438,27 +477,23 @@ exports.getReceipData = function(nMenu, selectedMenu, qty, ClassID, SizeID, Base
     var sale_object = new Object();
 
     cost_object.subtotal = nPrice;
-    if(fmcUse =='2')
+
+    if(couponName != "")
     {
-        cost_object.total_cost = (nPrice - nDiscountValue - nFmcAmount);
-
-        var sale_object = new Object();
-        sale_object.name = couponName;
-        sale_object.amount = (- nDiscountValue);
-
-        sale_array.push(sale_object);
-
-        sale_object = new Object();
-        sale_object.name = "멤버십 할인";
-        sale_objects.amount = (- nFmcAmount);
-        sale_array.push(sale_object);
-
-    }else{
         cost_object.total_cost = nPrice - nDiscountValue;
 
         var sale_object = new Object();
         sale_object.name = couponName;
         sale_object.amount = (-nDiscountValue);
+        sale_array.push(sale_object);
+    }
+
+    if(fmcUse =='2')
+    {
+        cost_object.total_cost = cost_object.total_cost - nFmcAmount;
+        sale_object = new Object();
+        sale_object.name = "멤버십 할인";
+        sale_object.amount = (- nFmcAmount);
         sale_array.push(sale_object);
     }
 
