@@ -46,7 +46,7 @@ exports.order_confirm = function(orderID, phone, callback)
 }
 exports.identify = function(phone, callback)
 {
-    var phonenumber = "params={'phone':'" + phone + "','req_page':'102','req_channel':'WEB'}";
+    var phonenumber = "params={'phone':'" + phone + "','req_page':'103','req_channel':'WEB'}";
     var target = "API-003.phk";
 
     APICall(phonenumber, target, function(err, result){
@@ -321,7 +321,7 @@ exports.getMenuDetail = function(baseID, callback)
                 var menuContents = new Object();
                 if(output["LIST"][n]["BASE_DESC"] === undefined)
                 {
-                    base_desc = " ";
+                    base_desc = "";
                 }else{
                     base_desc = output["LIST"][n]["BASE_DESC"] + "-";
                 }
@@ -353,7 +353,7 @@ exports.getMenuDetail = function(baseID, callback)
                         buttonContents.title = size + " " + output["LIST"][i]["PRICE"] + " 원";
                         buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][i]["CLASS_ID"] + "/" + output["LIST"][i]["SIZE_ID"]
                             + "/" + output["LIST"][i]["BASE_ID"] + "/" + output["LIST"][i]["PRODUCT_ID"] + "/" + output["LIST"][i]["PRICE"]
-                        + "/" + base_desc + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + size;
+                        + "/" + base_desc + output["LIST"][n]["PRODUCT_DESC"] + " " + size;
                         buttonArray.push(buttonContents);
                     }
                     n += 2;
@@ -369,7 +369,7 @@ exports.getMenuDetail = function(baseID, callback)
                     buttonContents.title = size + " " + output["LIST"][n]["PRICE"] + " 원";
                     buttonContents.payload = 'MENUORDER' + "/" + output["LIST"][n]["CLASS_ID"] + "/" + output["LIST"][n]["SIZE_ID"]
                         + "/" + output["LIST"][n]["BASE_ID"] + "/" + output["LIST"][n]["PRODUCT_ID"] + "/" + output["LIST"][n]["PRICE"]
-                    + "/" + output["LIST"][n]["BASE_DESC"] + '-' + output["LIST"][n]["PRODUCT_DESC"] + " " + size;
+                    + "/" + base_desc + output["LIST"][n]["PRODUCT_DESC"] + " " + size;
                     buttonArray.push(buttonContents);
                     n += 1;
                 }
