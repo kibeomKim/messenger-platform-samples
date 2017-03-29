@@ -13,16 +13,16 @@ exports.sendStartMessage = function(recipientId) {
                 type: "template",
                 payload: {
                     template_type: "button",
-                    text: "맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 주문하시겠습니까?",
+                    text: "맛있는 피자는 작은 차이로 부터! 피자헛 챗봇 입니다. 아래 버튼 중 하나를 선택해주세요.",
                     buttons:[{
-                        type: "postback",
-                        payload: "order_number",
-                        title: "주문 확인"
-                    }, {
                         type: "postback",
                         payload: "privacy",
                         title: "주문 하기"
 
+                    },{
+                        type: "postback",
+                        payload: "order_number",
+                        title: "주문 확인"
                     }, {
                         type: "postback",
                         title: "도움말",
@@ -427,7 +427,7 @@ exports.sendReceiptMessage = function(recipientId) {
     callSendAPI(messageData);
 }
 
-exports.sendReceipt = function(recipientId, NumOrder, custName, order_contents, address_contents, total, sale) {
+exports.sendReceipt = function(recipientId, orderID, custName, order_contents, address_contents, total, sale) {
     // Generate a random receipt ID as the API requires a unique ID
     //var receiptId = "order" + Math.floor(Math.random()*1000);
 
@@ -442,7 +442,7 @@ exports.sendReceipt = function(recipientId, NumOrder, custName, order_contents, 
                     template_type: "receipt",
                     recipient_name: custName,
                     merchant_name: "피자헛",
-                    order_number: NumOrder,
+                    order_number: orderID,
                     currency: "KRW",
                     payment_method: "현장결제",
                     //timestamp: timestamp,

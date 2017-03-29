@@ -22,7 +22,7 @@ exports.order_confirm = function(orderID, phone, callback)
         if (err) console.log(err);
         console.log(output);
 
-        if (output == false || output.RESULT == false)
+        if (output === false || output.RESULT == false)
         {
             callback(null, "주문 정보가 없습니다");
         } else {
@@ -38,8 +38,6 @@ exports.order_confirm = function(orderID, phone, callback)
             }
             comment = "[주문번호: " + orderID + "]\n제품:\n" + menuList + "금액: " + output.LAST_PRICE + "원\n"
                 + "[주문상태: " + state + "]\n" + "[주문매장: " + output.BRANCH_NAME + "(" + output.BRANCH_PHONE + ")]";
-            //comment = output.ORDER_YEAR + "년 " + output.ORDER_MONTH + "월 " + output.DAY + "일 " + output.HOUR + "시 " + output.MINUTE + "분 ";
-            console.log(comment);
             callback(null, comment);
         }
     });
@@ -53,9 +51,8 @@ exports.identify = function(phone, callback)
         var output = JSON.parse(result);
 
         if (err) console.log(err);
-        console.log("identify result!!!!!!!!!!!!!: " + output.RESULT);
 
-        if (result == false || output.RESULT == false) {
+        if (result === false || output.RESULT == false) {
             callback(null, false);
         } else {
             callback(null, result);
@@ -71,7 +68,7 @@ exports.verification = function(phone, authkey, authno, callback)
         var output = JSON.parse(result);
         if (err) console.log(err);
 
-        if (output == false || output.RESULT == false) {
+        if (output === false || output.RESULT == false) {
             callback(null, false);
         } else {
             callback(null, true);
@@ -92,7 +89,7 @@ exports.getAddress = function(address, callback)
         var output = JSON.parse(result);
         if (err) console.log(err);
 
-        if (output == false || output.RESULT == false) {
+        if (output === false || output.SEARCH_RESULT == "[]") {
             callback(null, false);
         } else {
             callback(null, output);
@@ -105,12 +102,13 @@ exports.selectShop = function(x, y, callback)
     var target = 'gis/getDeliveryStore.phk';
     APICall(inputdata, target, function(err, result){
         var output = JSON.parse(result);
+        var testOutput = JSON.parse(output.SEARCH_RESULT);
         if (err) console.log(err);
 
-        if (output == false /*|| output.SEARCH_RESULT.zoneDelivery == "N"*/) {
+        if (isEmpty(output) || isEmpty(testOutput)){
             callback(null, false);
         } else {
-            callback(null, result);
+            callback(null, output);
         }
     });
 }
@@ -122,7 +120,7 @@ exports.checkMembership = function(cardNo, callback)
         var output = JSON.parse(result);
         if (err) console.log(err);
 
-        if (output == false) {
+        if (output === false) {
             callback(null, false);
         } else {
             callback(null, result);
@@ -191,14 +189,14 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
         if(ClassID[i] == 'P')
         {
             ObjectItemData.couponId = couponID;
-            ObjectItemData.couponVal= String(selectedMenuPrice[i]*(couponValue/100));
+            ObjectItemData.couponVal= String(selectedMenuPrice[i]* qty[i] *(couponValue/100));
             totalSaleSum += selectedMenuPrice[i]* qty[i] *(couponValue/100);
             ObjectItemData.listPrice = String(selectedMenuPrice[i] * qty[i]);
-            ObjectItemData.discPrice = String(selectedMenuPrice[i]*(couponValue/100));
+            ObjectItemData.discPrice = String(selectedMenuPrice[i]* qty[i] *(couponValue/100));
         }else{
             ObjectItemData.couponId = "";
             ObjectItemData.couponVal= "";
-            ObjectItemData.listPrice = selectedMenuPrice[i];
+            ObjectItemData.listPrice = String(selectedMenuPrice[i]* qty[i]);
             ObjectItemData.discPrice = "";
         }
 
@@ -280,21 +278,18 @@ exports.order_now = function(NumOrder, branchID, branchName, orderType, timestam
     result.fullOrderVO = MD;
 
     inputdata = inputdata + JSON.stringify(result);
-    console.log("inputDATA!!!!!!!!!!!!!!!!! " + inputdata);
+    console.log("ORDER_DATA: " + inputdata);
 
     APICall(inputdata, target, function(err, result){
         var output = JSON.parse(result);
 
         console.log(output);
-        if(output == false || output.RESULT == false){
+        if(output === false || output.RESULT == false){
             callback(null, false);
         }else{
             callback(null, result);
         }
-
     });
-
-
 }
 exports.getMenuDetail = function(baseID, callback)
 {
@@ -312,7 +307,7 @@ exports.getMenuDetail = function(baseID, callback)
         var output = JSON.parse(result);
         if(err) console.log(err);
 
-        if(output == false || output.RESULT == false){
+        if(output === false || output.RESULT == false){
             callback(null, false);
         }else{
             var n = 0, pivot;
@@ -328,14 +323,18 @@ exports.getMenuDetail = function(baseID, callback)
                 menuContents.title = base_desc + output["LIST"][n]["PRODUCT_DESC"];
                 menuContents.subtitle = output["LIST"][n]["PRODUCT_DESC_SHORT"];
                 //menuContents.image_url = url;
-                if(output["LIST"][n]["CLASS_ID"] != "P")
+                if(output["LIST"][n]["CLASS_ID"] == "P")            //피자
                 {
-                    menuContents.image_url = "http://cdn.pizzahut.co.kr/IPizzahut/mobile/menu/drink/MENU_IMG_"
-                        + output["LIST"][n]["CLASS_ID"] + "__" + output["LIST"][n]["PRODUCT_ID"] + "_" + output["LIST"][n]["SIZE_ID"] + ".png";
-
-                }else{
                     menuContents.image_url = "http://akamai.pizzahut.co.kr/IPizzahut/mobile/menu/pizza/MENU_IMG_"
                         + output["LIST"][n]["CLASS_ID"] + "_" + output["LIST"][n]["BASE_ID"] + "_" + output["LIST"][n]["PRODUCT_ID"] + ".png";
+
+
+                }else if(output["LIST"][n]["CLASS_ID"] == "SB"){            //음료
+                    menuContents.image_url = "http://cdn.pizzahut.co.kr/IPizzahut/mobile/menu/drink/MENU_IMG_"
+                        + output["LIST"][n]["CLASS_ID"] + "__" + output["LIST"][n]["PRODUCT_ID"] + "_" + output["LIST"][n]["SIZE_ID"] + ".png";
+                }else{          //사이드
+                    menuContents.image_url = "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/side/"
+                        + output["LIST"][n]["CLASS_ID"] + "_" + output["LIST"][n]["BASE_ID"] + "_" + output["LIST"][n]["SIZE_ID"] + "_" + output["LIST"][n]["PRODUCT_ID"]   + ".jpg";
                 }
 
                 pivot = output["LIST"][n]["PRODUCT_DESC"];
@@ -398,7 +397,7 @@ exports.getCoupon = function(gbn, callback)
         var output = JSON.parse(result);
         if(err) console.log(err);
 
-        if(output == false || output["RESULT"] === false){
+        if(output === false || output["RESULT"] === false){
             callback(null, false);
         }else{
             callback(null, result);
@@ -425,7 +424,7 @@ exports.searchWrapShop = function(address, callback)
     });
 }
 exports.getReceipData = function(nMenu, selectedMenu, qty, ClassID, SizeID, BaseID, ProductID, selectedMenuPrice,
-                                 address, price, discountValue, couponName, couponValue, fmcUse, fmcAmount, orderType, callback)
+                                 address, price, discountValue, couponName, couponValue, fmcUse, fmcAmount, orderType, shopName, callback)
 {
     var order_Array = new Array();
     var result = new Object();
@@ -441,14 +440,18 @@ exports.getReceipData = function(nMenu, selectedMenu, qty, ClassID, SizeID, Base
         order_Object.quantity = qty[i];
         order_Object.price = Number(selectedMenuPrice[i]);
         order_Object.currency = "KRW";
-        if(ClassID[i] != "P")
+        if(ClassID[i] == "P")
         {
-            order_Object.image_url = "http://cdn.pizzahut.co.kr/IPizzahut/mobile/menu/drink/MENU_IMG_"
-                + ClassID[i] + "__" + ProductID[i] + "_"+ SizeID[i] + ".png";
-
-        }else{
             order_Object.image_url = "http://akamai.pizzahut.co.kr/IPizzahut/mobile/menu/pizza/MENU_IMG_"
                 + ClassID[i] + "_" + BaseID[i] + "_" + ProductID[i] + ".png";
+
+
+        }else if(ClassID[i] == "SB"){
+            order_Object.image_url = "http://cdn.pizzahut.co.kr/IPizzahut/mobile/menu/drink/MENU_IMG_"
+                + ClassID[i] + "__" + ProductID[i] + "_"+ SizeID[i] + ".png";
+        }else{
+            order_Object.image_url = "http://cdn.pizzahut.co.kr/reno_pizzahut/images/products/side/"
+                + ClassID[i] + "_" + BaseID[i] + "_" + SizeID[i] + "_" + ProductID[i] + ".jpg";
         }
 
         order_Array.push(order_Object);
@@ -457,18 +460,43 @@ exports.getReceipData = function(nMenu, selectedMenu, qty, ClassID, SizeID, Base
     result.order_contents = order_Array;
 
     var address_object = new Object();
+    var addr = address;
+    var tmp = " ";
 
-    address_object.street_1 = address;
-    address_object.city = "서울";
-    address_object.state = "관악구";
+    console.log(orderType + ":getReciept!!!");
+
     address_object.postal_code = "08912";
     if(orderType == "2")        //배달
     {
-        address_object.country = "[배달주문]";
-    }else{      //3: 포장
-        address_object.country = "[포장주문]";
-    }
+        tmp = getAddress(addr);
+        addr = addr.substring(addr.indexOf(" ")+1);
+        address_object.city = "[배달] " + tmp;
 
+        tmp = getAddress(addr);
+        addr = addr.substring(addr.indexOf(" ")+1);
+        address_object.state = tmp;
+
+        tmp = getAddress(addr);
+        addr = addr.substring(addr.indexOf(" ")+1);
+        address_object.street_2 = tmp;
+        address_object.street_1 = addr;
+
+    }else{      //3: 포장
+        console.log(orderType + ":getReciept!!!Who are you????");
+
+        tmp = getAddress(addr);
+        addr = addr.substring(addr.indexOf(" ")+1);
+        address_object.city = "[포장] " + tmp;
+
+        tmp = getAddress(addr);
+        addr = addr.substring(addr.indexOf(" ")+1);
+        address_object.state = tmp;
+
+        addr = addr.substring(addr.indexOf(" ")+1);
+        address_object.street_2 = addr;
+        address_object.street_1 = shopName;
+    }
+    address_object.country = "KR";
 
     result.address_contents = address_object;
 
@@ -518,7 +546,9 @@ exports.getTimeStamp = function()
 
     return s;
 }
-
+exports.numberWithCommas = function(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 function leadingZeros(n, digits) {
     var zero = '';
     n = n.toString();
@@ -589,7 +619,35 @@ function getState(state){
     }else if(state == "2")
     {
         return "포장준비";
+    }else if(state == "3")
+    {
+        return "토핑중";
+    }else if(state == "4")
+    {
+        return "제조중";
+    }else if(state == "5")
+    {
+        return "배달 중";
     }else{      //에러
         return "에러-문의요망";
     }
 }
+function getAddress(addr)
+{
+    if(addr === undefined || addr == "" || addr == " ")
+    {
+        return "_";
+    }
+    var tmp = addr.substring(0, addr.indexOf(" "));
+
+    return tmp;
+}
+var isEmpty = function(value)
+{
+    if( value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length ) )
+    {
+        return true
+    }else{
+        return false
+    }
+};
