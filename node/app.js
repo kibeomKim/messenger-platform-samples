@@ -309,9 +309,9 @@ function receivedChat(event){
             session.context.couponID = "couponID"; session.context.order_number = "FB00"; session.context.discountValue = '4470'; session.context.nMenu = 1; session.context.price = '14900'; session.context.address = '서울시 관악구 관악로1 138동'; session.context.custName = "김기범";
             session.qty=[1]; session.ClassID=['P']; session.SizeID = ['M']; session.BaseID = ['P']; session.ProductID = ['PP']; session.selectedMenu = ['팬 - 페퍼로니']; session.context.couponName = "배달할인"; session.context.couponValue = "30"; session.selectedMenuPrice = ['14900']; session.context.cardNo = ""; session.context.fmcUse = ""; session.context.fmcAmount = "";}
         if(messageText == '주소입력'){reset(session); session.context.state = 'delivery'; session.context.phone_number = '01092103621';}
-        if(messageText == '주문하기'){reset(session); session.context.state = 'order_now'; session.context.phone_number = '01092103621'; session.context.shopID = '8817'; session.context.shopName = "신림2호점"; session.context.orderType = '2';
+        /*if(messageText == '주문하기'){reset(session); session.context.state = 'order_now'; session.context.phone_number = '01092103621'; session.context.shopID = '8817'; session.context.shopName = "신림2호점"; session.context.orderType = '2';
             session.context.couponID = "couponID"; session.context.discountValue = '2500'; session.context.nMenu = 1; session.context.price = '23900'; session.context.address = '서울시 관악구 관악로1 138동'; session.context.custName = "김기범";
-        session.qty=[1]; session.ClassID=['P']; session.SizeID = ['M']; session.BaseID = ['P']; session.ProductID = ['PP']; session.context.cardNo = ""; session.context.fmcUse = ""; session.context.fmcAmount = ""; session.context.phone_number= "01000000000"}
+        session.qty=[1]; session.ClassID=['P']; session.SizeID = ['M']; session.BaseID = ['P']; session.ProductID = ['PP']; session.context.cardNo = ""; session.context.fmcUse = ""; session.context.fmcAmount = ""; session.context.phone_number= "01000000000"}*/
 
         if (session.context.state == "-1" || flow.start(messageText))           //시작단계
         {
@@ -386,12 +386,12 @@ function receivedChat(event){
         {
             var selectedNumber = Number(messageText);
             if(isNaN(selectedNumber)){
-                M.sendTextMessage(session.fbid, "숫자만 입력해주세요");          //숫자가 아닌 다른 값 입력
+                M.sendTextMessage(session.fbid, "숫자만 입력해주세요. 처음으로 가시려면 '처음'이라고 입력해주세요.");          //숫자가 아닌 다른 값 입력
                 session.context.state = 'wrap_3';
             }else {
                 if(selectedNumber <= 0 || selectedNumber > session.context.list_length+1)
                 {
-                    M.sendTextMessage(session.fbid, "유효한 숫자를 입력해주세요");
+                    M.sendTextMessage(session.fbid, "유효한 숫자를 입력해주세요. 처음으로 가시려면 '처음'이라고 입력해주세요.");
                     session.context.state = 'wrap_3';
                 }else{
                     if(selectedNumber == session.context.list_length+1){
@@ -730,7 +730,7 @@ function receivedChat(event){
 
             case 'address_1':
                 session.context.address = messageText;
-                M.sendTextMessage(session.fbid, "상세 주소를 입력해주세요.(00아파트 00-000)");
+                M.sendTextMessage(session.fbid, "상세 주소를 입력해주세요.(00아파트 혹은 00-000번지)");
                 session.context.state = 'address_1-1';
                 break;
 
@@ -740,15 +740,22 @@ function receivedChat(event){
                     var output = JSON.parse(result.SEARCH_RESULT);
                     session.addrList = output;
                     if(output["addrListVO"] == "" || output === false){
-                        M.sendTextMessage(session.fbid, "조회된 주소가 없습니다. 다시 입력해주세요.");
+                        M.sendTextMessage(session.fbid, "조회된 주소가 없습니다. \n배달 받으실 주소를 다시 입력해 주세요 (00시 00구 00동/로 혹은 00도 00읍 00면 00리)");
                         session.context.state = 'address_1';
                     }else {
-                        var addr = "";
-                        for (var i = 0; i < output["addrListVO"].length; i++) {
-                            addr += (Number(output["addrListVO"][i]["index"]) + 1) + ". " + output["addrListVO"][i]["addr"] + "\n";
+                        if(output["addrListVO"].length > 10)
+                        {
+                            M.sendTextMessage(session.fbid, "조회된 주소가 너무 많습니다. 좀 더 상세 주소를 입력해주세요.\n배달 받으실 주소를 입력해 주세요 (00시 00구 00동/로 혹은 00도 00읍 00면 00리)");
+                            session.context.state = 'address_1';
+
+                        }else{
+                            var addr = "";
+                            for (var i = 0; i < output["addrListVO"].length; i++) {
+                                addr += (Number(output["addrListVO"][i]["index"]) + 1) + ". " + output["addrListVO"][i]["addr"] + "\n";
+                            }
+                            addr += (output["addrListVO"].length + 1) + ". 다시 검색\n";
+                            M.sendTextMessage(session.fbid, addr + "목록에서 배달 받으실 주소 번호를 입력해 주십시오.");
                         }
-                        addr += (output["addrListVO"].length + 1) + ". 다시 검색\n";
-                        M.sendTextMessage(session.fbid, addr + "목록에서 배달 받으실 주소 번호를 입력해 주십시오.");
                     }
                 });
                 session.context.state = 'address_2';
@@ -782,7 +789,7 @@ function receivedChat(event){
 
             case 'address_3':
                 session.context.address = session.context.address + " " + messageText;
-                M.sendTextMessage(session.fbid, "상세 주소를 입력해주세요 (00아파트, 00-000)");
+                M.sendTextMessage(session.fbid, "상세 주소를 입력해주세요 (00아파트, 00-00번지)");
                 break;
 
             case 'address_4':
@@ -920,7 +927,7 @@ function receivedChat(event){
                             list += session.selectedMenu[i] + " " + flow.numberWithCommas(session.selectedMenuPrice[i]) + "원 [" + session.qty[i] + "]\n";
                         }
                         list+= "\n현재 총 금액은 " + flow.numberWithCommas(session.context.price) + "원 입니다.\n";
-                        M.sendTextMessage(session.fbid, list + session.context.shopName + "에 위 제품을 배달 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
+                        M.sendTextMessage(session.fbid, list + session.context.shopName + "에 위 제품을 목록에 추가 하였습니다. 제품 선택이 완료되었나요?\n1. 예\n2. 아니오. 추가 주문이 있습니다.");
                         session.context.state = 'menu_4';
                         session.context.nMenu += 1;
                     }
@@ -1084,7 +1091,7 @@ function receivedChat(event){
                 break;
 
             case 'wrap_1':
-                M.sendTextMessage(session.fbid, "제품 찾으실 주소를 입력해 주세요.(00시 00구 00동/로 혹은 00도 00읍 00면 00리)");
+                M.sendTextMessage(session.fbid, "제품 찾으실 주소를 입력해 주세요.(00시 00구 00동/로 혹은 00도 00읍 00면 00리 00-00번지)");
                 session.context.state = 'wrap_2';
                 break;
 
@@ -1092,16 +1099,30 @@ function receivedChat(event){
                 var shopStr = "";
                 flow.searchWrapShop(messageText, function(err, result){
                     var output = JSON.parse(result.SEARCH_RESULT);
-                    session.context.list_length = output["storeInfo"].length;
-                    session.addrList = output["storeInfo"];
-                    for(var i = 0; i < output["storeInfo"].length; i++){
-                        shopStr += (i+1) + ". " + output["storeInfo"][i].storeAddr + "(" + output["storeInfo"][i].storeName + ")\n";
+
+                    if(output["storeInfo"].length > 10)
+                    {
+                        M.sendTextMessage(session.fbid, "조회된 주소가 너무 많습니다. 좀 더 상세 주소를 입력해주세요.");
+                        session.context.state = 'wrap_2';
+                    }else if(output["storeInfo"].length == 0)
+                    {
+                        M.sendTextMessage(session.fbid, "조회된 주소가 없습니다. \n주소를 다시 입력해주세요.(00시 00구 00동/로 혹은 00도 00읍 00면 00리 00-00번지)");
+                        session.context.state = 'wrap_2';                        
+                    }else{
+                        session.context.list_length = output["storeInfo"].length;
+                        session.addrList = output["storeInfo"];
+                        for(var i = 0; i < output["storeInfo"].length; i++){
+                            shopStr += (i+1) + ". " + output["storeInfo"][i].storeAddr + "(" + output["storeInfo"][i].storeName + ")\n";
+                        }
+                        shopStr += (output["storeInfo"].length+1) + ". 다시 검색하기\n인근매장을 선택해주세요.";
+
+                        M.sendTextMessage(session.fbid, shopStr);
+                        session.context.state = 'wrap_3';
                     }
-                    shopStr += (output["storeInfo"].length+1) + ". 다시 검색하기\n인근매장을 선택해주세요.";
-
-                    M.sendTextMessage(session.fbid, shopStr);
                 });
+                break;
 
+            case 'wrap_3':
                 session.context.state = 'wrap_3';
                 break;
 
